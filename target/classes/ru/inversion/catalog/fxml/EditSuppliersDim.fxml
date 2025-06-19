@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import ru.inversion.fx.form.controls.JInvButton?>
+<?import ru.inversion.fx.form.controls.JInvLabel?>
+<?import ru.inversion.fx.form.controls.JInvTextField?>
+
+<VBox spacing="5.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.inversion.catalog.EditSuppliersDimController">
+<children>
+<GridPane hgap="5.0" vgap="5.0" VBox.vgrow="ALWAYS">
+<children>
+<JInvLabel fx:id="lblFIRST_NAME" text="%FIRST_NAME" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+<JInvTextField fx:id="FIRST_NAME" fieldName="FIRST_NAME" maxWidth="-Infinity" prefColumnCount="25" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+<JInvLabel fx:id="lblLAST_NAME" text="%LAST_NAME" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+<JInvTextField fx:id="LAST_NAME" fieldName="LAST_NAME" maxWidth="-Infinity" prefColumnCount="25" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+<JInvLabel fx:id="lblPATRONYMIC" text="%PATRONYMIC" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+<JInvTextField fx:id="PATRONYMIC" fieldName="PATRONYMIC" maxWidth="-Infinity" prefColumnCount="25" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+<JInvLabel fx:id="lblMAIL" text="%MAIL" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+<JInvTextField fx:id="MAIL" fieldName="MAIL" maxWidth="-Infinity" prefColumnCount="25" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+<JInvLabel fx:id="lblPHONE" text="%PHONE" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+<JInvTextField fx:id="PHONE" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+</children>
+<columnConstraints>
+<ColumnConstraints halignment="RIGHT" />
+<ColumnConstraints hgrow="ALWAYS" />
+</columnConstraints>
+<VBox.margin>
+<Insets />
+</VBox.margin>
+<rowConstraints>
+<RowConstraints />
+<RowConstraints />
+<RowConstraints />
+<RowConstraints />
+<RowConstraints />
+<RowConstraints />
+<RowConstraints minHeight="1.0" />
+</rowConstraints>
+</GridPane>
+<ButtonBar buttonMinWidth="80.0">
+<buttons>
+<JInvButton fx:id="btOK" />
+<JInvButton fx:id="btCancel" />
+</buttons>
+</ButtonBar>
+</children>
+<padding>
+<Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+</padding>
+</VBox>

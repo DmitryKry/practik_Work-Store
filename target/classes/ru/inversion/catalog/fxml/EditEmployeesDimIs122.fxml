@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import ru.inversion.fx.form.controls.JInvButton?>
+<?import ru.inversion.fx.form.controls.JInvLabel?>
+<?import ru.inversion.fx.form.controls.JInvTextField?>
+
+<VBox spacing="5.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.inversion.catalog.EditEmployeesDimIs122Controller">
+<children>
+<GridPane hgap="5.0" vgap="5.0" VBox.vgrow="ALWAYS">
+<children>
+<JInvLabel fx:id="lblFULL_NAME" text="%FULL_NAME" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+<JInvTextField fx:id="FULL_NAME" fieldName="FULL_NAME" prefColumnCount="50" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+<JInvLabel fx:id="lblPOSITION_ID" text="%POSITION_ID" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+<JInvTextField fx:id="POSITION_ID" fieldName="POSITION_ID" prefColumnCount="50" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+<JInvLabel fx:id="lblHIRE_DATE" text="%HIRE_DATE" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+<JInvTextField fx:id="HIRE_DATE" fieldName="HIRE_DATE" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+<JInvLabel fx:id="lblSALARY" text="%SALARY" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+<JInvTextField fx:id="SALARY" fieldName="SALARY" maxWidth="-Infinity" prefColumnCount="10" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+</children>
+<columnConstraints>
+<ColumnConstraints halignment="RIGHT" />
+<ColumnConstraints hgrow="ALWAYS" />
+</columnConstraints>
+<VBox.margin>
+<Insets />
+</VBox.margin>
+<rowConstraints>
+<RowConstraints />
+<RowConstraints />
+<RowConstraints />
+<RowConstraints />
+<RowConstraints />
+<RowConstraints minHeight="1.0" />
+</rowConstraints>
+</GridPane>
+<ButtonBar buttonMinWidth="80.0">
+<buttons>
+<JInvButton fx:id="btOK" />
+<JInvButton fx:id="btCancel" />
+</buttons>
+</ButtonBar>
+</children>
+<padding>
+<Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+</padding>
+</VBox>

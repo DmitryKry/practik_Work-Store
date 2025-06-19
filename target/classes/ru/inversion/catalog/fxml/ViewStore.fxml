@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import ru.inversion.fx.form.controls.JInvTable?>
+<?import ru.inversion.fx.form.controls.JInvTableColumn?>
+<?import ru.inversion.fx.form.controls.JInvTableColumnDate?>
+<?import ru.inversion.fx.form.controls.JInvToolBar?>
+
+<VBox prefHeight="400.0" prefWidth="800.0" spacing="5.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.inversion.catalog.ViewStoreController">
+<children>
+      <HBox prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <Button mnemonicParsing="false" onAction="#load_store" text="МАГАЗИНЫ" />
+            <Button mnemonicParsing="false" onAction="#load_suppliers" text="ПОСТАВЩИКИ" />
+            <Button mnemonicParsing="false" onAction="#load_product" text="ТОВАРЫ" />
+            <Button mnemonicParsing="false" onAction="#load_category" text="КАТЕГОРИИ НА ТОВАРЫ" />
+            <Button mnemonicParsing="false" onAction="#load_professions" text="ПРОФЕССИИ" />
+         </children>
+      </HBox>
+<JInvToolBar fx:id="toolBar" />
+<JInvTable fx:id="Pstore_table" tableMenuButtonVisible="true" VBox.vgrow="ALWAYS">
+<columns>
+<JInvTableColumn fx:id="ID_STORE" fieldName="ID_STORE" text="%ID_STORE" />
+<JInvTableColumn fx:id="ADDRESS" fieldName="ADDRESS" prefWidth="300.0" text="%ADDRESS" />
+<JInvTableColumn fx:id="NAME_STORE" fieldName="NAME_STORE" prefWidth="300.0" text="%NAME_STORE" />
+<JInvTableColumnDate fx:id="DATE_OPEN_STORE" fieldName="DATE_OPEN_STORE" text="%DATE_OPEN_STORE" />
+<JInvTableColumnDate fx:id="TIME_OPEN_STORE" fieldName="TIME_OPEN_STORE" text="%TIME_OPEN_STORE" />
+<JInvTableColumnDate fx:id="TIME_CLOSE_STORE" fieldName="TIME_CLOSE_STORE" text="%TIME_CLOSE_STORE" />
+<JInvTableColumn fx:id="FIRST_NAME_OWNER" fieldName="FIRST_NAME_OWNER" text="%FIRST_NAME_OWNER" />
+<JInvTableColumn fx:id="SECOND_NAME_OWNER" fieldName="SECOND_NAME_OWNER" text="%SECOND_NAME_OWNER" />
+<JInvTableColumn fx:id="LAST_NAME_OWNER" fieldName="LAST_NAME_OWNER" text="%LAST_NAME_OWNER" />
+<JInvTableColumn fx:id="PHONE" fieldName="PHONE" text="%PHONE" />
+<JInvTableColumn fx:id="MAIL" fieldName="MAIL" text="%MAIL" />
+</columns>
+<VBox.margin>
+<Insets bottom="5.0" left="5.0" right="5.0" />
+</VBox.margin>
+</JInvTable>
+</children>
+</VBox>

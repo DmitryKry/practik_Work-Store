@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import ru.inversion.fx.form.controls.JInvTable?>
+<?import ru.inversion.fx.form.controls.JInvTableColumn?>
+<?import ru.inversion.fx.form.controls.JInvTableColumnMoney?>
+<?import ru.inversion.fx.form.controls.JInvToolBar?>
+
+<VBox prefHeight="400.0" prefWidth="800.0" spacing="5.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.inversion.catalog.ViewProductDimController">
+<children>
+      <HBox prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <Button mnemonicParsing="false" onAction="#load_store" text="МАГАЗИНЫ" />
+            <Button mnemonicParsing="false" onAction="#load_suppliers" text="ПОСТАВЩИКИ" />
+            <Button mnemonicParsing="false" onAction="#load_product" text="ТОВАРЫ" />
+            <Button mnemonicParsing="false" onAction="#load_category" text="КАТЕГОРИИ НА ТОВАРЫ" />
+            <Button mnemonicParsing="false" onAction="#load_professions" text="ПРОФЕССИИ" />
+         </children>
+      </HBox>
+<JInvToolBar fx:id="toolBar" />
+      <HBox prefHeight="466.0" prefWidth="800.0">
+         <children>
+      <JInvTable fx:id="PRODUCT_DIM" tableMenuButtonVisible="true">
+      <columns>
+      <JInvTableColumn fx:id="PRODUCT_NAME" fieldName="PRODUCT_NAME" prefWidth="207.0" text="%PRODUCT_NAME" />
+      <JInvTableColumnMoney fx:id="PRICE" fieldName="PRICE" prefWidth="139.0" text="%PRICE" />
+      <JInvTableColumn fx:id="STOCK_QUANTITY" fieldName="STOCK_QUANTITY" prefWidth="154.0" text="%STOCK_QUANTITY" />
+      </columns>
+      </JInvTable>
+            <AnchorPane prefHeight="355.0" prefWidth="298.0">
+               <children>
+                  <Label layoutX="121.0" layoutY="21.0" text="Категория" />
+                  <TextField fx:id="categoryField" layoutX="75.0" layoutY="38.0" />
+                  <TextField fx:id="firstNameField" layoutX="77.0" layoutY="80.0" />
+                  <Label layoutX="118.0" layoutY="63.0" prefHeight="17.0" prefWidth="63.0" text="Поставщик" />
+                  <TextField fx:id="lastNameField" layoutX="77.0" layoutY="105.0" />
+                  <TextField fx:id="emailField" layoutX="78.0" layoutY="147.0" />
+                  <TextField fx:id="phoneField" layoutX="79.0" layoutY="195.0" />
+                  <Label layoutX="131.0" layoutY="130.0" prefHeight="17.0" prefWidth="36.0" text="EMAIL" />
+                  <Label layoutX="129.0" layoutY="178.0" prefHeight="17.0" prefWidth="48.0" text="Телефон" />
+               </children>
+            </AnchorPane>
+         </children>
+      </HBox>
+</children>
+</VBox>
