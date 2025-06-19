@@ -79,10 +79,10 @@ public class ViewStoreController extends JInvFXBrowserController
     
     private void updateTextFields(PStore selectSuppliers){
         if (selectSuppliers != null){
-            timeOpenField.setText(String.valueOf(selectSuppliers.getTIME_OPEN_STORE()));
+            timeOpenField.setText(String.valueOf(selectSuppliers.getTIME_OPEN_STORE().toLocalTime()));
             timeOpenField.setEditable(false);
             
-            timeCloseField.setText(String.valueOf(selectSuppliers.getTIME_CLOSE_STORE()));
+            timeCloseField.setText(String.valueOf(selectSuppliers.getTIME_CLOSE_STORE().toLocalTime()));
             timeCloseField.setEditable(false);
             
             secondNameField.setText(String.valueOf(selectSuppliers.getSECOND_NAME_OWNER()));

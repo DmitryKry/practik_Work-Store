@@ -9,5 +9,6 @@ and open the template in the editor.
     <expression name="get_suplers" lang = "PL/SQL">
         <script>SELECT * FROM SUPLERS_DIM</script>
     </expression>
+    
 </sql_expr_list>
 

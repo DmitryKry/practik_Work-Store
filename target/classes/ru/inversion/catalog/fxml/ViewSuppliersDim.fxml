@@ -28,7 +28,7 @@
       <columns>
       <JInvTableColumn fx:id="FIRST_NAME" fieldName="FIRST_NAME" prefWidth="136.0" text="%FIRST_NAME" />
       <JInvTableColumn fx:id="LAST_NAME" fieldName="LAST_NAME" prefWidth="125.0" text="%LAST_NAME" />
-      <JInvTableColumn fx:id="PATRONYMIC" fieldName="PATRONYMIC" prefWidth="181.0" text="%PATRONYMIC" />
+      <JInvTableColumn fx:id="PATRONYMIC" fieldName="PATRONYMIC" prefWidth="150.0" text="%PATRONYMIC" />
       </columns>
       </JInvTable>
             <AnchorPane prefHeight="355.0" prefWidth="346.0">

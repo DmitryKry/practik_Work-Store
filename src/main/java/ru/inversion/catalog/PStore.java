@@ -25,8 +25,8 @@ public class PStore implements Serializable
     private String ADDRESS;
     private String NAME_STORE;
     private LocalDate DATE_OPEN_STORE;
-    private LocalDate TIME_OPEN_STORE;
-    private LocalDate TIME_CLOSE_STORE;
+    private LocalDateTime TIME_OPEN_STORE;
+    private LocalDateTime TIME_CLOSE_STORE;
     private String FIRST_NAME_OWNER;
     private String SECOND_NAME_OWNER;
     private String LAST_NAME_OWNER;
@@ -36,7 +36,7 @@ public class PStore implements Serializable
     public PStore(){}
 
     @Id 
-    @Column(name="ID_STORE",nullable = false,length = 0)
+    @Column(name="ID_STRE",nullable = false,length = 0)
     public Long getID_STORE() {
         return ID_STORE;
     }
@@ -65,17 +65,17 @@ public class PStore implements Serializable
         DATE_OPEN_STORE = val; 
     }
     @Column(name="TIME_OPEN_STORE")
-    public LocalDate getTIME_OPEN_STORE() {
+    public LocalDateTime getTIME_OPEN_STORE() {
         return TIME_OPEN_STORE;
     }
-    public void setTIME_OPEN_STORE(LocalDate val) {
+    public void setTIME_OPEN_STORE(LocalDateTime val) {
         TIME_OPEN_STORE = val; 
     }
     @Column(name="TIME_CLOSE_STORE")
-    public LocalDate getTIME_CLOSE_STORE() {
+    public LocalDateTime getTIME_CLOSE_STORE() {
         return TIME_CLOSE_STORE;
     }
-    public void setTIME_CLOSE_STORE(LocalDate val) {
+    public void setTIME_CLOSE_STORE(LocalDateTime val) {
         TIME_CLOSE_STORE = val; 
     }
     @Column(name="FIRST_NAME_OWNER",length = 25)

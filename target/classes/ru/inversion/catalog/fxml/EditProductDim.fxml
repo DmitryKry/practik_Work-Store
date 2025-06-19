@@ -22,9 +22,10 @@
 <JInvTextField fx:id="PRICE" fieldName="PRICE" maxWidth="-Infinity" prefColumnCount="10" GridPane.columnIndex="1" GridPane.rowIndex="3" />
 <JInvLabel fx:id="lblSTOCK_QUANTITY" text="%STOCK_QUANTITY" GridPane.columnIndex="0" GridPane.rowIndex="4" />
 <JInvLabel text="%SUPPLIER" GridPane.rowIndex="5" />
-<ComboBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <ComboBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+<ComboBox fx:id="productCategoryComboBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <ComboBox fx:id="productSuppliersComboBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
             <JInvTextField fx:id="PRICE1" fieldName="PRICE" maxWidth="-Infinity" prefColumnCount="10" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <ComboBox fx:id="simpleBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
             
 </children>
 <columnConstraints>
@@ -41,6 +42,7 @@
 <RowConstraints />
 <RowConstraints maxHeight="26.0" minHeight="19.0" prefHeight="26.0" />
 <RowConstraints maxHeight="26.0" minHeight="19.0" prefHeight="26.0" />
+            <RowConstraints maxHeight="7.0" minHeight="0.0" prefHeight="0.0" />
             <RowConstraints maxHeight="7.0" minHeight="0.0" prefHeight="0.0" />
             <RowConstraints maxHeight="7.0" minHeight="0.0" prefHeight="0.0" />
             <RowConstraints maxHeight="7.0" minHeight="0.0" prefHeight="0.0" />

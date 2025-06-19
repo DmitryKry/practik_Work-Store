@@ -1,5 +1,6 @@
 package ru.inversion.catalog;
 
+import java.util.List;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -30,8 +31,15 @@ public class ViewSuppliersDimController extends JInvFXBrowserController
     @FXML private JInvToolBar toolBar;
     @FXML private TextField EMAILField;
     @FXML private TextField PhoneField;
-
+    private static List<PSuppliersDim> supplersList;
  
+    public List<PSuppliersDim> getSupllers(){
+        for(PSuppliersDim item : SUPPLIERS_DIM.getItems()){
+            supplersList.add(item);
+        }
+        return supplersList;
+    }
+    
    
     private final XXIDataSet<PSuppliersDim> dsSUPPLIERS_DIM = new XXIDataSet<> ();    
 //

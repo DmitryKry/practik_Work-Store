@@ -28,8 +28,8 @@
       <JInvTable fx:id="Pstore_table" prefHeight="192.0" prefWidth="559.0" tableMenuButtonVisible="true">
       <columns>
       <JInvTableColumn fx:id="ADDRESS" fieldName="ADDRESS" prefWidth="147.0" text="%ADDRESS" />
-      <JInvTableColumn fx:id="NAME_STORE" fieldName="NAME_STORE" minWidth="0.0" prefWidth="232.0" text="%NAME_STORE" />
-      <JInvTableColumnDate fx:id="DATE_OPEN_STORE" fieldName="DATE_OPEN_STORE" minWidth="0.0" prefWidth="178.0" text="%DATE_OPEN_STORE" />
+      <JInvTableColumn fx:id="NAME_STORE" fieldName="NAME_STORE" minWidth="0.0" prefWidth="151.0" text="%NAME_STORE" />
+      <JInvTableColumnDate fx:id="DATE_OPEN_STORE" fieldName="DATE_OPEN_STORE" minWidth="0.0" prefWidth="200.0" text="%DATE_OPEN_STORE" />
       </columns>
       </JInvTable>
             <AnchorPane prefHeight="355.0" prefWidth="241.0">

@@ -18,7 +18,8 @@ import javafx.scene.control.TextField;
 import ru.inversion.bicomp.action.JInvButtonPrint;
 import ru.inversion.bicomp.action.StopExecuteActionBiCompException;
 import ru.inversion.bicomp.fxreport.ApReport;
-
+import java.util.List;
+import java.util.ArrayList;
 /**
  *
  * @author  admin
@@ -44,6 +45,7 @@ public class ViewProductDimController extends JInvFXBrowserController
         dsPRODUCT_DIM.setTaskContext (getTaskContext ());
         dsPRODUCT_DIM.setRowClass (PProductDim.class);
     }
+    
 //
 // Initializes the controller class.
 //
