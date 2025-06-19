@@ -2,6 +2,7 @@ package ru.inversion.catalog;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.TextField;
 import ru.inversion.dataset.IDataSet;
 import ru.inversion.dataset.XXIDataSet;
 import ru.inversion.dataset.fx.DSFXAdapter;
@@ -27,7 +28,13 @@ public class ViewStoreController extends JInvFXBrowserController
 {
     @FXML private JInvTable<PStore> Pstore_table;   
     @FXML private JInvToolBar toolBar;
-
+    @FXML private TextField timeOpenField;
+    @FXML private TextField timeCloseField;
+    @FXML private TextField firstNameField;
+    @FXML private TextField secondNameField;
+    @FXML private TextField lastNameField;
+    @FXML private TextField phoneField;
+    @FXML private TextField emailField;
  
    
     private final XXIDataSet<PStore> dsPstore_table = new XXIDataSet<> ();    
@@ -62,9 +69,46 @@ public class ViewStoreController extends JInvFXBrowserController
         Pstore_table.setAction (ActionFactory.ActionTypeEnum.UPDATE, (a) -> doOperation (FormModeEnum.VM_EDIT));
         Pstore_table.setAction (ActionFactory.ActionTypeEnum.DELETE, (a) -> doOperation (FormModeEnum.VM_DEL));
         Pstore_table.setAction (ActionFactory.ActionTypeEnum.REFRESH, (a) -> doRefresh ());
-
-        doRefresh ();
-    }        
+        Pstore_table.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                updateTextFields(newSelection);
+            }
+        });
+        doRefresh();
+    }
+    
+    private void updateTextFields(PStore selectSuppliers){
+        if (selectSuppliers != null){
+            timeOpenField.setText(String.valueOf(selectSuppliers.getTIME_OPEN_STORE()));
+            timeOpenField.setEditable(false);
+            
+            timeCloseField.setText(String.valueOf(selectSuppliers.getTIME_CLOSE_STORE()));
+            timeCloseField.setEditable(false);
+            
+            secondNameField.setText(String.valueOf(selectSuppliers.getSECOND_NAME_OWNER()));
+            secondNameField.setEditable(false);
+            
+            firstNameField.setText(String.valueOf(selectSuppliers.getFIRST_NAME_OWNER()));
+            firstNameField.setEditable(false);
+            
+            lastNameField.setText(String.valueOf(selectSuppliers.getLAST_NAME_OWNER()));
+            lastNameField.setEditable(false);
+            
+            emailField.setText(String.valueOf(selectSuppliers.getMAIL()));
+            emailField.setEditable(false);
+            
+            phoneField.setText(String.valueOf(selectSuppliers.getPHONE()));
+            phoneField.setEditable(false);            
+        } else {
+            secondNameField.clear();
+            phoneField.clear();
+            firstNameField.clear();
+            lastNameField.clear();
+            emailField.clear();
+            timeOpenField.clear();
+            timeCloseField.clear();
+        }
+    }   
 //
 // doRefresh
 //    
@@ -154,7 +198,47 @@ public class ViewStoreController extends JInvFXBrowserController
         }    
 
         Pstore_table.requestFocus ();
-    }        
+    }    
+
+    @FXML
+    private void load_suppliers(ActionEvent event){
+        new FXFormLauncher<>(this, ViewSuppliersDimController.class)
+                .initProperties(getInitProperties())
+                .doModal();
+        getViewContext().getStage().close();
+    }
+    
+    @FXML
+    private void load_product(ActionEvent event){
+        new FXFormLauncher<>(this, ViewProductDimController.class)
+                .initProperties(getInitProperties())
+                .doModal();
+        getViewContext().getStage().close();
+    }
+    
+    @FXML
+    private void load_category(ActionEvent event){
+        new FXFormLauncher<>(this, ViewCategoryDimController.class)
+                .initProperties(getInitProperties())
+                .doModal();
+        getViewContext().getStage().close();
+    }
+   
+    @FXML
+    private void load_professions(ActionEvent event){
+        new FXFormLauncher<>(this, ViewPositionsDimController.class)
+                .initProperties(getInitProperties())
+                .doModal();
+        getViewContext().getStage().close();
+    }
+    
+    @FXML
+    private void load_store(ActionEvent event){
+        new FXFormLauncher<>(this, ViewStoreController.class)
+                .initProperties(getInitProperties())
+                .doModal();
+        getViewContext().getStage().close();
+    }    
 //
 //
 //    

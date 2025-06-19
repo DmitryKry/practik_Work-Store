@@ -154,7 +154,46 @@ public class ViewroductClassController extends JInvFXBrowserController
         }    
 
         Product.requestFocus ();
-    }        
+    }  
+        @FXML
+    private void load_suppliers(ActionEvent event){
+        new FXFormLauncher<>(this, ViewSuppliersDimController.class)
+                .initProperties(getInitProperties())
+                .doModal();
+        getViewContext().getStage().close();
+    }
+    
+    @FXML
+    private void load_product(ActionEvent event){
+        new FXFormLauncher<>(this, ViewProductDimController.class)
+                .initProperties(getInitProperties())
+                .doModal();
+        getViewContext().getStage().close();
+    }
+    
+    @FXML
+    private void load_category(ActionEvent event){
+        new FXFormLauncher<>(this, ViewCategoryDimController.class)
+                .initProperties(getInitProperties())
+                .doModal();
+        getViewContext().getStage().close();
+    }
+   
+    @FXML
+    private void load_professions(ActionEvent event){
+        new FXFormLauncher<>(this, ViewPositionsDimController.class)
+                .initProperties(getInitProperties())
+                .doModal();
+        getViewContext().getStage().close();
+    }
+    
+    @FXML
+    private void load_store(ActionEvent event){
+        new FXFormLauncher<>(this, ViewStoreController.class)
+                .initProperties(getInitProperties())
+                .doModal();
+        getViewContext().getStage().close();
+    }   
 //
 //
 //    

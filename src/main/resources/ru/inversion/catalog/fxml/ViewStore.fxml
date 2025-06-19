@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import ru.inversion.fx.form.controls.JInvTable?>
@@ -21,23 +23,31 @@
          </children>
       </HBox>
 <JInvToolBar fx:id="toolBar" />
-<JInvTable fx:id="Pstore_table" tableMenuButtonVisible="true" VBox.vgrow="ALWAYS">
-<columns>
-<JInvTableColumn fx:id="ID_STORE" fieldName="ID_STORE" text="%ID_STORE" />
-<JInvTableColumn fx:id="ADDRESS" fieldName="ADDRESS" prefWidth="300.0" text="%ADDRESS" />
-<JInvTableColumn fx:id="NAME_STORE" fieldName="NAME_STORE" prefWidth="300.0" text="%NAME_STORE" />
-<JInvTableColumnDate fx:id="DATE_OPEN_STORE" fieldName="DATE_OPEN_STORE" text="%DATE_OPEN_STORE" />
-<JInvTableColumnDate fx:id="TIME_OPEN_STORE" fieldName="TIME_OPEN_STORE" text="%TIME_OPEN_STORE" />
-<JInvTableColumnDate fx:id="TIME_CLOSE_STORE" fieldName="TIME_CLOSE_STORE" text="%TIME_CLOSE_STORE" />
-<JInvTableColumn fx:id="FIRST_NAME_OWNER" fieldName="FIRST_NAME_OWNER" text="%FIRST_NAME_OWNER" />
-<JInvTableColumn fx:id="SECOND_NAME_OWNER" fieldName="SECOND_NAME_OWNER" text="%SECOND_NAME_OWNER" />
-<JInvTableColumn fx:id="LAST_NAME_OWNER" fieldName="LAST_NAME_OWNER" text="%LAST_NAME_OWNER" />
-<JInvTableColumn fx:id="PHONE" fieldName="PHONE" text="%PHONE" />
-<JInvTableColumn fx:id="MAIL" fieldName="MAIL" text="%MAIL" />
-</columns>
-<VBox.margin>
-<Insets bottom="5.0" left="5.0" right="5.0" />
-</VBox.margin>
-</JInvTable>
+      <HBox prefHeight="523.0" prefWidth="800.0">
+         <children>
+      <JInvTable fx:id="Pstore_table" prefHeight="192.0" prefWidth="559.0" tableMenuButtonVisible="true">
+      <columns>
+      <JInvTableColumn fx:id="ADDRESS" fieldName="ADDRESS" prefWidth="147.0" text="%ADDRESS" />
+      <JInvTableColumn fx:id="NAME_STORE" fieldName="NAME_STORE" minWidth="0.0" prefWidth="232.0" text="%NAME_STORE" />
+      <JInvTableColumnDate fx:id="DATE_OPEN_STORE" fieldName="DATE_OPEN_STORE" minWidth="0.0" prefWidth="178.0" text="%DATE_OPEN_STORE" />
+      </columns>
+      </JInvTable>
+            <AnchorPane prefHeight="355.0" prefWidth="241.0">
+               <children>
+                  <TextField fx:id="timeOpenField" layoutX="46.0" layoutY="48.0" />
+                  <Label layoutX="76.0" layoutY="31.0" text="Время открытия" />
+                  <Label layoutX="77.0" layoutY="73.0" text="Время закрытия" />
+                  <TextField fx:id="timeCloseField" layoutX="47.0" layoutY="90.0" />
+                  <Label layoutX="95.0" layoutY="115.0" text="Владелец" />
+                  <TextField fx:id="firstNameField" layoutX="47.0" layoutY="132.0" />
+                  <TextField fx:id="secondNameField" layoutX="47.0" layoutY="157.0" />
+                  <TextField fx:id="lastNameField" layoutX="47.0" layoutY="182.0" />
+                  <Label layoutX="96.0" layoutY="207.0" text="Контакты" />
+                  <TextField fx:id="phoneField" layoutX="48.0" layoutY="224.0" />
+                  <TextField fx:id="emailField" layoutX="48.0" layoutY="249.0" />
+               </children>
+            </AnchorPane>
+         </children>
+      </HBox>
 </children>
 </VBox>

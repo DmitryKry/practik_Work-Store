@@ -225,11 +225,11 @@ public class ViewProductDimController extends JInvFXBrowserController
     
     @FXML
     private void load_store(ActionEvent event){
-        new FXFormLauncher<>(this, ViewStoreDimController.class)
+        new FXFormLauncher<>(this, ViewStoreController.class)
                 .initProperties(getInitProperties())
                 .doModal();
         getViewContext().getStage().close();
-    }
+    }   
 
 //
 //
