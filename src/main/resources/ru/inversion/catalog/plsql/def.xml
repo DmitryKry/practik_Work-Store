@@ -5,6 +5,29 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <sql_expr_list>
+    <expression name="updateActualReturnDate" lang="PL/SQL">
+    <script><![CDATA[
+        DECLARE 
+        BEGIN
+            IT_Library_PKG.update_actual_return_date(:p_issue_id, :p_actual_return_date);
+        END;
+    ]]></script>
+</expression>
+    <!-- Добавление новой записи о выданной книге -->
+    <expression name="addNewProduct" lang="PL/SQL">
+    <script><![CDATA[
+        DECLARE 
+        BEGIN
+            Product_PKG.add_product(
+                :p_name,
+                :p_category,
+                :p_price,
+                :p_stock_quantity,
+                :p_supplier
+            );
+        END;
+    ]]></script>
+</expression>
     <!-- Добавление пластинки --> 
     <expression name="get_suplers" lang = "PL/SQL">
         <script>SELECT * FROM SUPLERS_DIM</script>

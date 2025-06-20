@@ -8,6 +8,11 @@ import ru.inversion.bicomp.util.ParamMap;
 import ru.inversion.db.expr.SQLExpressionException;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import ru.inversion.dataset.XXIDataSet;
 /**
  * @author  admin
  * @since   Mon Jun 16 14:39:40 MSK 2025
@@ -18,25 +23,94 @@ public class EditProductDimController extends JInvFXFormController <PProductDim>
 //
 //
 //    @FXML JInvLongField PRODUCT_ID;
-//    @FXML JInvTextField PRODUCT_NAME;
+    @FXML JInvTextField PRODUCT_NAME;
 //    @FXML JInvLongField CATEGORY;
-//    @FXML JInvTextField PRICE;
+    @FXML JInvTextField PRICE;
 //    @FXML JInvLongField STOCK_QUANTITY;
 
-     @FXML private ComboBox<String> productCategoryComboBox;
-     @FXML private ComboBox<String> productSuppliersComboBox;
-     @FXML private ComboBox<String> simpleBox;
+    @FXML private ComboBox<String> productCategoryComboBox;
+    @FXML private ComboBox<String> productSuppliersComboBox;
+    private List<PSuppliersDim> supplierses;
+    private List<PCategoryDim> categores;
 //
 // Initializes the controller class.
 //
+     private final XXIDataSet<PSuppliersDim> dsSupplierSet = new XXIDataSet<> ();    
+     private final XXIDataSet<PCategoryDim> dsPCategorySet = new XXIDataSet<> ();    
+//
+// initDataSet
+//    
+    private void initDataSet () throws Exception 
+    {
+        dsSupplierSet.setTaskContext (getTaskContext ());
+        dsSupplierSet.setRowClass (PSuppliersDim.class);
+        
+        dsPCategorySet.setTaskContext (getTaskContext ());
+        dsPCategorySet.setRowClass (PCategoryDim.class);
+    }
+    @Override
+    protected boolean onOK() {
+        try {
+            PSuppliersDim SupplersOnly = supplierses.stream()
+                    .filter(s -> (s.getFIRST_NAME() + " " + s.getLAST_NAME())
+                            .equals(productSuppliersComboBox.getSelectionModel().getSelectedItem()))
+                    .findFirst().orElse(null);
+            
+            PCategoryDim categoryOnly = categores.stream()
+                    .filter(c -> (c.getCATEGORY_NAME())
+                            .equals(productSuppliersComboBox.getSelectionModel().getSelectedItem()))
+                    .findFirst().orElse(null);
+            
+            new ParamMap()
+                    .add("p_name", PRODUCT_NAME.getText())
+                    .add("p_category", categoryOnly.getCATEGORY_DIM_ID())
+                    .add("p_price", PRICE.getText())
+                    .add("p_stock_quantity", STOCK_QUANTITY.getText())
+                    .add("p_supplier", SupplersOnly.getID())
+                    .exec(this, "addNewProduct");
+            
+            return true;
+            
+        } catch (SQLExpressionException ex) {
+            Logger.getLogger(EditProductDimController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
     @Override
     protected void init () throws Exception 
     {
+        initDataSet();
+        dsSupplierSet.executeQuery();
+        dsPCategorySet.executeQuery();
+        productComboBox();
+        categoryComboBox();
         super.init (); 
-        
-        simpleBox.getItems().addAll("привет", "Пока");
-        simpleBox.getSelectionModel().selectFirst();
     }    
     
+    private void productComboBox(){
+        productSuppliersComboBox.getItems().clear();
+        Set<String> unigTetles = new LinkedHashSet<>();
+        supplierses = new ArrayList<>();
+        for (PSuppliersDim item : dsSupplierSet.getRows()){
+            unigTetles.add(item.getFIRST_NAME() + " " + item.getLAST_NAME());
+            supplierses.add(item);
+        }
+        productSuppliersComboBox.getItems().addAll(unigTetles);
+        if (!productSuppliersComboBox.getItems().isEmpty())
+            productSuppliersComboBox.getSelectionModel().selectFirst();
+    }
+    
+    private void categoryComboBox(){
+        productCategoryComboBox.getItems().clear();
+        Set<String> unigTetles = new LinkedHashSet<>();
+        categores = new ArrayList<>();
+        for (PCategoryDim item : dsPCategorySet.getRows()){
+            unigTetles.add(item.getCATEGORY_NAME());
+            categores.add(item);
+        }
+        productCategoryComboBox.getItems().addAll(unigTetles);
+        if (!productCategoryComboBox.getItems().isEmpty())
+            productCategoryComboBox.getSelectionModel().selectFirst();
+    }
 }
 
