@@ -1,5 +1,6 @@
 package ru.inversion.catalog;
 
+import javafx.event.ActionEvent;
 import ru.inversion.fx.form.JInvFXFormController;
 import ru.inversion.fx.form.controls.*;
 import javafx.fxml.FXML;
@@ -12,7 +13,9 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.scene.Node;
 import ru.inversion.dataset.XXIDataSet;
+import javafx.stage.Stage;
 /**
  * @author  admin
  * @since   Mon Jun 16 14:39:40 MSK 2025
@@ -26,7 +29,7 @@ public class EditProductDimController extends JInvFXFormController <PProductDim>
     @FXML JInvTextField PRODUCT_NAME;
 //    @FXML JInvLongField CATEGORY;
     @FXML JInvTextField PRICE;
-//    @FXML JInvLongField STOCK_QUANTITY;
+    @FXML JInvTextField STOCK_QUANTITY;
 
     @FXML private ComboBox<String> productCategoryComboBox;
     @FXML private ComboBox<String> productSuppliersComboBox;
@@ -48,8 +51,8 @@ public class EditProductDimController extends JInvFXFormController <PProductDim>
         dsPCategorySet.setTaskContext (getTaskContext ());
         dsPCategorySet.setRowClass (PCategoryDim.class);
     }
-    @Override
-    protected boolean onOK() {
+    
+    @FXML public void onOK(ActionEvent event) {
         try {
             PSuppliersDim SupplersOnly = supplierses.stream()
                     .filter(s -> (s.getFIRST_NAME() + " " + s.getLAST_NAME())
@@ -58,7 +61,7 @@ public class EditProductDimController extends JInvFXFormController <PProductDim>
             
             PCategoryDim categoryOnly = categores.stream()
                     .filter(c -> (c.getCATEGORY_NAME())
-                            .equals(productSuppliersComboBox.getSelectionModel().getSelectedItem()))
+                            .equals(productCategoryComboBox.getSelectionModel().getSelectedItem()))
                     .findFirst().orElse(null);
             
             new ParamMap()
@@ -68,13 +71,14 @@ public class EditProductDimController extends JInvFXFormController <PProductDim>
                     .add("p_stock_quantity", STOCK_QUANTITY.getText())
                     .add("p_supplier", SupplersOnly.getID())
                     .exec(this, "addNewProduct");
-            
-            return true;
+            Stage stage = (Stage) PRODUCT_NAME.getScene().getWindow();
+            stage.close();
             
         } catch (SQLExpressionException ex) {
             Logger.getLogger(EditProductDimController.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex.getMessage());
+            
         }
-        return false;
     }
     @Override
     protected void init () throws Exception 

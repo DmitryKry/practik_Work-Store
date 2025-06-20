@@ -24,7 +24,7 @@
 <JInvLabel text="%SUPPLIER" GridPane.rowIndex="5" />
 <ComboBox fx:id="productCategoryComboBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <ComboBox fx:id="productSuppliersComboBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-<JInvTextField maxWidth="-Infinity" prefColumnCount="10" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+<JInvTextField fx:id="STOCK_QUANTITY" maxWidth="-Infinity" prefColumnCount="10" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             
 </children>
 <columnConstraints>
@@ -52,7 +52,7 @@
 </GridPane>
 <ButtonBar buttonMinWidth="80.0">
 <buttons>
-<JInvButton fx:id="btOK" />
+<JInvButton onAction="#onOK" text="ОК" />
 <JInvButton fx:id="btCancel" />
 </buttons>
 </ButtonBar>
