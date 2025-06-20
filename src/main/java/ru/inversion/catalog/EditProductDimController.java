@@ -14,6 +14,7 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.Node;
+import javafx.scene.layout.GridPane;
 import ru.inversion.dataset.XXIDataSet;
 import javafx.stage.Stage;
 /**
@@ -52,7 +53,7 @@ public class EditProductDimController extends JInvFXFormController <PProductDim>
         dsPCategorySet.setRowClass (PCategoryDim.class);
     }
     
-    @FXML public void onOK(ActionEvent event) {
+    @FXML public void onOk() {
         try {
             PSuppliersDim SupplersOnly = supplierses.stream()
                     .filter(s -> (s.getFIRST_NAME() + " " + s.getLAST_NAME())
@@ -71,15 +72,12 @@ public class EditProductDimController extends JInvFXFormController <PProductDim>
                     .add("p_stock_quantity", STOCK_QUANTITY.getText())
                     .add("p_supplier", SupplersOnly.getID())
                     .exec(this, "addNewProduct");
-            Stage stage = (Stage) PRODUCT_NAME.getScene().getWindow();
-            stage.close();
-            
         } catch (SQLExpressionException ex) {
             Logger.getLogger(EditProductDimController.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println(ex.getMessage());
-            
         }
     }
+    
     @Override
     protected void init () throws Exception 
     {

@@ -52,7 +52,7 @@
 </GridPane>
 <ButtonBar buttonMinWidth="80.0">
 <buttons>
-<JInvButton onAction="#onOK" text="ОК" />
+<JInvButton onAction="#onOk" text="ОК" />
 <JInvButton fx:id="btCancel" />
 </buttons>
 </ButtonBar>
