@@ -20,6 +20,10 @@ import ru.inversion.bicomp.action.StopExecuteActionBiCompException;
 import ru.inversion.bicomp.fxreport.ApReport;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import ru.inversion.bicomp.util.ParamMap;
+import ru.inversion.db.expr.SQLExpressionException;
 /**
  *
  * @author  admin
@@ -34,6 +38,7 @@ public class ViewProductDimController extends JInvFXBrowserController
     @FXML private TextField lastNameField;
     @FXML private TextField phoneField;
     @FXML private TextField emailField;
+    
  
    
     private final XXIDataSet<PProductDim> dsPRODUCT_DIM = new XXIDataSet<> ();    
@@ -150,12 +155,20 @@ public class ViewProductDimController extends JInvFXBrowserController
                         ep.invokeSetter (p, ep.invokeGetter (dsPRODUCT_DIM.getCurrentRow ()));
                 break;
             case VM_EDIT:
+                p = PRODUCT_DIM.getSelectionModel().getSelectedItem();
+                break;
             case VM_SHOW:
             case VM_DEL:
-                p = dsPRODUCT_DIM.getCurrentRow ();
+                PProductDim selectProduct = PRODUCT_DIM.getSelectionModel().getSelectedItem();
+                    try {
+                        new ParamMap()
+                                    .add("p_id", selectProduct.getPRODUCT_ID())
+                                    .exec(this, "deleteProduct");
+                        } catch (SQLExpressionException ex) {
+                            Logger.getLogger(ViewProductDimController.class.getName()).log(Level.SEVERE, null, ex);
+                        }                            
                 break;
         }
-
         if (p != null) 
             new FXFormLauncher<> (this, EditProductDimController.class)
                 .dataObject (p)
@@ -163,6 +176,7 @@ public class ViewProductDimController extends JInvFXBrowserController
                 .initProperties (getInitProperties ())
                 .callback (this::doFormResult)    
                 .doModal ();
+        doRefresh();
     }
 //
 // doFormResult 
@@ -182,12 +196,13 @@ public class ViewProductDimController extends JInvFXBrowserController
                     doRefresh ();
                     break;
                 case VM_DEL:
-                    dsPRODUCT_DIM.removeCurrentRow ();
-                    doRefresh ();
+                    dsPRODUCT_DIM.removeCurrentRow ();      
+                    
                     break;
                 default:
                     break;
-            }                
+            }               
+            doRefresh();
         }    
 
         PRODUCT_DIM.requestFocus ();

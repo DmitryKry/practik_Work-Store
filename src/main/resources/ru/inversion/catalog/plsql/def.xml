@@ -5,7 +5,7 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <sql_expr_list>
-    <expression name="addSupplersNew" lang="PL/SQL">
+    <expression name="addSuppliersNew" lang="PL/SQL">
         <script><![CDATA[
             DECLARE 
             BEGIN
@@ -39,6 +39,28 @@ and open the template in the editor.
                     :p_price,
                     :p_stock_quantity,
                     :p_supplier
+                );
+            END;
+        ]]></script>
+    </expression>
+    
+    <expression name="deleteProduct" lang="PL/SQL">
+        <script><![CDATA[
+            DECLARE 
+            BEGIN
+                Product_PKG.delete_product(
+                    :p_id
+                );
+            END;
+        ]]></script>
+    </expression>
+    
+    <expression name="deleteSuppliers" lang="PL/SQL">
+        <script><![CDATA[
+            DECLARE 
+            BEGIN
+                SUPPLIERS_DIM_PKG.delete_supplier(
+                    :s_id
                 );
             END;
         ]]></script>

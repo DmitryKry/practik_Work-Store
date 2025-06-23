@@ -49,7 +49,7 @@ public class EditSuppliersDimController extends JInvFXFormController <PSuppliers
                     .add("s_patronymic", PATRONYMIC.getText())
                     .add("s_mail", MAIL.getText())
                     .add("s_phone", PHONE.getText())
-                    .exec(this, "addSupplersNew");
+                    .exec(this, "addSuppliersNew");
         } catch (SQLExpressionException ex) {
             Logger.getLogger(EditProductDimController.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println(ex.getMessage());

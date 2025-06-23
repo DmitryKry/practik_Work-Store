@@ -1,40 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import ru.inversion.fx.form.controls.*?>
-<?import ru.inversion.fx.form.lov.*?>
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import ru.inversion.fx.form.controls.JInvButton?>
+<?import ru.inversion.fx.form.controls.JInvComboBox?>
+<?import ru.inversion.fx.form.controls.JInvLabel?>
+<?import ru.inversion.fx.form.controls.JInvTextField?>
 
-<VBox spacing="5.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.inversion.catalog.EditStoreController">
+<VBox spacing="5.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.inversion.catalog.EditStoreController">
 <children>
 <GridPane hgap="5.0" vgap="5.0" VBox.vgrow="ALWAYS">
 <children>
-<JInvLabel fx:id="lblID_STORE" text="%ID_STORE" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-<JInvLongField fx:id="ID_STORE" maxWidth="-Infinity" prefColumnCount="0" fieldName="ID_STORE" GridPane.columnIndex="1" GridPane.rowIndex="0" />
 <JInvLabel fx:id="lblADDRESS" text="%ADDRESS" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-<JInvTextField fx:id="ADDRESS" prefColumnCount="50" fieldName="ADDRESS" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+<JInvTextField fx:id="ADDRESS" fieldName="ADDRESS" prefColumnCount="50" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 <JInvLabel fx:id="lblNAME_STORE" text="%NAME_STORE" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-<JInvTextField fx:id="NAME_STORE" prefColumnCount="50" fieldName="NAME_STORE" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+<JInvTextField fx:id="NAME_STORE" fieldName="NAME_STORE" prefColumnCount="50" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 <JInvLabel fx:id="lblDATE_OPEN_STORE" text="%DATE_OPEN_STORE" GridPane.columnIndex="0" GridPane.rowIndex="3" />
 <JInvTextField fx:id="DATE_OPEN_STORE" fieldName="DATE_OPEN_STORE" GridPane.columnIndex="1" GridPane.rowIndex="3" />
 <JInvLabel fx:id="lblTIME_OPEN_STORE" text="%TIME_OPEN_STORE" GridPane.columnIndex="0" GridPane.rowIndex="4" />
 <JInvTextField fx:id="TIME_OPEN_STORE" fieldName="TIME_OPEN_STORE" GridPane.columnIndex="1" GridPane.rowIndex="4" />
 <JInvLabel fx:id="lblTIME_CLOSE_STORE" text="%TIME_CLOSE_STORE" GridPane.columnIndex="0" GridPane.rowIndex="5" />
 <JInvTextField fx:id="TIME_CLOSE_STORE" fieldName="TIME_CLOSE_STORE" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-<JInvLabel fx:id="lblFIRST_NAME_OWNER" text="%FIRST_NAME_OWNER" GridPane.columnIndex="0" GridPane.rowIndex="6" />
-<JInvTextField fx:id="FIRST_NAME_OWNER" maxWidth="-Infinity" prefColumnCount="25" fieldName="FIRST_NAME_OWNER" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-<JInvLabel fx:id="lblSECOND_NAME_OWNER" text="%SECOND_NAME_OWNER" GridPane.columnIndex="0" GridPane.rowIndex="7" />
-<JInvTextField fx:id="SECOND_NAME_OWNER" maxWidth="-Infinity" prefColumnCount="25" fieldName="SECOND_NAME_OWNER" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-<JInvLabel fx:id="lblLAST_NAME_OWNER" text="%LAST_NAME_OWNER" GridPane.columnIndex="0" GridPane.rowIndex="8" />
-<JInvTextField fx:id="LAST_NAME_OWNER" maxWidth="-Infinity" prefColumnCount="25" fieldName="LAST_NAME_OWNER" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-<JInvLabel fx:id="lblPHONE" text="%PHONE" GridPane.columnIndex="0" GridPane.rowIndex="9" />
-<JInvLongField fx:id="PHONE" maxWidth="-Infinity" prefColumnCount="11" fieldName="PHONE" GridPane.columnIndex="1" GridPane.rowIndex="9" />
-<JInvLabel fx:id="lblMAIL" text="%MAIL" GridPane.columnIndex="0" GridPane.rowIndex="10" />
-<JInvTextField fx:id="MAIL" fieldName="MAIL" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+            <JInvLabel fx:id="lblOWNER_OF_STORE" text="%OWNER_OF_STORE" GridPane.rowIndex="6" />
+            <JInvComboBox prefHeight="25.0" prefWidth="253.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
 </children>
 <columnConstraints>
 <ColumnConstraints halignment="RIGHT" />
@@ -48,14 +40,15 @@
 <RowConstraints />
 <RowConstraints />
 <RowConstraints />
+<RowConstraints maxHeight="42.0" minHeight="22.0" prefHeight="22.0" />
+<RowConstraints maxHeight="42.0" minHeight="7.0" prefHeight="27.0" />
+<RowConstraints maxHeight="42.0" minHeight="7.0" prefHeight="27.0" />
 <RowConstraints />
 <RowConstraints />
 <RowConstraints />
 <RowConstraints />
-<RowConstraints />
-<RowConstraints />
-<RowConstraints />
-<RowConstraints minHeight="1.0"/>
+            <RowConstraints maxHeight="1.0" minHeight="1.0" prefHeight="1.0" />
+            <RowConstraints maxHeight="0.0" minHeight="0.0" prefHeight="0.0" />
 </rowConstraints>
 </GridPane>
 <ButtonBar buttonMinWidth="80.0">

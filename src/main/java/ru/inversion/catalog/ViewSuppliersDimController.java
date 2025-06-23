@@ -1,6 +1,8 @@
 package ru.inversion.catalog;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -19,6 +21,8 @@ import ru.inversion.fx.form.controls.*;
 import ru.inversion.bicomp.action.JInvButtonPrint;
 import ru.inversion.bicomp.action.StopExecuteActionBiCompException;
 import ru.inversion.bicomp.fxreport.ApReport;
+import ru.inversion.bicomp.util.ParamMap;
+import ru.inversion.db.expr.SQLExpressionException;
 
 /**
  *
@@ -145,7 +149,17 @@ public class ViewSuppliersDimController extends JInvFXBrowserController
             case VM_EDIT:
             case VM_SHOW:
             case VM_DEL:
-                p = dsSUPPLIERS_DIM.getCurrentRow ();
+                dsSUPPLIERS_DIM.getCurrentRow ();
+                PSuppliersDim selectProduct = SUPPLIERS_DIM.getSelectionModel().getSelectedItem();
+                try {
+                    new ParamMap()
+                            .add("s_id", selectProduct.getID())
+                            .exec(this, "deleteSuppliers");
+                } catch (SQLExpressionException ex) {
+                    Logger.getLogger(ViewProductDimController.class.getName()).log(Level.SEVERE, null, ex);
+                } 
+                          
+                                             
                 break;
         }
 
@@ -156,6 +170,7 @@ public class ViewSuppliersDimController extends JInvFXBrowserController
                 .initProperties (getInitProperties ())
                 .callback (this::doFormResult)    
                 .doModal ();
+        doRefresh();
     }
 //
 // doFormResult 
