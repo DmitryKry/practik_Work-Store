@@ -1,12 +1,15 @@
 package ru.inversion.catalog;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import ru.inversion.fx.form.JInvFXFormController;
 import ru.inversion.fx.form.controls.*;
 import javafx.fxml.FXML;
+import javafx.scene.control.ComboBox;
 import ru.inversion.bicomp.util.ParamMap;
 import ru.inversion.dataset.XXIDataSet;
 import ru.inversion.db.expr.SQLExpressionException;
@@ -31,6 +34,7 @@ public class EditStoreController extends JInvFXFormController <PStore>
 //    @FXML JInvTextField LAST_NAME_OWNER;
 //    @FXML JInvLongField PHONE;
 //    @FXML JInvTextField MAIL;
+    @FXML JInvComboBox ownersBox;
 
     private List<POwner_Store> owners;
 //
@@ -52,9 +56,24 @@ public class EditStoreController extends JInvFXFormController <PStore>
     @Override
     protected void init () throws Exception 
     {
+        initDataSet();
         owners = new ArrayList<>();
+        dsOwnerSet.executeQuery();
+        productComboBox();
         super.init (); 
     }    
 
+    private void productComboBox(){
+        ownersBox.getItems().clear();
+        Set<String> unigTetles = new LinkedHashSet<>();
+        owners = new ArrayList<>();
+        for (POwner_Store item : dsOwnerSet.getRows()){
+            unigTetles.add(item.getFIRST_NAME_OWNER() + " " + item.getLAST_NAME_OWNER() + " " + item.getMAIL());
+            owners.add(item);
+        }
+        ownersBox.getItems().addAll(unigTetles);
+        if (!ownersBox.getItems().isEmpty())
+            ownersBox.getSelectionModel().selectFirst();
+    }
 }
 
