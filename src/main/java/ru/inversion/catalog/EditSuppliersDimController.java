@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 import ru.inversion.fx.form.JInvFXFormController;
 import ru.inversion.fx.form.controls.*;
 import javafx.fxml.FXML;
+import javafx.stage.Stage;
 import ru.inversion.bicomp.util.ParamMap;
 import ru.inversion.db.expr.SQLExpressionException;
 
@@ -54,6 +55,8 @@ public class EditSuppliersDimController extends JInvFXFormController <PSuppliers
             Logger.getLogger(EditProductDimController.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println(ex.getMessage());
         }
+        Stage stage = (Stage) FIRST_NAME.getScene().getWindow();
+        stage.close();
     }
 }
 

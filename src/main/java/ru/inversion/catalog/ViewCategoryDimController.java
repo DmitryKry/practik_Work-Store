@@ -55,7 +55,7 @@ public class ViewCategoryDimController extends JInvFXBrowserController
                 
         initToolBar ();
 
-        CATEGORY_DIM.setToolBar (toolBar);       
+        CATEGORY_DIM.setToolBar (toolBar);
         CATEGORY_DIM.setAction (ActionFactory.ActionTypeEnum.CREATE, (a) -> doOperation (FormModeEnum.VM_INS));
         CATEGORY_DIM.setAction (ActionFactory.ActionTypeEnum.CREATE_BY, (a) -> doOperation (FormModeEnum.VM_NONE));
         CATEGORY_DIM.setAction (ActionFactory.ActionTypeEnum.VIEW, (a) -> doOperation (FormModeEnum.VM_SHOW));
@@ -101,7 +101,6 @@ public class ViewCategoryDimController extends JInvFXBrowserController
     private void doOperation ( JInvFXFormController.FormModeEnum mode ) 
     {
         PCategoryDim p = null;
-
         switch (mode) {
             case VM_INS:
                 p = new PCategoryDim ();
@@ -120,6 +119,7 @@ public class ViewCategoryDimController extends JInvFXBrowserController
             case VM_DEL:
                 p = dsCATEGORY_DIM.getCurrentRow ();
                 break;
+            case VM_CHOICE:
         }
 
         if (p != null) 

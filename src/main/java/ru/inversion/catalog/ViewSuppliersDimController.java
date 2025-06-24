@@ -75,6 +75,7 @@ public class ViewSuppliersDimController extends JInvFXBrowserController
         SUPPLIERS_DIM.setAction (ActionFactory.ActionTypeEnum.VIEW, (a) -> doOperation (FormModeEnum.VM_SHOW));
         SUPPLIERS_DIM.setAction (ActionFactory.ActionTypeEnum.UPDATE, (a) -> doOperation (FormModeEnum.VM_EDIT));
         SUPPLIERS_DIM.setAction (ActionFactory.ActionTypeEnum.DELETE, (a) -> doOperation (FormModeEnum.VM_DEL));
+        SUPPLIERS_DIM.setAction (ActionFactory.ActionTypeEnum.CHOOSE_DIRECTORY, (a) -> doOperation (FormModeEnum.VM_CHOICE));
         SUPPLIERS_DIM.setAction (ActionFactory.ActionTypeEnum.REFRESH, (a) -> doRefresh ());
         SUPPLIERS_DIM.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
@@ -116,6 +117,7 @@ public class ViewSuppliersDimController extends JInvFXBrowserController
                                     ActionFactory.ActionTypeEnum.CREATE_BY, 
                                     ActionFactory.ActionTypeEnum.VIEW,
                                     ActionFactory.ActionTypeEnum.UPDATE,
+                                    ActionFactory.ActionTypeEnum.CHOOSE_DIRECTORY,
                                     ActionFactory.ActionTypeEnum.DELETE);
     }
 //
@@ -132,7 +134,7 @@ public class ViewSuppliersDimController extends JInvFXBrowserController
     private void doOperation ( JInvFXFormController.FormModeEnum mode ) 
     {
         PSuppliersDim p = null;
-
+        PProductDim prod = null;
         switch (mode) {
             case VM_INS:
                 p = new PSuppliersDim ();
@@ -157,9 +159,20 @@ public class ViewSuppliersDimController extends JInvFXBrowserController
                             .exec(this, "deleteSuppliers");
                 } catch (SQLExpressionException ex) {
                     Logger.getLogger(ViewProductDimController.class.getName()).log(Level.SEVERE, null, ex);
-                } 
-                          
-                                             
+                }                     
+                break;
+            case VM_CHOICE:
+                p = SUPPLIERS_DIM.getSelectionModel().getSelectedItem();
+                prod = new PProductDim();
+                prod.setFIRST_NAME(p.getFIRST_NAME());
+                prod.setLAST_NAME(p.getLAST_NAME());
+                p = null;
+                new FXFormLauncher<> (this, EditProductDimController.class)
+                .dataObject (prod)
+                .dialogMode (mode)
+                .initProperties (getInitProperties ())
+                .callback (this::doFormResult)    
+                .doModal ();
                 break;
         }
 

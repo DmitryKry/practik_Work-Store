@@ -36,23 +36,24 @@ public class EditStoreController extends JInvFXFormController <PStore>
 //    @FXML JInvTextField MAIL;
     @FXML JInvComboBox ownersBox;
 
-    private List<POwner_Store> owners;
+    private List<POwnerStore> owners;
 //
 // Initializes the controller class.
 //
-    private final XXIDataSet<POwner_Store> dsOwnerSet = new XXIDataSet<> ();    
+    private final XXIDataSet<POwnerStore> dsOwnerSet = new XXIDataSet<> ();    
 //
 // initDataSet
 //    
     private void initDataSet () throws Exception 
     {
         dsOwnerSet.setTaskContext (getTaskContext ());
-        dsOwnerSet.setRowClass (POwner_Store.class);
+        dsOwnerSet.setRowClass (POwnerStore.class);
         
     }
     
     @FXML public void onOk() {
     }
+    
     @Override
     protected void init () throws Exception 
     {
@@ -67,7 +68,7 @@ public class EditStoreController extends JInvFXFormController <PStore>
         ownersBox.getItems().clear();
         Set<String> unigTetles = new LinkedHashSet<>();
         owners = new ArrayList<>();
-        for (POwner_Store item : dsOwnerSet.getRows()){
+        for (POwnerStore item : dsOwnerSet.getRows()){
             unigTetles.add(item.getFIRST_NAME_OWNER() + " " + item.getLAST_NAME_OWNER() + " " + item.getMAIL());
             owners.add(item);
         }

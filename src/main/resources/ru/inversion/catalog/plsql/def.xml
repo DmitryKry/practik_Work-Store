@@ -20,15 +20,6 @@ and open the template in the editor.
         ]]></script>
     </expression>
     
-    <expression name="updateActualReturnDate" lang="PL/SQL">
-        <script><![CDATA[
-            DECLARE 
-            BEGIN
-                IT_Library_PKG.update_actual_return_date(:p_issue_id, :p_actual_return_date);
-            END;
-        ]]></script>
-    </expression>
-    <!-- Добавление новой записи о выданной книге -->
     <expression name="addNewProduct" lang="PL/SQL">
         <script><![CDATA[
             DECLARE 

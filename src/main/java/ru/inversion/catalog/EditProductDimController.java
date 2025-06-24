@@ -76,6 +76,8 @@ public class EditProductDimController extends JInvFXFormController <PProductDim>
             Logger.getLogger(EditProductDimController.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println(ex.getMessage());
         }
+        Stage stage = (Stage) PRODUCT_NAME.getScene().getWindow();
+        stage.close();
     }
     
     @Override
