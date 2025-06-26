@@ -86,7 +86,7 @@ public class EditProductDimController extends JInvFXFormController <PProductDim>
         initDataSet();
         dsSupplierSet.executeQuery();
         dsPCategorySet.executeQuery();
-        if (dataObject != null){
+        if (dataObject.getFIRST_NAME() != null){
             productSuppliersComboBox.getItems().clear();
             supplierses = new ArrayList<>();
             for (PSuppliersDim item : dsSupplierSet.getRows()){

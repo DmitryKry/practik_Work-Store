@@ -18,7 +18,6 @@
             <Button mnemonicParsing="false" onAction="#load_suppliers" text="ПОСТАВЩИКИ" />
             <Button mnemonicParsing="false" onAction="#load_product" text="ТОВАРЫ" />
             <Button mnemonicParsing="false" onAction="#load_category" text="КАТЕГОРИИ НА ТОВАРЫ" />
-            <Button mnemonicParsing="false" onAction="#load_professions" text="ПРОФЕССИИ" />
          </children>
       </HBox>
 <JInvToolBar fx:id="toolBar" />

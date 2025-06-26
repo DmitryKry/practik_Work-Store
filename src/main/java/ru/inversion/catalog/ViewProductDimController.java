@@ -202,8 +202,8 @@ public class ViewProductDimController extends JInvFXBrowserController
                 default:
                     break;
             }               
-            doRefresh();
-        }    
+        }
+        doRefresh ();
 
         PRODUCT_DIM.requestFocus ();
     }        
@@ -231,15 +231,7 @@ public class ViewProductDimController extends JInvFXBrowserController
                 .doModal();
         getViewContext().getStage().close();
     }
-   
-    @FXML
-    private void load_professions(ActionEvent event){
-        new FXFormLauncher<>(this, ViewPositionsDimController.class)
-                .initProperties(getInitProperties())
-                .doModal();
-        getViewContext().getStage().close();
-    }
-    
+       
     @FXML
     private void load_store(ActionEvent event){
         new FXFormLauncher<>(this, ViewStoreController.class)

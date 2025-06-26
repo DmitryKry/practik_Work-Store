@@ -196,6 +196,7 @@ public class ViewStoreController extends JInvFXBrowserController
                     break;
             }                
         }    
+        doRefresh ();
 
         Pstore_table.requestFocus ();
     }    
@@ -219,14 +220,6 @@ public class ViewStoreController extends JInvFXBrowserController
     @FXML
     private void load_category(ActionEvent event){
         new FXFormLauncher<>(this, ViewCategoryDimController.class)
-                .initProperties(getInitProperties())
-                .doModal();
-        getViewContext().getStage().close();
-    }
-   
-    @FXML
-    private void load_professions(ActionEvent event){
-        new FXFormLauncher<>(this, ViewPositionsDimController.class)
                 .initProperties(getInitProperties())
                 .doModal();
         getViewContext().getStage().close();

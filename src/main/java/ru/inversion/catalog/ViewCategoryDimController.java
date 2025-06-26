@@ -151,7 +151,8 @@ public class ViewCategoryDimController extends JInvFXBrowserController
                 default:
                     break;
             }                
-        }    
+        }  
+        doRefresh ();
 
         CATEGORY_DIM.requestFocus ();
     }    
@@ -175,14 +176,6 @@ public class ViewCategoryDimController extends JInvFXBrowserController
     @FXML
     private void load_category(ActionEvent event){
         new FXFormLauncher<>(this, ViewCategoryDimController.class)
-                .initProperties(getInitProperties())
-                .doModal();
-        getViewContext().getStage().close();
-    }
-   
-    @FXML
-    private void load_professions(ActionEvent event){
-        new FXFormLauncher<>(this, ViewPositionsDimController.class)
                 .initProperties(getInitProperties())
                 .doModal();
         getViewContext().getStage().close();

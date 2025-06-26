@@ -19,13 +19,12 @@
                 <Button mnemonicParsing="false" onAction="#load_suppliers" text="ПОСТАВЩИКИ" />
                 <Button mnemonicParsing="false" onAction="#load_product" text="ТОВАРЫ" />
                 <Button mnemonicParsing="false" onAction="#load_category" text="КАТЕГОРИИ НА ТОВАРЫ" />
-                <Button mnemonicParsing="false" onAction="#load_professions" text="ПРОФЕССИИ" />
              </children>             
         </HBox>
         <JInvToolBar fx:id="toolBar" />
         <HBox prefHeight="466.0" prefWidth="800.0">
             <children>
-                <JInvTable fx:id="PRODUCT_DIM" tableMenuButtonVisible="true" prefWidth="450.0">
+                <JInvTable fx:id="PRODUCT_DIM" prefWidth="450.0" tableMenuButtonVisible="true">
                     <columns>
                         <JInvTableColumn fx:id="PRODUCT_NAME" fieldName="PRODUCT_NAME" prefWidth="150.0" text="%PRODUCT_NAME" />
                         <JInvTableColumnMoney fx:id="PRICE" fieldName="PRICE" prefWidth="120.0" text="%PRICE" />

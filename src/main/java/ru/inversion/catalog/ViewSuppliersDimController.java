@@ -233,14 +233,6 @@ public class ViewSuppliersDimController extends JInvFXBrowserController
                 .doModal();
         getViewContext().getStage().close();
     }
-   
-    @FXML
-    private void load_professions(ActionEvent event){
-        new FXFormLauncher<>(this, ViewPositionsDimController.class)
-                .initProperties(getInitProperties())
-                .doModal();
-        getViewContext().getStage().close();
-    }
     
     @FXML
     private void load_store(ActionEvent event){
