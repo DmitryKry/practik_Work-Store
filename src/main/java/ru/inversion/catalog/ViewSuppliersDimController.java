@@ -149,6 +149,7 @@ public class ViewSuppliersDimController extends JInvFXBrowserController
                         ep.invokeSetter (p, ep.invokeGetter (dsSUPPLIERS_DIM.getCurrentRow ()));
                 break;
             case VM_EDIT:
+                p = SUPPLIERS_DIM.getSelectionModel().getSelectedItem();
             case VM_SHOW:
             case VM_DEL:
                 dsSUPPLIERS_DIM.getCurrentRow ();
@@ -159,7 +160,8 @@ public class ViewSuppliersDimController extends JInvFXBrowserController
                             .exec(this, "deleteSuppliers");
                 } catch (SQLExpressionException ex) {
                     Logger.getLogger(ViewProductDimController.class.getName()).log(Level.SEVERE, null, ex);
-                }                     
+                }      
+                doRefresh();
                 break;
             case VM_CHOICE:
                 mode = FormModeEnum.VM_INS;
@@ -175,7 +177,6 @@ public class ViewSuppliersDimController extends JInvFXBrowserController
                 .doModal ();
                 break;
         }
-
         if (p != null) 
             new FXFormLauncher<> (this, EditSuppliersDimController.class)
                 .dataObject (p)
