@@ -162,6 +162,7 @@ public class ViewSuppliersDimController extends JInvFXBrowserController
                 }                     
                 break;
             case VM_CHOICE:
+                mode = FormModeEnum.VM_INS;
                 p = SUPPLIERS_DIM.getSelectionModel().getSelectedItem();
                 prod = new PProductDim();
                 prod.setFIRST_NAME(p.getFIRST_NAME());
@@ -171,7 +172,6 @@ public class ViewSuppliersDimController extends JInvFXBrowserController
                 .dataObject (prod)
                 .dialogMode (mode)
                 .initProperties (getInitProperties ())
-                .callback (this::doFormResult)    
                 .doModal ();
                 break;
         }
@@ -183,7 +183,6 @@ public class ViewSuppliersDimController extends JInvFXBrowserController
                 .initProperties (getInitProperties ())
                 .callback (this::doFormResult)    
                 .doModal ();
-        doRefresh();
     }
 //
 // doFormResult 
@@ -206,8 +205,8 @@ public class ViewSuppliersDimController extends JInvFXBrowserController
                 default:
                     break;
             }                
-        }    
-
+        }
+        doRefresh();
         SUPPLIERS_DIM.requestFocus ();
     }        
     
