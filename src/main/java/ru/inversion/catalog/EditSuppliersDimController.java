@@ -38,12 +38,6 @@ public class EditSuppliersDimController extends JInvFXFormController <PSuppliers
 
     @FXML public void onOk() {
         try {         
-            List<String> it = new ArrayList<>();
-            it.add(FIRST_NAME.getText());
-            it.add(LAST_NAME.getText());
-            it.add(PATRONYMIC.getText());
-            it.add(MAIL.getText());
-            it.add(PHONE.getText());
             new ParamMap()
                     .add("s_first_name", FIRST_NAME.getText())
                     .add("s_last_name", LAST_NAME.getText())

@@ -15,10 +15,10 @@
 <children>
       <HBox prefHeight="100.0" prefWidth="200.0">
          <children>
-            <Button mnemonicParsing="false" onAction="#load_store" text="МАГАЗИНЫ" />
-            <Button mnemonicParsing="false" onAction="#load_suppliers" text="ПОСТАВЩИКИ" />
-            <Button mnemonicParsing="false" onAction="#load_product" text="ТОВАРЫ" />
-            <Button mnemonicParsing="false" onAction="#load_category" text="КАТЕГОРИИ НА ТОВАРЫ" />
+            <Button mnemonicParsing="false" onAction="#load_store" text="Магазины" />
+            <Button mnemonicParsing="false" onAction="#load_suppliers" text="Поставщики" />
+            <Button mnemonicParsing="false" onAction="#load_product" text="Товары" />
+            <Button mnemonicParsing="false" onAction="#load_category" text="Категории на товары" />          
          </children>
       </HBox>
 <JInvToolBar fx:id="toolBar" />
