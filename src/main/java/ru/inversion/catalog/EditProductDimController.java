@@ -55,7 +55,8 @@ public class EditProductDimController extends JInvFXFormController <PProductDim>
         dsPCategorySet.setRowClass (PCategoryDim.class);
     }
     
-    @FXML public void onOk() {
+    @Override
+    @FXML public boolean onOK() {
         cheakBox = true;
         try {
             PSuppliersDim SupplersOnly = supplierses.stream()
@@ -81,6 +82,7 @@ public class EditProductDimController extends JInvFXFormController <PProductDim>
         }
         Stage stage = (Stage) PRODUCT_NAME.getScene().getWindow();
         stage.close();
+        return true;
     }
     
     private void SupplersBooksComboBox() {
@@ -96,7 +98,7 @@ public class EditProductDimController extends JInvFXFormController <PProductDim>
                 int count = 0;
                 for (PSuppliersDim suppliers : dsSupplierSet.getRows()) {
                     for (char item : newVal.toCharArray()) {
-                        if (item == (suppliers.getFIRST_NAME() + " " + suppliers.getLAST_NAME()).charAt(count)) {
+                        if (Character.toLowerCase(item) == Character.toLowerCase((suppliers.getFIRST_NAME() + " " + suppliers.getLAST_NAME()).charAt(count))) {
                             if (count < newVal.length()) {
                                 count++;
                                 if (count == (newVal.length())) {
@@ -127,7 +129,6 @@ public class EditProductDimController extends JInvFXFormController <PProductDim>
                 }
             }
         });
-
         // Устанавливаем первое значение по умолчанию, если список не пуст
         if (!productSuppliersComboBox.getItems().isEmpty()) {
             productSuppliersComboBox.getSelectionModel().selectFirst();
@@ -148,7 +149,7 @@ public class EditProductDimController extends JInvFXFormController <PProductDim>
                 int count = 0;
                 for (PCategoryDim category : dsPCategorySet.getRows()) {
                     for (char item : newVal.toCharArray()) {
-                        if (item == (category.getCATEGORY_NAME().charAt(count))) {
+                        if (Character.toLowerCase(item) == Character.toLowerCase((category.getCATEGORY_NAME().charAt(count)))) {
                             if (count < newVal.length()) {
                                 count++;
                                 if (count == (newVal.length())) {

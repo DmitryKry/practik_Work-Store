@@ -35,7 +35,6 @@ public class ViewProductDimController extends JInvFXBrowserController
     @FXML private JInvToolBar toolBar;
     @FXML private TextField categoryField;
     @FXML private TextField firstNameField;
-    @FXML private TextField lastNameField;
     @FXML private TextField phoneField;
     @FXML private TextField emailField;
     
@@ -86,11 +85,9 @@ public class ViewProductDimController extends JInvFXBrowserController
             categoryField.setText(String.valueOf(selectSuppliers.getCATEGORY_NAME()));
             categoryField.setEditable(false);
             
-            firstNameField.setText(String.valueOf(selectSuppliers.getFIRST_NAME()));
+            firstNameField.setText(String.valueOf(selectSuppliers.getFIRST_NAME()) 
+                    + " " + String.valueOf(selectSuppliers.getLAST_NAME()));
             firstNameField.setEditable(false);
-            
-            lastNameField.setText(String.valueOf(selectSuppliers.getLAST_NAME()));
-            lastNameField.setEditable(false);
             
             emailField.setText(String.valueOf(selectSuppliers.getMAIL()));
             emailField.setEditable(false);
@@ -101,7 +98,6 @@ public class ViewProductDimController extends JInvFXBrowserController
             categoryField.clear();
             phoneField.clear();
             firstNameField.clear();
-            lastNameField.clear();
             emailField.clear();
         }
     }
@@ -162,11 +158,12 @@ public class ViewProductDimController extends JInvFXBrowserController
                 PProductDim selectProduct = PRODUCT_DIM.getSelectionModel().getSelectedItem();
                     try {
                         new ParamMap()
-                                    .add("p_id", selectProduct.getPRODUCT_ID())
-                                    .exec(this, "deleteProduct");
+                                .add("p_id", selectProduct.getPRODUCT_ID())
+                                .exec(this, "deleteProduct");
                         } catch (SQLExpressionException ex) {
                             Logger.getLogger(ViewProductDimController.class.getName()).log(Level.SEVERE, null, ex);
-                        }                            
+                        }  
+                    doRefresh();
                 break;
         }
         if (p != null) 

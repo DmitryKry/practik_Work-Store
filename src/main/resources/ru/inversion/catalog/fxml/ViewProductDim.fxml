@@ -25,32 +25,33 @@
         <JInvToolBar fx:id="toolBar" />
         <HBox prefHeight="466.0" prefWidth="800.0">
             <children>
-                <JInvTable fx:id="PRODUCT_DIM" prefWidth="450.0" tableMenuButtonVisible="true">
+                <JInvTable fx:id="PRODUCT_DIM" prefHeight="355.0" prefWidth="486.0" tableMenuButtonVisible="true">
                     <columns>
                         <JInvTableColumn fx:id="PRODUCT_NAME" fieldName="PRODUCT_NAME" prefWidth="150.0" text="%PRODUCT_NAME" />
                         <JInvTableColumnMoney fx:id="PRICE" fieldName="PRICE" prefWidth="120.0" text="%PRICE" />
                         <JInvTableColumn fx:id="STOCK_QUANTITY" fieldName="STOCK_QUANTITY" prefWidth="130.0" text="%STOCK_QUANTITY" />
                     </columns>
                 </JInvTable>
-                <AnchorPane prefHeight="355.0" prefWidth="350.0">
-                   <children>
-                      <Label layoutX="121.0" layoutY="21.0" text="Категория" />
-                      <TextField fx:id="categoryField" layoutX="75.0" layoutY="38.0" prefHeight="27.0" prefWidth="152.0">
-                     <padding>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </padding></TextField>
-                      <TextField fx:id="firstNameField" layoutX="77.0" layoutY="80.0" />
-                      <Label layoutX="118.0" layoutY="63.0" prefHeight="17.0" prefWidth="63.0" text="Поставщик" />
-                      <TextField fx:id="lastNameField" layoutX="77.0" layoutY="105.0" />
-                      <TextField fx:id="emailField" layoutX="78.0" layoutY="147.0" />
-                      <TextField fx:id="phoneField" layoutX="79.0" layoutY="195.0" />
-                      <Label layoutX="131.0" layoutY="130.0" prefHeight="17.0" prefWidth="36.0" text="EMAIL" />
-                      <Label layoutX="129.0" layoutY="178.0" prefHeight="17.0" prefWidth="48.0" text="Телефон" />
-                   </children>
-               <padding>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </padding>
-                </AnchorPane>
+            <AnchorPane prefHeight="355.0" prefWidth="351.0">
+               <children>
+                  <VBox alignment="TOP_CENTER" layoutX="91.0" layoutY="40.0" spacing="5.0">
+                     <children>
+                        <Label text="Категория" />
+                        <TextField fx:id="categoryField" prefHeight="27.0" prefWidth="152.0">
+                           <padding>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </padding>
+                        </TextField>
+                        <Label prefHeight="17.0" prefWidth="63.0" text="Поставщик" />
+                        <TextField fx:id="firstNameField" />
+                        <Label prefHeight="17.0" prefWidth="36.0" text="EMAIL" />
+                        <TextField fx:id="emailField" />
+                        <Label prefHeight="17.0" prefWidth="48.0" text="Телефон" />
+                        <TextField fx:id="phoneField" />
+                     </children>
+                  </VBox>
+               </children>
+            </AnchorPane>
             </children>             
         </HBox>          
     </children>
