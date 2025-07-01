@@ -83,7 +83,7 @@ public class EditProductDimController extends JInvFXFormController <PProductDim>
         stage.close();
     }
     
-    private void populateBooksComboBox() {
+    private void SupplersBooksComboBox() {
         Set<String> uniqueSuppliers = new LinkedHashSet<>();
         List<PSuppliersDim> findOfUsers = new ArrayList<>();// LinkedHashSet сохраняет порядок
         for (PSuppliersDim supplier : dsSupplierSet.getRows()) 
@@ -113,6 +113,7 @@ public class EditProductDimController extends JInvFXFormController <PProductDim>
                 }       
                 productSuppliersComboBox.getItems().clear();
                 productSuppliersComboBox.getItems().setAll(uniqueSuppliers);
+                productSuppliersComboBox.show();
 
                 // Показываем выпадающий список при вводе
                 if (newVal.isEmpty()) {
@@ -131,7 +132,59 @@ public class EditProductDimController extends JInvFXFormController <PProductDim>
         if (!productSuppliersComboBox.getItems().isEmpty()) {
             productSuppliersComboBox.getSelectionModel().selectFirst();
         }
-   } 
+    } 
+
+
+    private void CategoryBooksComboBox() {
+        Set<String> uniqueSuppliers = new LinkedHashSet<>();
+        List<PCategoryDim> findOfUsers = new ArrayList<>();// LinkedHashSet сохраняет порядок
+        for (PCategoryDim category : dsPCategorySet.getRows()) 
+            findOfUsers.add(category);
+        productCategoryComboBox.setEditable(true);
+        productCategoryComboBox.getEditor().textProperty().addListener((obs, oldVal, newVal) -> {
+            if (!productCategoryComboBox.getItems().contains(newVal)) {
+                if (!uniqueSuppliers.isEmpty())
+                    uniqueSuppliers.clear();
+                int count = 0;
+                for (PCategoryDim category : dsPCategorySet.getRows()) {
+                    for (char item : newVal.toCharArray()) {
+                        if (item == (category.getCATEGORY_NAME().charAt(count))) {
+                            if (count < newVal.length()) {
+                                count++;
+                                if (count == (newVal.length())) {
+                                    uniqueSuppliers.add(category.getCATEGORY_NAME());
+                                    count = 0;
+                                }
+                            }
+                        }
+                        else {
+                            count = 0;
+                            break;
+                        }
+                    }
+                }       
+                productCategoryComboBox.getItems().clear();
+                productCategoryComboBox.getItems().setAll(uniqueSuppliers);
+                productCategoryComboBox.show();
+
+                // Показываем выпадающий список при вводе
+                if (newVal.isEmpty()) {
+                    productCategoryComboBox.getItems().clear();
+                    uniqueSuppliers.clear();
+                    for (PCategoryDim category : findOfUsers){
+                        uniqueSuppliers.add(category.getCATEGORY_NAME());
+                    }
+                    productCategoryComboBox.getItems().addAll(uniqueSuppliers);                                
+                    productCategoryComboBox.show();
+                }
+            }
+        });
+
+        // Устанавливаем первое значение по умолчанию, если список не пуст
+        if (!productSuppliersComboBox.getItems().isEmpty()) {
+            productSuppliersComboBox.getSelectionModel().selectFirst();
+        }
+    } 
     
     @Override
     protected void init () throws Exception 
@@ -150,7 +203,8 @@ public class EditProductDimController extends JInvFXFormController <PProductDim>
         }
         else productComboBox();
         categoryComboBox();
-        populateBooksComboBox(); 
+        SupplersBooksComboBox();
+        CategoryBooksComboBox();
         super.init (); 
     }       
     
