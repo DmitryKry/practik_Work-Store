@@ -176,7 +176,6 @@ public class ViewProductDimController extends JInvFXBrowserController
                 .initProperties (getInitProperties ())
                 .callback (this::doFormResult)    
                 .doModal ();
-        doRefresh();
     }
 //
 // doFormResult 

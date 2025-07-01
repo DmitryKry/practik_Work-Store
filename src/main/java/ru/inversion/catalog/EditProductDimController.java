@@ -13,6 +13,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
 import ru.inversion.dataset.XXIDataSet;
@@ -34,6 +35,7 @@ public class EditProductDimController extends JInvFXFormController <PProductDim>
 
     @FXML private ComboBox<String> productCategoryComboBox;
     @FXML private ComboBox<String> productSuppliersComboBox;
+    private boolean cheakBox;
     private List<PSuppliersDim> supplierses;
     private List<PCategoryDim> categores;
 //
@@ -54,6 +56,7 @@ public class EditProductDimController extends JInvFXFormController <PProductDim>
     }
     
     @FXML public void onOk() {
+        cheakBox = true;
         try {
             PSuppliersDim SupplersOnly = supplierses.stream()
                     .filter(s -> (s.getFIRST_NAME() + " " + s.getLAST_NAME())
@@ -80,6 +83,56 @@ public class EditProductDimController extends JInvFXFormController <PProductDim>
         stage.close();
     }
     
+    private void populateBooksComboBox() {
+        Set<String> uniqueSuppliers = new LinkedHashSet<>();
+        List<PSuppliersDim> findOfUsers = new ArrayList<>();// LinkedHashSet сохраняет порядок
+        for (PSuppliersDim supplier : dsSupplierSet.getRows()) 
+            findOfUsers.add(supplier);
+        productSuppliersComboBox.setEditable(true);
+        productSuppliersComboBox.getEditor().textProperty().addListener((obs, oldVal, newVal) -> {
+            if (!productSuppliersComboBox.getItems().contains(newVal)) {
+                if (!uniqueSuppliers.isEmpty())
+                    uniqueSuppliers.clear();
+                int count = 0;
+                for (PSuppliersDim suppliers : dsSupplierSet.getRows()) {
+                    for (char item : newVal.toCharArray()) {
+                        if (item == (suppliers.getFIRST_NAME() + " " + suppliers.getLAST_NAME()).charAt(count)) {
+                            if (count < newVal.length()) {
+                                count++;
+                                if (count == (newVal.length())) {
+                                    uniqueSuppliers.add(suppliers.getFIRST_NAME() + " " + suppliers.getLAST_NAME());
+                                    count = 0;
+                                }
+                            }
+                        }
+                        else {
+                            count = 0;
+                            break;
+                        }
+                    }
+                }       
+                productSuppliersComboBox.getItems().clear();
+                productSuppliersComboBox.getItems().setAll(uniqueSuppliers);
+
+                // Показываем выпадающий список при вводе
+                if (newVal.isEmpty()) {
+                    productSuppliersComboBox.getItems().clear();
+                    uniqueSuppliers.clear();
+                    for (PSuppliersDim supplierItem : findOfUsers){
+                        uniqueSuppliers.add(supplierItem.getFIRST_NAME() + " " + supplierItem.getLAST_NAME());
+                    }
+                    productSuppliersComboBox.getItems().addAll(uniqueSuppliers);                                
+                    productSuppliersComboBox.show();
+                }
+            }
+        });
+
+        // Устанавливаем первое значение по умолчанию, если список не пуст
+        if (!productSuppliersComboBox.getItems().isEmpty()) {
+            productSuppliersComboBox.getSelectionModel().selectFirst();
+        }
+   } 
+    
     @Override
     protected void init () throws Exception 
     {
@@ -97,6 +150,7 @@ public class EditProductDimController extends JInvFXFormController <PProductDim>
         }
         else productComboBox();
         categoryComboBox();
+        populateBooksComboBox(); 
         super.init (); 
     }       
     
