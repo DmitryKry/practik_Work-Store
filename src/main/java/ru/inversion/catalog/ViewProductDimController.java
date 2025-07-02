@@ -37,7 +37,7 @@ public class ViewProductDimController extends JInvFXBrowserController
     @FXML private TextField firstNameField;
     @FXML private TextField phoneField;
     @FXML private TextField emailField;
-    
+    private Thread thread;
  
    
     private final XXIDataSet<PProductDim> dsPRODUCT_DIM = new XXIDataSet<> ();    
@@ -78,6 +78,23 @@ public class ViewProductDimController extends JInvFXBrowserController
             }
         });
         doRefresh();
+        
+        forDorefresh.setProductCheak(false);
+        thread = new Thread(() -> {
+            while (!Thread.currentThread().isInterrupted()){
+                if (forDorefresh.getProductCheak()){
+                    doRefresh ();
+                    forDorefresh.setProductCheak(false);
+                }
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(ViewProductDimController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            
+        });
+        thread.start();
     }
     
     private void updateTextFields(PProductDim selectSuppliers){
@@ -206,6 +223,10 @@ public class ViewProductDimController extends JInvFXBrowserController
     
     @FXML
     private void load_suppliers(ActionEvent event){
+        if (thread != null) {
+            thread.interrupt();  // Посылаем сигнал прерывания
+            thread = null;
+        }
         new FXFormLauncher<>(this, ViewSuppliersDimController.class)
                 .initProperties(getInitProperties())
                 .doModal();
@@ -214,6 +235,10 @@ public class ViewProductDimController extends JInvFXBrowserController
     
     @FXML
     private void load_product(ActionEvent event){
+        if (thread != null) {
+            thread.interrupt();  // Посылаем сигнал прерывания
+            thread = null;
+        }
         new FXFormLauncher<>(this, ViewProductDimController.class)
                 .initProperties(getInitProperties())
                 .doModal();
@@ -222,6 +247,10 @@ public class ViewProductDimController extends JInvFXBrowserController
     
     @FXML
     private void load_category(ActionEvent event){
+        if (thread != null) {
+            thread.interrupt();  // Посылаем сигнал прерывания
+            thread = null;
+        }
         new FXFormLauncher<>(this, ViewCategoryDimController.class)
                 .initProperties(getInitProperties())
                 .doModal();
@@ -230,6 +259,10 @@ public class ViewProductDimController extends JInvFXBrowserController
        
     @FXML
     private void load_store(ActionEvent event){
+        if (thread != null) {
+            thread.interrupt();  // Посылаем сигнал прерывания
+            thread = null;
+        }
         new FXFormLauncher<>(this, ViewStoreController.class)
                 .initProperties(getInitProperties())
                 .doModal();

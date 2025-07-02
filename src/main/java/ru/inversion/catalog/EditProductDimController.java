@@ -82,6 +82,7 @@ public class EditProductDimController extends JInvFXFormController <PProductDim>
         }
         Stage stage = (Stage) PRODUCT_NAME.getScene().getWindow();
         stage.close();
+        forDorefresh.setProductCheak(true);
         return true;
     }
     

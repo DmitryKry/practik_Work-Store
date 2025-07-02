@@ -62,8 +62,9 @@ public class ViewCategoryDimController extends JInvFXBrowserController
         CATEGORY_DIM.setAction (ActionFactory.ActionTypeEnum.UPDATE, (a) -> doOperation (FormModeEnum.VM_EDIT));
         CATEGORY_DIM.setAction (ActionFactory.ActionTypeEnum.DELETE, (a) -> doOperation (FormModeEnum.VM_DEL));
         CATEGORY_DIM.setAction (ActionFactory.ActionTypeEnum.REFRESH, (a) -> doRefresh ());
-
+       
         doRefresh ();
+        
     }        
 //
 // doRefresh
