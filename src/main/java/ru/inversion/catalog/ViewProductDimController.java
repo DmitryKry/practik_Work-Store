@@ -1,5 +1,4 @@
 package ru.inversion.catalog;
-import DAO.SQLProductDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import ru.inversion.dataset.IDataSet;
@@ -84,6 +83,7 @@ public class ViewProductDimController extends JInvFXBrowserController
             while (!Thread.currentThread().isInterrupted()){
                 if (forDorefresh.getProductCheak()){
                     doRefresh ();
+                    
                     forDorefresh.setProductCheak(false);
                 }
                 try {

@@ -168,6 +168,7 @@ public class ViewSuppliersDimController extends JInvFXBrowserController
                 break;
             case VM_EDIT:
                 p = SUPPLIERS_DIM.getSelectionModel().getSelectedItem();
+                break;
             case VM_SHOW:
             case VM_DEL:
                 dsSUPPLIERS_DIM.getCurrentRow ();

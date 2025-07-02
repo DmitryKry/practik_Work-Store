@@ -37,17 +37,34 @@ public class EditSuppliersDimController extends JInvFXFormController <PSuppliers
     }    
 
     @FXML public void onOk() {
-        try {         
-            new ParamMap()
-                    .add("s_first_name", FIRST_NAME.getText())
-                    .add("s_last_name", LAST_NAME.getText())
-                    .add("s_patronymic", PATRONYMIC.getText())
-                    .add("s_mail", MAIL.getText())
-                    .add("s_phone", PHONE.getText())
-                    .exec(this, "addSuppliersNew");
-        } catch (SQLExpressionException ex) {
-            Logger.getLogger(EditProductDimController.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println(ex.getMessage());
+        if (dataObject != null){
+            try {         
+                new ParamMap()
+                        .add("s_id", dataObject.getID())
+                        .add("s_first_name", FIRST_NAME.getText())
+                        .add("s_last_name", LAST_NAME.getText())
+                        .add("s_patronymic", PATRONYMIC.getText())
+                        .add("s_mail", MAIL.getText())
+                        .add("s_phone", PHONE.getText())
+                        .exec(this, "updateSuppliersNew");
+            } catch (SQLExpressionException ex) {
+                Logger.getLogger(EditProductDimController.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println(ex.getMessage());
+            }        
+        }
+        else {
+            try {         
+                new ParamMap()
+                        .add("s_first_name", FIRST_NAME.getText())
+                        .add("s_last_name", LAST_NAME.getText())
+                        .add("s_patronymic", PATRONYMIC.getText())
+                        .add("s_mail", MAIL.getText())
+                        .add("s_phone", PHONE.getText())
+                        .exec(this, "addSuppliersNew");
+            } catch (SQLExpressionException ex) {
+                Logger.getLogger(EditProductDimController.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println(ex.getMessage());
+            }
         }
         Stage stage = (Stage) FIRST_NAME.getScene().getWindow();
         stage.close();

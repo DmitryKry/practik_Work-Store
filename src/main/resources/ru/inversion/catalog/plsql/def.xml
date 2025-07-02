@@ -20,6 +20,22 @@ and open the template in the editor.
         ]]></script>
     </expression>
     
+    <expression name="updateSuppliersNew" lang="PL/SQL">
+        <script><![CDATA[
+            DECLARE 
+            BEGIN
+                SUPPLIERS_DIM_PKG.update_suppliers_new(
+                    :s_id,
+                    :s_first_name,
+                    :s_last_name,
+                    :s_patronymic,
+                    :s_mail,
+                    :s_phone
+            );
+            END;
+        ]]></script>
+    </expression>
+    
     <expression name="addNewProduct" lang="PL/SQL">
         <script><![CDATA[
             DECLARE 
