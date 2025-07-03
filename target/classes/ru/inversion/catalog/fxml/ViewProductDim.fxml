@@ -3,56 +3,68 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import ru.inversion.fx.form.controls.JInvTable?>
 <?import ru.inversion.fx.form.controls.JInvTableColumn?>
 <?import ru.inversion.fx.form.controls.JInvTableColumnMoney?>
 <?import ru.inversion.fx.form.controls.JInvToolBar?>
-
-<VBox prefHeight="400.0" prefWidth="800.0" spacing="5.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.inversion.catalog.ViewProductDimController">
-    <children>
-        <HBox prefHeight="100.0" prefWidth="200.0">
-            <children>
-                <Button mnemonicParsing="false" onAction="#load_store" text="Магазины" />
-                <Button mnemonicParsing="false" onAction="#load_suppliers" text="Поставщики" />
-                <Button mnemonicParsing="false" onAction="#load_product" text="Товары" />
-                <Button mnemonicParsing="false" onAction="#load_category" text="Категории на товары" />
-             </children>             
-        </HBox>
-        <JInvToolBar fx:id="toolBar" />
-        <HBox prefHeight="466.0" prefWidth="800.0">
-            <children>
-                <JInvTable fx:id="PRODUCT_DIM" prefHeight="355.0" prefWidth="486.0" tableMenuButtonVisible="true">
-                    <columns>
-                        <JInvTableColumn fx:id="PRODUCT_NAME" fieldName="PRODUCT_NAME" prefWidth="150.0" text="%PRODUCT_NAME" />
-                        <JInvTableColumnMoney fx:id="PRICE" fieldName="PRICE" prefWidth="120.0" text="%PRICE" />
-                        <JInvTableColumn fx:id="STOCK_QUANTITY" fieldName="STOCK_QUANTITY" prefWidth="130.0" text="%STOCK_QUANTITY" />
-                    </columns>
-                </JInvTable>
-            <AnchorPane prefHeight="355.0" prefWidth="351.0">
-               <children>
-                  <VBox alignment="TOP_CENTER" layoutX="91.0" layoutY="40.0" spacing="5.0">
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.layout.BorderPane?>
+<BorderPane xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.inversion.catalog.ViewProductDimController" fx:id="rootPane">
+   <center>
+      <VBox prefHeight="400.0" prefWidth="800.0" spacing="5.0" BorderPane.alignment="CENTER">
+          <children>
+              <HBox prefHeight="100.0" prefWidth="200.0">
+                  <children>
+                      <Button mnemonicParsing="false" onAction="#load_store" text="Магазины" />
+                      <Button mnemonicParsing="false" onAction="#load_suppliers" text="Поставщики" />
+                      <Button mnemonicParsing="false" onAction="#load_product" text="Товары" />
+                      <Button mnemonicParsing="false" onAction="#load_category" text="Категории на товары" />
+                   </children>             
+              </HBox>
+              <JInvToolBar fx:id="toolBar" />
+              <HBox prefHeight="466.0" prefWidth="800.0" VBox.vgrow="ALWAYS" >
+                  <children>
+                      <JInvTable fx:id="PRODUCT_DIM" prefHeight="355.0" prefWidth="486.0" tableMenuButtonVisible="true" HBox.hgrow="ALWAYS">
+                          <columns>
+                              <JInvTableColumn fx:id="PRODUCT_NAME" fieldName="PRODUCT_NAME" prefWidth="150.0" text="%PRODUCT_NAME" />
+                              <JInvTableColumnMoney fx:id="PRICE" fieldName="PRICE" prefWidth="120.0" text="%PRICE" />
+                              <JInvTableColumn fx:id="STOCK_QUANTITY" fieldName="STOCK_QUANTITY" prefWidth="130.0" text="%STOCK_QUANTITY" />
+                          </columns>
+                          <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                          </columnResizePolicy>
+                      </JInvTable>
+                  <AnchorPane prefHeight="355.0" prefWidth="351.0">
                      <children>
-                        <Label text="Категория" />
-                        <TextField fx:id="categoryField" prefHeight="27.0" prefWidth="152.0">
-                           <padding>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                           </padding>
-                        </TextField>
-                        <Label prefHeight="17.0" prefWidth="63.0" text="Поставщик" />
-                        <TextField fx:id="firstNameField" />
-                        <Label prefHeight="17.0" prefWidth="36.0" text="EMAIL" />
-                        <TextField fx:id="emailField" />
-                        <Label prefHeight="17.0" prefWidth="48.0" text="Телефон" />
-                        <TextField fx:id="phoneField" />
+                        <VBox alignment="TOP_CENTER" layoutX="91.0" layoutY="40.0" spacing="5.0">
+                           <children>
+                              <Label text="Категория" />
+                              <TextField fx:id="categoryField" prefHeight="27.0" prefWidth="152.0">
+                                 <padding>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </padding>
+                              </TextField>
+                              <Label prefHeight="17.0" prefWidth="63.0" text="Поставщик" />
+                              <TextField fx:id="firstNameField" />
+                              <Label prefHeight="17.0" prefWidth="36.0" text="EMAIL" />
+                              <TextField fx:id="emailField" />
+                              <Label prefHeight="17.0" prefWidth="48.0" text="Телефон" />
+                              <TextField fx:id="phoneField" />
+                           </children>
+                        </VBox>
                      </children>
-                  </VBox>
-               </children>
-            </AnchorPane>
-            </children>             
-        </HBox>          
-    </children>
-</VBox>
+                  </AnchorPane>
+                  </children>             
+              </HBox>          
+          </children>
+      </VBox>
+   </center>
+</BorderPane>

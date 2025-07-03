@@ -10,43 +10,56 @@
 <?import ru.inversion.fx.form.controls.JInvTableColumn?>
 <?import ru.inversion.fx.form.controls.JInvTableColumnDate?>
 <?import ru.inversion.fx.form.controls.JInvToolBar?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.layout.BorderPane?>
 
-<VBox prefHeight="400.0" prefWidth="800.0" spacing="5.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.inversion.catalog.ViewStoreController">
-<children>
-      <HBox prefHeight="100.0" prefWidth="200.0">
-         <children>
-            <Button mnemonicParsing="false" onAction="#load_store" text="Магазины" />
-            <Button mnemonicParsing="false" onAction="#load_suppliers" text="Поставщики" />
-            <Button mnemonicParsing="false" onAction="#load_product" text="Товары" />
-            <Button mnemonicParsing="false" onAction="#load_category" text="Категории на товары" />          
-         </children>
-      </HBox>
-<JInvToolBar fx:id="toolBar" />
-      <HBox prefHeight="523.0" prefWidth="800.0">
-         <children>
-      <JInvTable fx:id="Pstore_table" prefHeight="192.0" prefWidth="559.0" tableMenuButtonVisible="true">
-      <columns>
-      <JInvTableColumn fx:id="ADDRESS" fieldName="ADDRESS" prefWidth="147.0" text="%ADDRESS" />
-      <JInvTableColumn fx:id="NAME_STORE" fieldName="NAME_STORE" minWidth="0.0" prefWidth="151.0" text="%NAME_STORE" />
-      <JInvTableColumnDate fx:id="DATE_OPEN_STORE" fieldName="DATE_OPEN_STORE" minWidth="0.0" prefWidth="200.0" text="%DATE_OPEN_STORE" />
-      </columns>
-      </JInvTable>
-            <AnchorPane prefHeight="355.0" prefWidth="241.0">
-               <children>
-                  <TextField fx:id="timeOpenField" layoutX="46.0" layoutY="48.0" />
-                  <Label layoutX="76.0" layoutY="31.0" text="Время открытия" />
-                  <Label layoutX="77.0" layoutY="73.0" text="Время закрытия" />
-                  <TextField fx:id="timeCloseField" layoutX="47.0" layoutY="90.0" />
-                  <Label layoutX="95.0" layoutY="115.0" text="Владелец" />
-                  <TextField fx:id="firstNameField" layoutX="47.0" layoutY="132.0" />
-                  <TextField fx:id="secondNameField" layoutX="47.0" layoutY="157.0" />
-                  <TextField fx:id="lastNameField" layoutX="47.0" layoutY="182.0" />
-                  <Label layoutX="96.0" layoutY="207.0" text="Контакты" />
-                  <TextField fx:id="phoneField" layoutX="48.0" layoutY="224.0" />
-                  <TextField fx:id="emailField" layoutX="48.0" layoutY="249.0" />
-               </children>
-            </AnchorPane>
-         </children>
-      </HBox>
-</children>
-</VBox>
+<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" 
+            fx:controller="ru.inversion.catalog.ViewStoreController" fx:id="rootPane">
+    <center>
+        <VBox prefHeight="400.0" prefWidth="800.0" spacing="5.0">
+            <children>
+                <HBox prefHeight="100.0" prefWidth="200.0">
+                    <children>
+                        <Button mnemonicParsing="false" onAction="#load_store" text="Магазины" />
+                        <Button mnemonicParsing="false" onAction="#load_suppliers" text="Поставщики" />
+                        <Button mnemonicParsing="false" onAction="#load_product" text="Товары" />
+                        <Button mnemonicParsing="false" onAction="#load_category" text="Категории на товары" />          
+                    </children>
+                </HBox>
+                <JInvToolBar fx:id="toolBar" />
+                <HBox prefHeight="523.0" prefWidth="800.0" VBox.vgrow="ALWAYS">
+                    <children>
+                        <JInvTable fx:id="Pstore_table" prefHeight="192.0" prefWidth="559.0" 
+                                  tableMenuButtonVisible="true" HBox.hgrow="ALWAYS">
+                            <columns>
+                                <JInvTableColumn fx:id="ADDRESS" fieldName="ADDRESS" prefWidth="147.0" text="%ADDRESS" />
+                                <JInvTableColumn fx:id="NAME_STORE" fieldName="NAME_STORE" minWidth="0.0" prefWidth="151.0" text="%NAME_STORE" />
+                                <JInvTableColumnDate fx:id="DATE_OPEN_STORE" fieldName="DATE_OPEN_STORE" minWidth="0.0" prefWidth="200.0" text="%DATE_OPEN_STORE" />
+                            </columns>
+                            <columnResizePolicy>
+                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                            </columnResizePolicy> 
+                        </JInvTable>
+                        <AnchorPane prefHeight="355.0" prefWidth="241.0" HBox.hgrow="NEVER">
+                            <children>
+                                <TextField fx:id="timeOpenField" layoutX="46.0" layoutY="48.0" />
+                                <Label layoutX="76.0" layoutY="31.0" text="Время открытия" />
+                                <Label layoutX="77.0" layoutY="73.0" text="Время закрытия" />
+                                <TextField fx:id="timeCloseField" layoutX="47.0" layoutY="90.0" />
+                                <Label layoutX="95.0" layoutY="115.0" text="Владелец" />
+                                <TextField fx:id="firstNameField" layoutX="47.0" layoutY="132.0" />
+                                <TextField fx:id="secondNameField" layoutX="47.0" layoutY="157.0" />
+                                <TextField fx:id="lastNameField" layoutX="47.0" layoutY="182.0" />
+                                <Label layoutX="96.0" layoutY="207.0" text="Контакты" />
+                                <TextField fx:id="phoneField" layoutX="48.0" layoutY="224.0" />
+                                <TextField fx:id="emailField" layoutX="48.0" layoutY="249.0" />
+                            </children>
+                        </AnchorPane>
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+    </center>
+</BorderPane>

@@ -7,25 +7,35 @@
 <?import ru.inversion.fx.form.controls.JInvTable?>
 <?import ru.inversion.fx.form.controls.JInvTableColumn?>
 <?import ru.inversion.fx.form.controls.JInvToolBar?>
-
-<VBox prefHeight="400.0" prefWidth="800.0" spacing="5.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.inversion.catalog.ViewCategoryDimController">
-<children>
-      <HBox prefHeight="100.0" prefWidth="200.0">
-         <children>
-            <Button mnemonicParsing="false" onAction="#load_store" text="Магазины" />
-            <Button mnemonicParsing="false" onAction="#load_suppliers" text="Поставщики" />
-            <Button mnemonicParsing="false" onAction="#load_product" text="Товары" />
-            <Button mnemonicParsing="false" onAction="#load_category" text="Категории на товары" />     
-         </children>
-      </HBox>
-<JInvToolBar fx:id="toolBar" />
-<JInvTable fx:id="CATEGORY_DIM" tableMenuButtonVisible="true" VBox.vgrow="ALWAYS">
-<columns>
-<JInvTableColumn fx:id="CATEGORY_NAME" fieldName="CATEGORY_NAME" prefWidth="773.0" text="%CATEGORY_NAME" />
-</columns>
-<VBox.margin>
-<Insets bottom="5.0" left="5.0" right="5.0" />
-</VBox.margin>
-</JInvTable>
-</children>
-</VBox>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.layout.BorderPane?>
+<BorderPane xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.inversion.catalog.ViewCategoryDimController" fx:id="rootPane">
+    <center>
+        <VBox prefHeight="400.0" prefWidth="800.0" spacing="5.0">
+        <children>
+              <HBox prefHeight="100.0" prefWidth="200.0">
+                 <children>
+                    <Button mnemonicParsing="false" onAction="#load_store" text="Магазины" />
+                    <Button mnemonicParsing="false" onAction="#load_suppliers" text="Поставщики" />
+                    <Button mnemonicParsing="false" onAction="#load_product" text="Товары" />
+                    <Button mnemonicParsing="false" onAction="#load_category" text="Категории на товары" />     
+                 </children>
+              </HBox>
+        <JInvToolBar fx:id="toolBar" />
+        <JInvTable fx:id="CATEGORY_DIM" tableMenuButtonVisible="true" VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS">
+        <columns>
+            <JInvTableColumn fx:id="CATEGORY_NAME" fieldName="CATEGORY_NAME" prefWidth="773.0" text="%CATEGORY_NAME" />
+        </columns>
+        <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+        </columnResizePolicy>                          
+        <VBox.margin>
+        <Insets bottom="5.0" left="5.0" right="5.0" />
+        </VBox.margin>
+        </JInvTable>
+        </children>
+        </VBox>
+    </center>
+</BorderPane>

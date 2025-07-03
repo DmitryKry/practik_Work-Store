@@ -6,6 +6,9 @@ import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Screen;
+import javafx.stage.Stage;
 import ru.inversion.dataset.IDataSet;
 import ru.inversion.dataset.XXIDataSet;
 import ru.inversion.dataset.fx.DSFXAdapter;
@@ -35,6 +38,7 @@ public class ViewSuppliersDimController extends JInvFXBrowserController
     @FXML private JInvToolBar toolBar;
     @FXML private TextField EMAILField;
     @FXML private TextField PhoneField;
+    @FXML private BorderPane rootPane;
     private static List<PSuppliersDim> supplersList;
     private Thread thread;
  
@@ -55,12 +59,34 @@ public class ViewSuppliersDimController extends JInvFXBrowserController
         dsSUPPLIERS_DIM.setTaskContext (getTaskContext ());
         dsSUPPLIERS_DIM.setRowClass (PSuppliersDim.class);
     }
+    
+    private void centerStage(Stage stage) {
+        // Получаем размеры экрана
+        double screenWidth = Screen.getPrimary().getVisualBounds().getWidth();
+        double screenHeight = Screen.getPrimary().getVisualBounds().getHeight();
+        
+        // Вычисляем координаты для центрирования
+        double x = (screenWidth - stage.getWidth()) / 2;
+        double y = (screenHeight - stage.getHeight()) / 2;
+        
+        // Устанавливаем позицию
+        stage.setX(x);
+        stage.setY(y);
+    }
 //
 // Initializes the controller class.
 //
     @Override
     protected void init() throws Exception
     {
+        Stage stage = (Stage) rootPane.getScene().getWindow();
+        
+        // Устанавливаем начальный размер окна
+        stage.setWidth(800);  // Ширина
+        stage.setHeight(400); // Высота
+        
+        // Центрируем окно на экране
+        centerStage(stage);
         setTitle (getBundleString ("VIEW.TITLE"));
         
         initDataSet ();

@@ -23,6 +23,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import ru.inversion.bicomp.util.ParamMap;
 import ru.inversion.db.expr.SQLExpressionException;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
+import javafx.stage.Screen;
 /**
  *
  * @author  admin
@@ -36,6 +39,7 @@ public class ViewProductDimController extends JInvFXBrowserController
     @FXML private TextField firstNameField;
     @FXML private TextField phoneField;
     @FXML private TextField emailField;
+    @FXML private BorderPane rootPane;
     private Thread thread;
  
    
@@ -49,12 +53,34 @@ public class ViewProductDimController extends JInvFXBrowserController
         dsPRODUCT_DIM.setRowClass (PProductDim.class);
     }
     
+    private void centerStage(Stage stage) {
+        // Получаем размеры экрана
+        double screenWidth = Screen.getPrimary().getVisualBounds().getWidth();
+        double screenHeight = Screen.getPrimary().getVisualBounds().getHeight();
+        
+        // Вычисляем координаты для центрирования
+        double x = (screenWidth - stage.getWidth()) / 2;
+        double y = (screenHeight - stage.getHeight()) / 2;
+        
+        // Устанавливаем позицию
+        stage.setX(x);
+        stage.setY(y);
+    }
+    
 //
 // Initializes the controller class.
 //
     @Override
     protected void init() throws Exception
     {
+        Stage stage = (Stage) rootPane.getScene().getWindow();
+        
+        // Устанавливаем начальный размер окна
+        stage.setWidth(800);  // Ширина
+        stage.setHeight(400); // Высота
+        
+        // Центрируем окно на экране
+        centerStage(stage);
         setTitle (getBundleString ("VIEW.TITLE"));
         initDataSet ();
         DSFXAdapter<PProductDim> dsfx = DSFXAdapter.bind (dsPRODUCT_DIM, PRODUCT_DIM, null, false); 

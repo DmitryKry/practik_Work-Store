@@ -2,6 +2,9 @@ package ru.inversion.catalog;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Screen;
+import javafx.stage.Stage;
 import ru.inversion.dataset.IDataSet;
 import ru.inversion.dataset.XXIDataSet;
 import ru.inversion.dataset.fx.DSFXAdapter;
@@ -27,7 +30,7 @@ public class ViewCategoryDimController extends JInvFXBrowserController
 {
     @FXML private JInvTable<PCategoryDim> CATEGORY_DIM;   
     @FXML private JInvToolBar toolBar;
-
+    @FXML private BorderPane rootPane;
  
    
     private final XXIDataSet<PCategoryDim> dsCATEGORY_DIM = new XXIDataSet<> ();    
@@ -39,12 +42,34 @@ public class ViewCategoryDimController extends JInvFXBrowserController
         dsCATEGORY_DIM.setTaskContext (getTaskContext ());
         dsCATEGORY_DIM.setRowClass (PCategoryDim.class);
     }
+    
+    private void centerStage(Stage stage) {
+        // Получаем размеры экрана
+        double screenWidth = Screen.getPrimary().getVisualBounds().getWidth();
+        double screenHeight = Screen.getPrimary().getVisualBounds().getHeight();
+        
+        // Вычисляем координаты для центрирования
+        double x = (screenWidth - stage.getWidth()) / 2;
+        double y = (screenHeight - stage.getHeight()) / 2;
+        
+        // Устанавливаем позицию
+        stage.setX(x);
+        stage.setY(y);
+    }
 //
 // Initializes the controller class.
 //
     @Override
     protected void init() throws Exception
     {
+        Stage stage = (Stage) rootPane.getScene().getWindow();
+        
+        // Устанавливаем начальный размер окна
+        stage.setWidth(800);  // Ширина
+        stage.setHeight(400); // Высота
+        
+        // Центрируем окно на экране
+        centerStage(stage);
         setTitle (getBundleString ("VIEW.TITLE"));
         
         initDataSet ();
