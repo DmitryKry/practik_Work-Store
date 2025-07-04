@@ -76,11 +76,11 @@ public class ViewProductDimController extends JInvFXBrowserController
         Stage stage = (Stage) rootPane.getScene().getWindow();
         
         // Устанавливаем начальный размер окна
-        stage.setWidth(800);  // Ширина
-        stage.setHeight(400); // Высота
+        //stage.setWidth(800);  // Ширина
+        //stage.setHeight(400); // Высота
         
         // Центрируем окно на экране
-        centerStage(stage);
+        //centerStage(stage);
         setTitle (getBundleString ("VIEW.TITLE"));
         initDataSet ();
         DSFXAdapter<PProductDim> dsfx = DSFXAdapter.bind (dsPRODUCT_DIM, PRODUCT_DIM, null, false); 

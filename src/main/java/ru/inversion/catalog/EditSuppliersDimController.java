@@ -37,7 +37,7 @@ public class EditSuppliersDimController extends JInvFXFormController <PSuppliers
     }    
 
     @FXML public void onOk() {
-        if (dataObject != null){
+        if (dataObject.getFIRST_NAME() != null){
             try {         
                 new ParamMap()
                         .add("s_id", dataObject.getID())
