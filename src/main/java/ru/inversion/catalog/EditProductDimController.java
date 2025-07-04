@@ -58,7 +58,6 @@ public class EditProductDimController extends JInvFXFormController <PProductDim>
     @Override
     public boolean onOK() {
         cheakBox = true;
-        this.getFXEntity().getBaseEntity();
         
         try {
             PSuppliersDim SupplersOnly = supplierses.stream()
@@ -81,11 +80,10 @@ public class EditProductDimController extends JInvFXFormController <PProductDim>
         } catch (SQLExpressionException ex) {
             Logger.getLogger(EditProductDimController.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println(ex.getMessage());
+            return  false;
         }
-        getDataObject().setFIRST_NAME(PROPERTY_NAME);
-        Stage stage = (Stage) PRODUCT_NAME.getScene().getWindow();
-        stage.close();
-        forDorefresh.setProductCheak(true);
+        getDataObject().setPRODUCT_NAME(PRODUCT_NAME.getText());
+        this.getFXEntity().commit();
         return true;
     }
     

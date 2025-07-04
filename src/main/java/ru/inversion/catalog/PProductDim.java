@@ -41,7 +41,7 @@ public class PProductDim implements Serializable
     public void setPRODUCT_ID(Long val) {
         PRODUCT_ID = val; 
     }
-    @Column(name="PRODUCT_NAME",nullable = false,length = 100)
+    @Column(name="PRODUCT_NAME",columnDefinition = "",nullable = false,length = 100)
     public String getPRODUCT_NAME() {
         return PRODUCT_NAME;
     }
