@@ -19,8 +19,12 @@ import ru.inversion.bicomp.action.StopExecuteActionBiCompException;
 import ru.inversion.bicomp.fxreport.ApReport;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import ru.inversion.bicomp.util.ParamMap;
 import ru.inversion.db.expr.SQLExpressionException;
 import javafx.scene.layout.BorderPane;
@@ -40,7 +44,6 @@ public class ViewProductDimController extends JInvFXBrowserController
     @FXML private TextField phoneField;
     @FXML private TextField emailField;
     @FXML private BorderPane rootPane;
-    private Thread thread;
  
    
     private final XXIDataSet<PProductDim> dsPRODUCT_DIM = new XXIDataSet<> ();    
@@ -104,23 +107,6 @@ public class ViewProductDimController extends JInvFXBrowserController
         });
         doRefresh();
         
-        forDorefresh.setProductCheak(false);
-        thread = new Thread(() -> {
-            while (!Thread.currentThread().isInterrupted()){
-                if (forDorefresh.getProductCheak()){
-                    doRefresh ();
-                    
-                    forDorefresh.setProductCheak(false);
-                }
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(ViewProductDimController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-            
-        });
-        thread.start();
     }
     
     private void updateTextFields(PProductDim selectSuppliers){
@@ -176,6 +162,23 @@ public class ViewProductDimController extends JInvFXBrowserController
 //
 // doOperation
 //    
+    
+    private boolean showErrorAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+
+        // Добавляем кастомные кнопки
+        ButtonType okButton = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
+        ButtonType cancelButton = new ButtonType("Отмена", ButtonBar.ButtonData.CANCEL_CLOSE);
+        alert.getButtonTypes().setAll(okButton, cancelButton);
+
+        // Ждём нажатия кнопки и возвращаем результат
+        Optional<ButtonType> result = alert.showAndWait();
+        return result.isPresent() && result.get() == okButton;
+    }
+    
     private void doOperation ( JInvFXFormController.FormModeEnum mode ) 
     {
         PProductDim p = null;
@@ -199,6 +202,8 @@ public class ViewProductDimController extends JInvFXBrowserController
             case VM_SHOW:
             case VM_DEL:
                 PProductDim selectProduct = PRODUCT_DIM.getSelectionModel().getSelectedItem();
+                boolean temp = showErrorAlert("Удалить", "Вы точно хотите удалить " + selectProduct.getPRODUCT_NAME());     
+                if (temp) {
                     try {
                         new ParamMap()
                                 .add("p_id", selectProduct.getPRODUCT_ID())
@@ -207,6 +212,7 @@ public class ViewProductDimController extends JInvFXBrowserController
                             Logger.getLogger(ViewProductDimController.class.getName()).log(Level.SEVERE, null, ex);
                         }  
                     doRefresh();
+                }
                 break;
         }
         if (p != null) 
@@ -236,23 +242,19 @@ public class ViewProductDimController extends JInvFXBrowserController
                     break;
                 case VM_DEL:
                     dsPRODUCT_DIM.removeCurrentRow ();      
-                    
+                    doRefresh ();
                     break;
                 default:
                     break;
             }               
         }
-        doRefresh ();
+        
 
         PRODUCT_DIM.requestFocus ();
     }        
     
     @FXML
     private void load_suppliers(ActionEvent event){
-        if (thread != null) {
-            thread.interrupt();  // Посылаем сигнал прерывания
-            thread = null;
-        }
         new FXFormLauncher<>(this, ViewSuppliersDimController.class)
                 .initProperties(getInitProperties())
                 .doModal();
@@ -261,10 +263,6 @@ public class ViewProductDimController extends JInvFXBrowserController
     
     @FXML
     private void load_product(ActionEvent event){
-        if (thread != null) {
-            thread.interrupt();  // Посылаем сигнал прерывания
-            thread = null;
-        }
         new FXFormLauncher<>(this, ViewProductDimController.class)
                 .initProperties(getInitProperties())
                 .doModal();
@@ -273,10 +271,6 @@ public class ViewProductDimController extends JInvFXBrowserController
     
     @FXML
     private void load_category(ActionEvent event){
-        if (thread != null) {
-            thread.interrupt();  // Посылаем сигнал прерывания
-            thread = null;
-        }
         new FXFormLauncher<>(this, ViewCategoryDimController.class)
                 .initProperties(getInitProperties())
                 .doModal();
@@ -285,10 +279,6 @@ public class ViewProductDimController extends JInvFXBrowserController
        
     @FXML
     private void load_store(ActionEvent event){
-        if (thread != null) {
-            thread.interrupt();  // Посылаем сигнал прерывания
-            thread = null;
-        }
         new FXFormLauncher<>(this, ViewStoreController.class)
                 .initProperties(getInitProperties())
                 .doModal();

@@ -13,11 +13,8 @@
 <?import ru.inversion.fx.form.controls.JInvTableColumn?>
 <?import ru.inversion.fx.form.controls.JInvTableColumnMoney?>
 <?import ru.inversion.fx.form.controls.JInvToolBar?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.layout.BorderPane?>
-<BorderPane xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.inversion.catalog.ViewProductDimController" fx:id="rootPane">
+
+<BorderPane fx:id="rootPane" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.inversion.catalog.ViewProductDimController">
    <center>
       <VBox prefHeight="400.0" prefWidth="800.0" spacing="5.0" BorderPane.alignment="CENTER">
           <children>
@@ -30,7 +27,7 @@
                    </children>             
               </HBox>
               <JInvToolBar fx:id="toolBar" />
-              <HBox prefHeight="466.0" prefWidth="800.0" VBox.vgrow="ALWAYS" >
+              <HBox prefHeight="466.0" prefWidth="800.0" VBox.vgrow="ALWAYS">
                   <children>
                       <JInvTable fx:id="PRODUCT_DIM" prefHeight="355.0" prefWidth="486.0" tableMenuButtonVisible="true" HBox.hgrow="ALWAYS">
                           <columns>
@@ -52,11 +49,11 @@
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                  </padding>
                               </TextField>
-                              <Label prefHeight="17.0" prefWidth="63.0" text="Поставщик" />
+                              <Label text="Поставщик" />
                               <TextField fx:id="firstNameField" />
-                              <Label prefHeight="17.0" prefWidth="36.0" text="EMAIL" />
+                              <Label text="EMAIL" />
                               <TextField fx:id="emailField" />
-                              <Label prefHeight="17.0" prefWidth="48.0" text="Телефон" />
+                              <Label text="Телефон" />
                               <TextField fx:id="phoneField" />
                            </children>
                         </VBox>

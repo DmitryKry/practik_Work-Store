@@ -15,6 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.layout.GridPane;
 import ru.inversion.dataset.XXIDataSet;
 import javafx.stage.Stage;
@@ -28,10 +29,10 @@ public class EditProductDimController extends JInvFXFormController <PProductDim>
 //
 //
 //    @FXML JInvLongField PRODUCT_ID;
-    @FXML JInvTextField PRODUCT_NAME;
+    @FXML private JInvTextField PRODUCT_NAME;
 //    @FXML JInvLongField CATEGORY;
-    @FXML JInvTextField PRICE;
-    @FXML JInvTextField STOCK_QUANTITY;
+    @FXML private JInvTextField PRICE;
+    @FXML private JInvTextField STOCK_QUANTITY;
 
     @FXML private ComboBox<String> productCategoryComboBox;
     @FXML private ComboBox<String> productSuppliersComboBox;
@@ -55,10 +56,23 @@ public class EditProductDimController extends JInvFXFormController <PProductDim>
         dsPCategorySet.setRowClass (PCategoryDim.class);
     }
     
+    private void showErrorAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    
     @Override
     public boolean onOK() {
         cheakBox = true;
-        
+        if (STOCK_QUANTITY.getText() == null){
+            showErrorAlert("Ошибка", "Поле 'Количество' обязательно для заполнения!");
+            STOCK_QUANTITY.requestFocus();
+            return false;
+        }
         try {
             PSuppliersDim SupplersOnly = supplierses.stream()
                     .filter(s -> (s.getFIRST_NAME() + " " + s.getLAST_NAME())
@@ -80,9 +94,8 @@ public class EditProductDimController extends JInvFXFormController <PProductDim>
         } catch (SQLExpressionException ex) {
             Logger.getLogger(EditProductDimController.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println(ex.getMessage());
-            return  false;
+            return false;
         }
-        getDataObject().setPRODUCT_NAME(PRODUCT_NAME.getText());
         this.getFXEntity().commit();
         return true;
     }

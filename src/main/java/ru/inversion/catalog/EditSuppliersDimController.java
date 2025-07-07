@@ -66,9 +66,7 @@ public class EditSuppliersDimController extends JInvFXFormController <PSuppliers
                 System.out.println(ex.getMessage());
             }
         }
-        Stage stage = (Stage) FIRST_NAME.getScene().getWindow();
-        stage.close();
-        forDorefresh.setSuppliersCheak(true);
+        this.getFXEntity().commit();
     }
 }
 
