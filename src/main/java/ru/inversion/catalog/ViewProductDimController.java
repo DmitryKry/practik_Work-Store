@@ -248,8 +248,7 @@ public class ViewProductDimController extends JInvFXBrowserController
                     break;
             }               
         }
-        
-
+        PRODUCT_DIM.getSelectionModel().clearSelection();
         PRODUCT_DIM.requestFocus ();
     }        
     

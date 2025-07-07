@@ -44,7 +44,6 @@ public class ViewSuppliersDimController extends JInvFXBrowserController
     @FXML private TextField PhoneField;
     @FXML private BorderPane rootPane;
     private static List<PSuppliersDim> supplersList;
-    private Thread thread;
  
     public List<PSuppliersDim> getSupllers(){
         for(PSuppliersDim item : SUPPLIERS_DIM.getItems()){
@@ -115,22 +114,6 @@ public class ViewSuppliersDimController extends JInvFXBrowserController
         });
         doRefresh();
         
-        forDorefresh.setSuppliersCheak(false);
-        thread = new Thread(() -> {
-            while (!Thread.currentThread().isInterrupted()){
-                if (forDorefresh.getSuppliersCheak()){
-                    doRefresh ();
-                    forDorefresh.setSuppliersCheak(false);
-                }
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(ViewProductDimController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-            
-        });
-        thread.start();
     }
     
     private void updateTextFields(PSuppliersDim selectSuppliers){
@@ -264,27 +247,27 @@ public class ViewSuppliersDimController extends JInvFXBrowserController
             {
                 case VM_INS:
                     dsSUPPLIERS_DIM.insertRow (dctl.getDataObject (), IDataSet.InsertRowModeEnum.AFTER_CURRENT, true);
+                    doRefresh();
                     break;
                 case VM_EDIT:                
                     dsSUPPLIERS_DIM.updateCurrentRow (dctl.getDataObject ());
+                    doRefresh();
                     break;
                 case VM_DEL:
                     dsSUPPLIERS_DIM.removeCurrentRow ();
+                    doRefresh();
                     break;
                 default:
                     break;
-            }                
-        }
-        doRefresh();
+            }    
+        }            
+
+        SUPPLIERS_DIM.getSelectionModel().clearSelection();
         SUPPLIERS_DIM.requestFocus ();
     }        
     
     @FXML
     private void load_suppliers(ActionEvent event){
-        if (thread != null) {
-            thread.interrupt();  // Посылаем сигнал прерывания
-            thread = null;
-        }
         new FXFormLauncher<>(this, ViewSuppliersDimController.class)
                 .initProperties(getInitProperties())
                 .doModal();
@@ -293,10 +276,6 @@ public class ViewSuppliersDimController extends JInvFXBrowserController
     
     @FXML
     private void load_product(ActionEvent event){
-        if (thread != null) {
-            thread.interrupt();  // Посылаем сигнал прерывания
-            thread = null;
-        }
         new FXFormLauncher<>(this, ViewProductDimController.class)
                 .initProperties(getInitProperties())
                 .doModal();
@@ -305,10 +284,6 @@ public class ViewSuppliersDimController extends JInvFXBrowserController
     
     @FXML
     private void load_category(ActionEvent event){
-        if (thread != null) {
-            thread.interrupt();  // Посылаем сигнал прерывания
-            thread = null;
-        }
         new FXFormLauncher<>(this, ViewCategoryDimController.class)
                 .initProperties(getInitProperties())
                 .doModal();
@@ -317,10 +292,6 @@ public class ViewSuppliersDimController extends JInvFXBrowserController
     
     @FXML
     private void load_store(ActionEvent event){
-        if (thread != null) {
-            thread.interrupt();  // Посылаем сигнал прерывания
-            thread = null;
-        }
         new FXFormLauncher<>(this, ViewStoreController.class)
                 .initProperties(getInitProperties())
                 .doModal();

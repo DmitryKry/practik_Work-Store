@@ -223,7 +223,7 @@ public class ViewStoreController extends JInvFXBrowserController
             }                
         }    
         doRefresh ();
-
+        Pstore_table.getSelectionModel().clearSelection();
         Pstore_table.requestFocus ();
     }    
 
