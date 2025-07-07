@@ -1,10 +1,14 @@
 package ru.inversion.catalog;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Screen;
@@ -175,6 +179,23 @@ public class ViewSuppliersDimController extends JInvFXBrowserController
 //
 // doOperation
 //    
+    
+    private boolean showErrorAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+
+        // Добавляем кастомные кнопки
+        ButtonType okButton = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
+        ButtonType cancelButton = new ButtonType("Отмена", ButtonBar.ButtonData.CANCEL_CLOSE);
+        alert.getButtonTypes().setAll(okButton, cancelButton);
+
+        // Ждём нажатия кнопки и возвращаем результат
+        Optional<ButtonType> result = alert.showAndWait();
+        return result.isPresent() && result.get() == okButton;
+    }
+    
     private void doOperation ( JInvFXFormController.FormModeEnum mode ) 
     {
         PSuppliersDim p = null;
@@ -197,16 +218,18 @@ public class ViewSuppliersDimController extends JInvFXBrowserController
                 break;
             case VM_SHOW:
             case VM_DEL:
-                dsSUPPLIERS_DIM.getCurrentRow ();
                 PSuppliersDim selectProduct = SUPPLIERS_DIM.getSelectionModel().getSelectedItem();
-                try {
-                    new ParamMap()
-                            .add("s_id", selectProduct.getID())
-                            .exec(this, "deleteSuppliers");
-                } catch (SQLExpressionException ex) {
-                    Logger.getLogger(ViewProductDimController.class.getName()).log(Level.SEVERE, null, ex);
-                }      
-                doRefresh();
+                boolean temp = showErrorAlert("Удалить", "Вы точно хотите удалить " + selectProduct.getFIRST_NAME() + selectProduct.getLAST_NAME() + selectProduct.getPATRONYMIC());
+                if (temp){
+                    try {
+                        new ParamMap()
+                                .add("s_id", selectProduct.getID())
+                                .exec(this, "deleteSuppliers");
+                    } catch (SQLExpressionException ex) {
+                        Logger.getLogger(ViewProductDimController.class.getName()).log(Level.SEVERE, null, ex);
+                    }      
+                    doRefresh();
+                }
                 break;
             case VM_CHOICE:
                 mode = FormModeEnum.VM_INS;

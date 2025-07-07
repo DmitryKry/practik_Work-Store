@@ -1,5 +1,6 @@
 package ru.inversion.catalog;
 
+import com.itextpdf.text.Element;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -7,6 +8,7 @@ import java.util.logging.Logger;
 import ru.inversion.fx.form.JInvFXFormController;
 import ru.inversion.fx.form.controls.*;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import ru.inversion.bicomp.util.ParamMap;
 import ru.inversion.db.expr.SQLExpressionException;
@@ -26,17 +28,38 @@ public class EditSuppliersDimController extends JInvFXFormController <PSuppliers
     @FXML JInvTextField PATRONYMIC;
     @FXML JInvTextField MAIL;
     @FXML JInvTextField PHONE;
-
+    private JInvTextField[] evereField;
+    private String[] nameFields;
+            
 //
 // Initializes the controller class.
 //
     @Override
     protected void init () throws Exception 
     {
+        evereField = new JInvTextField[]{FIRST_NAME, LAST_NAME, PATRONYMIC, MAIL, PHONE};
+        nameFields = new String[]{"FIRST_NAME", "LAST_NAME", "PATRONYMIC", "MAIL", "PHONE"};
         super.init (); 
     }    
 
-    @FXML public void onOk() {
+    private void showErrorAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+    
+    @Override
+    public boolean onOK() {
+        for (int i = 0; i < 5; i++){
+            String tempEveryField = evereField[i].getText();
+            if (tempEveryField == null){
+                showErrorAlert("Ошибка", "Поле " + nameFields[i] + " обязательно для заполнения!");
+                return false;
+            }
+        }
+        
         if (dataObject.getFIRST_NAME() != null){
             try {         
                 new ParamMap()
@@ -50,6 +73,7 @@ public class EditSuppliersDimController extends JInvFXFormController <PSuppliers
             } catch (SQLExpressionException ex) {
                 Logger.getLogger(EditProductDimController.class.getName()).log(Level.SEVERE, null, ex);
                 System.out.println(ex.getMessage());
+                return false;
             }        
         }
         else {
@@ -64,9 +88,11 @@ public class EditSuppliersDimController extends JInvFXFormController <PSuppliers
             } catch (SQLExpressionException ex) {
                 Logger.getLogger(EditProductDimController.class.getName()).log(Level.SEVERE, null, ex);
                 System.out.println(ex.getMessage());
+                return false;
             }
         }
         this.getFXEntity().commit();
+        return true;
     }
 }
 
