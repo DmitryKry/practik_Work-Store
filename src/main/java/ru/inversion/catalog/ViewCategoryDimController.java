@@ -82,8 +82,6 @@ public class ViewCategoryDimController extends JInvFXBrowserController
 
         CATEGORY_DIM.setToolBar (toolBar);
         CATEGORY_DIM.setAction (ActionFactory.ActionTypeEnum.CREATE, (a) -> doOperation (FormModeEnum.VM_INS));
-        CATEGORY_DIM.setAction (ActionFactory.ActionTypeEnum.CREATE_BY, (a) -> doOperation (FormModeEnum.VM_NONE));
-        CATEGORY_DIM.setAction (ActionFactory.ActionTypeEnum.VIEW, (a) -> doOperation (FormModeEnum.VM_SHOW));
         CATEGORY_DIM.setAction (ActionFactory.ActionTypeEnum.UPDATE, (a) -> doOperation (FormModeEnum.VM_EDIT));
         CATEGORY_DIM.setAction (ActionFactory.ActionTypeEnum.DELETE, (a) -> doOperation (FormModeEnum.VM_DEL));
         CATEGORY_DIM.setAction (ActionFactory.ActionTypeEnum.REFRESH, (a) -> doRefresh ());
@@ -103,13 +101,7 @@ public class ViewCategoryDimController extends JInvFXBrowserController
 //    
     private void initToolBar () 
     {
-        JInvButtonPrint bp = new JInvButtonPrint (this::setPrintParam);        
-        bp.setReportTypeId (200000);
-        toolBar.getItems ().add (bp);
-
         toolBar.setStandartActions (ActionFactory.ActionTypeEnum.CREATE, 
-                                    ActionFactory.ActionTypeEnum.CREATE_BY, 
-                                    ActionFactory.ActionTypeEnum.VIEW,
                                     ActionFactory.ActionTypeEnum.UPDATE,
                                     ActionFactory.ActionTypeEnum.DELETE);
     }
@@ -141,11 +133,9 @@ public class ViewCategoryDimController extends JInvFXBrowserController
                         ep.invokeSetter (p, ep.invokeGetter (dsCATEGORY_DIM.getCurrentRow ()));
                 break;
             case VM_EDIT:
-            case VM_SHOW:
             case VM_DEL:
                 p = dsCATEGORY_DIM.getCurrentRow ();
                 break;
-            case VM_CHOICE:
         }
 
         if (p != null) 
