@@ -12,43 +12,61 @@
 <?import ru.inversion.fx.form.controls.JInvTableColumn?>
 <?import ru.inversion.fx.form.controls.JInvToolBar?>
 
-<BorderPane fx:id="rootPane" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.inversion.catalog.ViewSuppliersDimController">
-    <center>
-        <VBox prefHeight="400.0" prefWidth="800.0" spacing="5.0">
-            <children>
-                  <HBox prefHeight="100.0" prefWidth="200.0">
-                     <children>
-                        <Button mnemonicParsing="false" onAction="#load_store" text="Магазины" />
-                        <Button mnemonicParsing="false" onAction="#load_suppliers" text="Поставщики" />
-                        <Button mnemonicParsing="false" onAction="#load_product" text="Товары" />
-                        <Button mnemonicParsing="false" onAction="#load_category" text="Категории на товары" />     
-                     </children>
-                  </HBox>
-                <JInvToolBar fx:id="toolBar" />
-                <HBox prefHeight="472.0" prefWidth="800.0" VBox.vgrow="ALWAYS">
-                    <children>
-                        <JInvTable fx:id="SUPPLIERS_DIM" prefHeight="355.0" prefWidth="454.0" tableMenuButtonVisible="true" HBox.hgrow="ALWAYS">
-                        <columns>
-                        <JInvTableColumn fx:id="FIRST_NAME" fieldName="FIRST_NAME" prefWidth="136.0" text="%FIRST_NAME" />
-                        <JInvTableColumn fx:id="LAST_NAME" fieldName="LAST_NAME" prefWidth="125.0" text="%LAST_NAME" />
-                        <JInvTableColumn fx:id="PATRONYMIC" fieldName="PATRONYMIC" prefWidth="150.0" text="%PATRONYMIC" />
-                        </columns>
-                        <columnResizePolicy>
-                            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                        </columnResizePolicy>    
-                        </JInvTable>
-                              <AnchorPane prefHeight="355.0" prefWidth="346.0">
-                                 <children>
-                                    <Label layoutX="157.0" layoutY="50.0" text="EMAIL" textAlignment="CENTER" />
-                                    <TextField fx:id="EMAILField" layoutX="99.0" layoutY="75.0" prefHeight="25.0" prefWidth="149.0" />
-                                    <TextField fx:id="PhoneField" layoutX="102.0" layoutY="165.0" />
-                                    <Label layoutX="151.0" layoutY="134.0" text="Телефон" />
-                                 </children>
-                              </AnchorPane>
-                    </children>
-                </HBox>
-              
-            </children>
+<BorderPane fx:id="rootPane" xmlns="http://javafx.com/javafx/8.0.65" 
+            xmlns:fx="http://javafx.com/fxml/1" 
+            fx:controller="ru.inversion.catalog.ViewSuppliersDimController">
+    
+    <!-- Фиксированная верхняя панель -->
+    <top>
+        <VBox spacing="5" style="-fx-padding: 5;">
+            <!-- Панель кнопок -->
+            <HBox style="-fx-padding: 5;">
+                <children>
+                    <Button mnemonicParsing="false" onAction="#load_store" text="Магазины" 
+                            prefWidth="100"/>
+                    <Button mnemonicParsing="false" onAction="#load_suppliers" text="Поставщики" 
+                            prefWidth="100"/>
+                    <Button mnemonicParsing="false" onAction="#load_product" text="Товары" 
+                            prefWidth="100"/>
+                    <Button mnemonicParsing="false" onAction="#load_category" 
+                            text="Категории" prefWidth="120"/>
+                </children>
+            </HBox>
+            
+            <!-- Фиксированный тулбар -->
+            <JInvToolBar fx:id="toolBar"/>
         </VBox>
+    </top>
+
+    <!-- Основное содержимое -->
+    <center>
+        <HBox spacing="10" style="-fx-padding: 5;">
+            <!-- Таблица поставщиков (растягивается) -->
+            <JInvTable fx:id="SUPPLIERS_DIM" tableMenuButtonVisible="true" HBox.hgrow="ALWAYS">
+                <columns>
+                    <JInvTableColumn fx:id="FIRST_NAME" fieldName="FIRST_NAME" 
+                                    prefWidth="150" text="%FIRST_NAME"/>
+                    <JInvTableColumn fx:id="LAST_NAME" fieldName="LAST_NAME" 
+                                    prefWidth="150" text="%LAST_NAME"/>
+                    <JInvTableColumn fx:id="PATRONYMIC" fieldName="PATRONYMIC" 
+                                    prefWidth="150" text="%PATRONYMIC"/>
+                </columns>
+                <columnResizePolicy>
+                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                </columnResizePolicy>
+            </JInvTable>
+            
+            <!-- Правая панель с контактной информацией -->
+            <VBox alignment="TOP_CENTER" prefWidth="250" spacing="10" 
+                  style="-fx-padding: 20;" HBox.hgrow="NEVER">
+                <children>
+                    <Label text="EMAIL" textAlignment="CENTER"/>
+                    <TextField fx:id="EMAILField" prefWidth="200"/>
+                    
+                    <Label text="Телефон" textAlignment="CENTER"/>
+                    <TextField fx:id="PhoneField" prefWidth="200"/>
+                </children>
+            </VBox>
+        </HBox>
     </center>
 </BorderPane>
