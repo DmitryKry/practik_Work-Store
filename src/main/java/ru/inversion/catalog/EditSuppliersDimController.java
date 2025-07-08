@@ -12,6 +12,9 @@ import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import ru.inversion.bicomp.util.ParamMap;
 import ru.inversion.db.expr.SQLExpressionException;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
+import java.math.*;
 
 /**
  * @author  admin
@@ -30,6 +33,12 @@ public class EditSuppliersDimController extends JInvFXFormController <PSuppliers
     @FXML JInvTextField PHONE;
     private JInvTextField[] evereField;
     private String[] nameFields;
+    private static final String EMAIL_REGEX = 
+            "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
+    private static final Pattern pattern_EMAIL = Pattern.compile(EMAIL_REGEX);
+    private static final String PHONE_REGEX = 
+            "^(\\+7|8)[-\\s]?\\(?[0-9]{3}\\)?[-\\s]?[0-9]{3}[-\\s]?[0-9]{2}[-\\s]?[0-9]{2}$";;
+    private static final Pattern pattern_PHONE = Pattern.compile(PHONE_REGEX);
             
 //
 // Initializes the controller class.
@@ -42,7 +51,7 @@ public class EditSuppliersDimController extends JInvFXFormController <PSuppliers
         super.init (); 
     }    
 
-    private void showErrorAlert(String title, String message) {
+    private static void showErrorAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);
         alert.setHeaderText(null);
@@ -50,13 +59,49 @@ public class EditSuppliersDimController extends JInvFXFormController <PSuppliers
         alert.showAndWait();
     }
     
+    private static boolean isValidEmail(String element, Pattern anotherPattern) {
+        if (element == null) {
+            return false;
+        }
+        Matcher matcher = anotherPattern.matcher(element);
+        return matcher.matches();
+    }
+    
     @Override
     public boolean onOK() {
+        String phoneNumber = "";
+        char[] arrayNumber = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
         for (int i = 0; i < 5; i++){
             String tempEveryField = evereField[i].getText();
             if (tempEveryField == null){
                 showErrorAlert("Ошибка", "Поле " + nameFields[i] + " обязательно для заполнения!");
                 return false;
+            }
+            else if (nameFields[i].equals("MAIL")){
+                if (!isValidEmail(tempEveryField, pattern_EMAIL)){
+                    showErrorAlert("Ошибка", "Неверно введённый емаил!");
+                    return false;
+                }
+            }
+            else if (nameFields[i].equals("PHONE")){
+                if (!isValidEmail(tempEveryField, pattern_PHONE)){
+                    showErrorAlert("Ошибка", "Неверно введённый номер телефона!");
+                    return false;
+                }
+                for (int j = 0; j < tempEveryField.length(); j++) {
+                    if (j == 0){
+                        if (tempEveryField.charAt(j) == '+'){
+                            phoneNumber += '8';
+                            j++;
+                            continue;
+                        }
+                    }
+                    for (char item : arrayNumber){
+                        if (item == tempEveryField.charAt(j)){
+                            phoneNumber += tempEveryField.charAt(j);
+                        }
+                    }
+                }
             }
         }
         
@@ -68,7 +113,7 @@ public class EditSuppliersDimController extends JInvFXFormController <PSuppliers
                         .add("s_last_name", LAST_NAME.getText())
                         .add("s_patronymic", PATRONYMIC.getText())
                         .add("s_mail", MAIL.getText())
-                        .add("s_phone", PHONE.getText())
+                        .add("s_phone", phoneNumber)
                         .exec(this, "updateSuppliersNew");
             } catch (SQLExpressionException ex) {
                 Logger.getLogger(EditProductDimController.class.getName()).log(Level.SEVERE, null, ex);
@@ -83,7 +128,7 @@ public class EditSuppliersDimController extends JInvFXFormController <PSuppliers
                         .add("s_last_name", LAST_NAME.getText())
                         .add("s_patronymic", PATRONYMIC.getText())
                         .add("s_mail", MAIL.getText())
-                        .add("s_phone", PHONE.getText())
+                        .add("s_phone", phoneNumber)
                         .exec(this, "addSuppliersNew");
             } catch (SQLExpressionException ex) {
                 Logger.getLogger(EditProductDimController.class.getName()).log(Level.SEVERE, null, ex);
