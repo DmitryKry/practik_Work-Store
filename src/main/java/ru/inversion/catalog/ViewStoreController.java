@@ -90,8 +90,6 @@ public class ViewStoreController extends JInvFXBrowserController
 
         Pstore_table.setToolBar (toolBar);       
         Pstore_table.setAction (ActionFactory.ActionTypeEnum.CREATE, (a) -> doOperation (FormModeEnum.VM_INS));
-        Pstore_table.setAction (ActionFactory.ActionTypeEnum.CREATE_BY, (a) -> doOperation (FormModeEnum.VM_NONE));
-        Pstore_table.setAction (ActionFactory.ActionTypeEnum.VIEW, (a) -> doOperation (FormModeEnum.VM_SHOW));
         Pstore_table.setAction (ActionFactory.ActionTypeEnum.UPDATE, (a) -> doOperation (FormModeEnum.VM_EDIT));
         Pstore_table.setAction (ActionFactory.ActionTypeEnum.DELETE, (a) -> doOperation (FormModeEnum.VM_DEL));
         Pstore_table.setAction (ActionFactory.ActionTypeEnum.REFRESH, (a) -> doRefresh ());
@@ -147,13 +145,7 @@ public class ViewStoreController extends JInvFXBrowserController
 //    
     private void initToolBar () 
     {
-        JInvButtonPrint bp = new JInvButtonPrint (this::setPrintParam);        
-        bp.setReportTypeId (200000);
-        toolBar.getItems ().add (bp);
-
         toolBar.setStandartActions (ActionFactory.ActionTypeEnum.CREATE, 
-                                    ActionFactory.ActionTypeEnum.CREATE_BY, 
-                                    ActionFactory.ActionTypeEnum.VIEW,
                                     ActionFactory.ActionTypeEnum.UPDATE,
                                     ActionFactory.ActionTypeEnum.DELETE);
     }
@@ -186,7 +178,6 @@ public class ViewStoreController extends JInvFXBrowserController
                         ep.invokeSetter (p, ep.invokeGetter (dsPstore_table.getCurrentRow ()));
                 break;
             case VM_EDIT:
-            case VM_SHOW:
             case VM_DEL:
                 p = dsPstore_table.getCurrentRow ();
                 break;

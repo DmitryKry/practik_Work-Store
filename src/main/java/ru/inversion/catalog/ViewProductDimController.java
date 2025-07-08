@@ -95,8 +95,6 @@ public class ViewProductDimController extends JInvFXBrowserController
 
         PRODUCT_DIM.setToolBar (toolBar);       
         PRODUCT_DIM.setAction (ActionFactory.ActionTypeEnum.CREATE, (a) -> doOperation (FormModeEnum.VM_INS));
-        PRODUCT_DIM.setAction (ActionFactory.ActionTypeEnum.CREATE_BY, (a) -> doOperation (FormModeEnum.VM_NONE));
-        PRODUCT_DIM.setAction (ActionFactory.ActionTypeEnum.VIEW, (a) -> doOperation (FormModeEnum.VM_SHOW));
         PRODUCT_DIM.setAction (ActionFactory.ActionTypeEnum.UPDATE, (a) -> doOperation (FormModeEnum.VM_EDIT));
         PRODUCT_DIM.setAction (ActionFactory.ActionTypeEnum.DELETE, (a) -> doOperation (FormModeEnum.VM_DEL));
         PRODUCT_DIM.setAction (ActionFactory.ActionTypeEnum.REFRESH, (a) -> doRefresh ());
@@ -141,13 +139,7 @@ public class ViewProductDimController extends JInvFXBrowserController
 //    
     private void initToolBar () 
     {
-        JInvButtonPrint bp = new JInvButtonPrint (this::setPrintParam);        
-        bp.setReportTypeId (200000);
-        toolBar.getItems ().add (bp);
-
         toolBar.setStandartActions (ActionFactory.ActionTypeEnum.CREATE, 
-                                    ActionFactory.ActionTypeEnum.CREATE_BY, 
-                                    ActionFactory.ActionTypeEnum.VIEW,
                                     ActionFactory.ActionTypeEnum.UPDATE,
                                     ActionFactory.ActionTypeEnum.DELETE);
     }
@@ -199,7 +191,6 @@ public class ViewProductDimController extends JInvFXBrowserController
             case VM_EDIT:
                 p = PRODUCT_DIM.getSelectionModel().getSelectedItem();
                 break;
-            case VM_SHOW:
             case VM_DEL:
                 PProductDim selectProduct = PRODUCT_DIM.getSelectionModel().getSelectedItem();
                 boolean temp = showErrorAlert("Удалить", "Вы точно хотите удалить " + selectProduct.getPRODUCT_NAME());     

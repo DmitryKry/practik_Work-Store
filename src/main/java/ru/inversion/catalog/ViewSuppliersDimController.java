@@ -101,8 +101,6 @@ public class ViewSuppliersDimController extends JInvFXBrowserController
 
         SUPPLIERS_DIM.setToolBar (toolBar);       
         SUPPLIERS_DIM.setAction (ActionFactory.ActionTypeEnum.CREATE, (a) -> doOperation (FormModeEnum.VM_INS));
-        SUPPLIERS_DIM.setAction (ActionFactory.ActionTypeEnum.CREATE_BY, (a) -> doOperation (FormModeEnum.VM_NONE));
-        SUPPLIERS_DIM.setAction (ActionFactory.ActionTypeEnum.VIEW, (a) -> doOperation (FormModeEnum.VM_SHOW));
         SUPPLIERS_DIM.setAction (ActionFactory.ActionTypeEnum.UPDATE, (a) -> doOperation (FormModeEnum.VM_EDIT));
         SUPPLIERS_DIM.setAction (ActionFactory.ActionTypeEnum.DELETE, (a) -> doOperation (FormModeEnum.VM_DEL));
         SUPPLIERS_DIM.setAction (ActionFactory.ActionTypeEnum.CHOOSE_DIRECTORY, (a) -> doOperation (FormModeEnum.VM_CHOICE));
@@ -140,13 +138,7 @@ public class ViewSuppliersDimController extends JInvFXBrowserController
 //    
     private void initToolBar () 
     {
-        JInvButtonPrint bp = new JInvButtonPrint (this::setPrintParam);        
-        bp.setReportTypeId (200000);
-        toolBar.getItems ().add (bp);
-
         toolBar.setStandartActions (ActionFactory.ActionTypeEnum.CREATE, 
-                                    ActionFactory.ActionTypeEnum.CREATE_BY, 
-                                    ActionFactory.ActionTypeEnum.VIEW,
                                     ActionFactory.ActionTypeEnum.UPDATE,
                                     ActionFactory.ActionTypeEnum.CHOOSE_DIRECTORY,
                                     ActionFactory.ActionTypeEnum.DELETE);
