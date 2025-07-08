@@ -3,21 +3,30 @@
 To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
+ 
 -->
 <sql_expr_list>
     <expression name="addSuppliersNew" lang="PL/SQL">
         <script><![CDATA[
-            DECLARE 
-            BEGIN
-                SUPPLIERS_DIM_PKG.add_suppliers_new(
-                    :s_first_name,
-                    :s_last_name,
-                    :s_patronymic,
-                    :s_mail,
-                    :s_phone
-            );
-            END;
-        ]]></script>
+                DECLARE 
+                BEGIN
+                    SUPPLIERS_DIM_PKG.add_suppliers_new(
+                        :s_first_name,
+                        :s_last_name,
+                        :s_patronymic,
+                        :s_mail,
+                        :s_phone
+                );
+                END;
+            ]]>
+        </script>
+        <parameters>
+            <parameter name="s_first_name" position="" mode="IN" sqlType= "VARCHAR" javaType="String" defaultValue="" />
+                <parameter name="s_last_name" position="" mode="IN" sqlType= "VARCHAR" javaType="String" defaultValue="" />
+                <parameter name="s_patronymic" position="" mode="IN" sqlType= "VARCHAR" javaType="String" defaultValue="" />
+                <parameter name="s_mail" position="" mode="IN" sqlType= "VARCHAR" javaType="String" defaultValue="" />
+                <parameter name="s_phone" position="" mode="IN" sqlType= "NUMERIC" javaType="Long" defaultValue="" />
+        </parameters>    
     </expression>
     
     <expression name="updateSuppliersNew" lang="PL/SQL">
@@ -34,6 +43,38 @@ and open the template in the editor.
             );
             END;
         ]]></script>
+        <parameters>
+            <parameter name="s_id" position="" mode="IN" sqlType= "NUMERIC" javaType="Long" defaultValue="" />
+            <parameter name="s_first_name" position="" mode="IN" sqlType= "VARCHAR" javaType="String" defaultValue="" />
+            <parameter name="s_last_name" position="" mode="IN" sqlType= "VARCHAR" javaType="String" defaultValue="" />
+            <parameter name="s_patronymic" position="" mode="IN" sqlType= "VARCHAR" javaType="String" defaultValue="" />
+            <parameter name="s_mail" position="" mode="IN" sqlType= "VARCHAR" javaType="String" defaultValue="" />
+            <parameter name="s_phone" position="" mode="IN" sqlType= "NUMERIC" javaType="Long" defaultValue="" />
+        </parameters>
+    </expression>
+    
+    <expression name="updateProductsNew" lang="PL/SQL">
+        <script><![CDATA[
+            DECLARE 
+            BEGIN
+                Product_PKG.update_product(
+                    :p_id,
+                    :p_name,
+                    :p_category,
+                    :p_price,
+                    :p_stock_quantity,
+                    :p_supplier
+                );
+            END;
+        ]]></script>
+        <parameters>
+            <parameter name="p_id" position="" mode="IN" sqlType= "NUMERIC" javaType="Long" defaultValue="" />
+            <parameter name="p_name" position="" mode="IN" sqlType= "VARCHAR" javaType="String" defaultValue="" />
+            <parameter name="p_category" position="" mode="IN" sqlType= "NUMERIC" javaType="Long" defaultValue="" />
+            <parameter name="p_price" position="" mode="IN" sqlType= "NUMERIC" javaType="Long" defaultValue="" />
+            <parameter name="p_stock_quantity" position="" mode="IN" sqlType= "NUMERIC" javaType="Long" defaultValue="" />
+            <parameter name="p_supplier" position="" mode="IN" sqlType= "NUMERIC" javaType="Long" defaultValue="" />
+        </parameters>
     </expression>
     
     <expression name="addNewProduct" lang="PL/SQL">
@@ -49,6 +90,13 @@ and open the template in the editor.
                 );
             END;
         ]]></script>
+        <parameters>
+            <parameter name="p_name" position="" mode="IN" sqlType= "VARCHAR" javaType="String" defaultValue="" />
+            <parameter name="p_category" position="" mode="IN" sqlType= "NUMERIC" javaType="Long" defaultValue="" />
+            <parameter name="p_price" position="" mode="IN" sqlType= "NUMERIC" javaType="Long" defaultValue="" />
+            <parameter name="p_stock_quantity" position="" mode="IN" sqlType= "NUMERIC" javaType="Long" defaultValue="" />
+            <parameter name="p_supplier" position="" mode="IN" sqlType= "NUMERIC" javaType="Long" defaultValue="" />
+        </parameters>
     </expression>
     
     <expression name="deleteProduct" lang="PL/SQL">
@@ -60,6 +108,9 @@ and open the template in the editor.
                 );
             END;
         ]]></script>
+        <parameters>
+            <parameter name="p_id" position="" mode="IN" sqlType= "NUMERIC" javaType="Long" defaultValue="" />
+        </parameters>
     </expression>
     
     <expression name="deleteSuppliers" lang="PL/SQL">
@@ -71,6 +122,9 @@ and open the template in the editor.
                 );
             END;
         ]]></script>
+        <parameters>
+            <parameter name="s_id" position="" mode="IN" sqlType= "NUMERIC" javaType="Long" defaultValue="" />
+        </parameters>
     </expression>
     <!-- Добавление пластинки --> 
     <expression name="get_suplers" lang = "PL/SQL">

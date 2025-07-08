@@ -155,7 +155,7 @@ public class ViewSuppliersDimController extends JInvFXBrowserController
 // doOperation
 //    
     
-    private boolean showErrorAlert(String title, String message) {
+    static private boolean showErrorAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);
         alert.setHeaderText(null);
@@ -194,7 +194,8 @@ public class ViewSuppliersDimController extends JInvFXBrowserController
             case VM_SHOW:
             case VM_DEL:
                 PSuppliersDim selectProduct = SUPPLIERS_DIM.getSelectionModel().getSelectedItem();
-                boolean temp = showErrorAlert("Удалить", "Вы точно хотите удалить " + selectProduct.getFIRST_NAME() + selectProduct.getLAST_NAME() + selectProduct.getPATRONYMIC());
+                boolean temp = showErrorAlert("Удалить", "Вы точно хотите удалить " 
+                        + selectProduct.getFIRST_NAME() + " " + selectProduct.getLAST_NAME() + " " + selectProduct.getPATRONYMIC());
                 if (temp){
                     try {
                         new ParamMap()

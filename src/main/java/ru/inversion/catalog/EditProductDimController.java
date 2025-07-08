@@ -73,28 +73,45 @@ public class EditProductDimController extends JInvFXFormController <PProductDim>
             STOCK_QUANTITY.requestFocus();
             return false;
         }
-        try {
-            PSuppliersDim SupplersOnly = supplierses.stream()
-                    .filter(s -> (s.getFIRST_NAME() + " " + s.getLAST_NAME())
-                            .equals(productSuppliersComboBox.getSelectionModel().getSelectedItem()))
-                    .findFirst().orElse(null);
-            
-            PCategoryDim categoryOnly = categores.stream()
-                    .filter(c -> (c.getCATEGORY_NAME())
-                            .equals(productCategoryComboBox.getSelectionModel().getSelectedItem()))
-                    .findFirst().orElse(null);
-            
-            new ParamMap()
-                    .add("p_name", PRODUCT_NAME.getText())
-                    .add("p_category", categoryOnly.getCATEGORY_DIM_ID())
-                    .add("p_price", PRICE.getText())
-                    .add("p_stock_quantity", STOCK_QUANTITY.getText())
-                    .add("p_supplier", SupplersOnly.getID())
-                    .exec(this, "addNewProduct");
-        } catch (SQLExpressionException ex) {
-            Logger.getLogger(EditProductDimController.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println(ex.getMessage());
-            return false;
+        PSuppliersDim SupplersOnly = supplierses.stream()
+                        .filter(s -> (s.getFIRST_NAME() + " " + s.getLAST_NAME())
+                                .equals(productSuppliersComboBox.getSelectionModel().getSelectedItem()))
+                        .findFirst().orElse(null);
+
+        PCategoryDim categoryOnly = categores.stream()
+                        .filter(c -> (c.getCATEGORY_NAME())
+                                .equals(productCategoryComboBox.getSelectionModel().getSelectedItem()))
+                        .findFirst().orElse(null);                 
+        if (dataObject.getPRODUCT_NAME() == null){
+            try {
+                new ParamMap()
+                        .add("p_name", PRODUCT_NAME.getText())
+                        .add("p_category", categoryOnly.getCATEGORY_DIM_ID())
+                        .add("p_price", PRICE.getText())
+                        .add("p_stock_quantity", STOCK_QUANTITY.getText())
+                        .add("p_supplier", SupplersOnly.getID())
+                        .exec(this, "addNewProduct");
+            } catch (SQLExpressionException ex) {
+                Logger.getLogger(EditProductDimController.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println(ex.getMessage());
+                return false;
+            }
+        }
+        else{
+            try {
+                new ParamMap()
+                        .add("p_id", dataObject.getPRODUCT_ID())
+                        .add("p_name", PRODUCT_NAME.getText())
+                        .add("p_category", categoryOnly.getCATEGORY_DIM_ID())
+                        .add("p_price", PRICE.getText())
+                        .add("p_stock_quantity", STOCK_QUANTITY.getText())
+                        .add("p_supplier", SupplersOnly.getID())
+                        .exec(this, "updateProductsNew");
+            } catch (SQLExpressionException ex) {
+                Logger.getLogger(EditProductDimController.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println(ex.getMessage());
+                return false;
+            }
         }
         this.getFXEntity().commit();
         return true;
