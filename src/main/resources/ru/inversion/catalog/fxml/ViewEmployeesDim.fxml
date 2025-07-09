@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import ru.inversion.fx.form.controls.JInvTable?>
+<?import ru.inversion.fx.form.controls.JInvTableColumn?>
+<?import ru.inversion.fx.form.controls.JInvTableColumnDate?>
+<?import ru.inversion.fx.form.controls.JInvTableColumnMoney?>
+<?import ru.inversion.fx.form.controls.JInvToolBar?>
+
+<VBox prefHeight="400.0" prefWidth="800.0" spacing="5.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.inversion.catalog.ViewEmployeesDimController">
+<children>
+      <HBox prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <Button mnemonicParsing="false" text="МАГАЗИНЫ" onAction="#load_store"/>
+            <Button mnemonicParsing="false" text="СОТРУДНИКИ" onAction="#load_employers"/>
+            <Button mnemonicParsing="false" text="ТОВАРЫ" onAction="#load_product"/>
+            <Button mnemonicParsing="false" text="КАТЕГОРИИ НА ТОВАРЫ" onAction="#load_category"/>
+            <Button mnemonicParsing="false" text="ПРОФЕССИИ" onAction="#load_professions"/>
+         </children>
+      </HBox>
+<JInvToolBar fx:id="toolBar" />
+<JInvTable fx:id="EMPLOYEES_DIM" tableMenuButtonVisible="true" VBox.vgrow="ALWAYS">
+<columns>
+<JInvTableColumn fx:id="EMPLOYEE_ID" fieldName="EMPLOYEE_ID" text="%EMPLOYEE_ID" />
+<JInvTableColumn fx:id="FULL_NAME" fieldName="FULL_NAME" prefWidth="300.0" text="%FULL_NAME" />
+<JInvTableColumnDate fx:id="HIRE_DATE" fieldName="HIRE_DATE" text="%HIRE_DATE" />
+<JInvTableColumnMoney fx:id="SALARY" fieldName="SALARY" text="%SALARY" />
+<JInvTableColumn fx:id="POSITION_ID_DIM" fieldName="POSITION_ID_DIM" text="%POSITION_ID_DIM" />
+<JInvTableColumn fx:id="STORE_ID_DIM" fieldName="STORE_ID_DIM" text="%STORE_ID_DIM" />
+</columns>
+<VBox.margin>
+<Insets bottom="5.0" left="5.0" right="5.0" />
+</VBox.margin>
+</JInvTable>
+</children>
+</VBox>
