@@ -19,17 +19,25 @@ import ru.inversion.bicomp.action.StopExecuteActionBiCompException;
 import ru.inversion.bicomp.fxreport.ApReport;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
+
 import java.util.Optional;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import ru.inversion.bicomp.util.ParamMap;
 import ru.inversion.db.expr.SQLExpressionException;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.Screen;
+import ru.inversion.dataset.DataSetException;
 /**
  *
  * @author  admin
@@ -44,9 +52,13 @@ public class ViewProductDimController extends JInvFXBrowserController
     @FXML private TextField phoneField;
     @FXML private TextField emailField;
     @FXML private BorderPane rootPane;
+    private ComboBox<String> filterForCategoryBox;
+    private List<PProductDim> products;
  
    
     private final XXIDataSet<PProductDim> dsPRODUCT_DIM = new XXIDataSet<> ();    
+    private final XXIDataSet<PSuppliersDim> dsSupplierSet = new XXIDataSet<> ();    
+    private final XXIDataSet<PCategoryDim> dsPCategorySet = new XXIDataSet<> ();   
 //
 // initDataSet
 //    
@@ -54,22 +66,13 @@ public class ViewProductDimController extends JInvFXBrowserController
     {
         dsPRODUCT_DIM.setTaskContext (getTaskContext ());
         dsPRODUCT_DIM.setRowClass (PProductDim.class);
-    }
-    
-    private void centerStage(Stage stage) {
-        // Получаем размеры экрана
-        double screenWidth = Screen.getPrimary().getVisualBounds().getWidth();
-        double screenHeight = Screen.getPrimary().getVisualBounds().getHeight();
         
-        // Вычисляем координаты для центрирования
-        double x = (screenWidth - stage.getWidth()) / 2;
-        double y = (screenHeight - stage.getHeight()) / 2;
+        dsSupplierSet.setTaskContext (getTaskContext ());
+        dsSupplierSet.setRowClass (PSuppliersDim.class);
         
-        // Устанавливаем позицию
-        stage.setX(x);
-        stage.setY(y);
+        dsPCategorySet.setTaskContext (getTaskContext ());
+        dsPCategorySet.setRowClass (PCategoryDim.class);
     }
-    
 //
 // Initializes the controller class.
 //
@@ -86,9 +89,15 @@ public class ViewProductDimController extends JInvFXBrowserController
         //centerStage(stage);
         setTitle (getBundleString ("VIEW.TITLE"));
         initDataSet ();
+        dsSupplierSet.executeQuery();
+        dsPCategorySet.executeQuery();
+        dsPRODUCT_DIM.executeQuery();
         DSFXAdapter<PProductDim> dsfx = DSFXAdapter.bind (dsPRODUCT_DIM, PRODUCT_DIM, null, false); 
-
+        
         dsfx.setEnableFilter (true);
+        products = new ArrayList<>();
+        for (PProductDim item : dsPRODUCT_DIM.getRows())
+            products.add(item);
  
                 
         initToolBar ();
@@ -97,6 +106,7 @@ public class ViewProductDimController extends JInvFXBrowserController
         PRODUCT_DIM.setAction (ActionFactory.ActionTypeEnum.CREATE, (a) -> doOperation (FormModeEnum.VM_INS));
         PRODUCT_DIM.setAction (ActionFactory.ActionTypeEnum.UPDATE, (a) -> doOperation (FormModeEnum.VM_EDIT));
         PRODUCT_DIM.setAction (ActionFactory.ActionTypeEnum.DELETE, (a) -> doOperation (FormModeEnum.VM_DEL));
+        PRODUCT_DIM.setAction (ActionFactory.ActionTypeEnum.FILTER, (a) -> doOperation (FormModeEnum.VM_SHOW));
         PRODUCT_DIM.setAction (ActionFactory.ActionTypeEnum.REFRESH, (a) -> doRefresh ());
         PRODUCT_DIM.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
@@ -141,7 +151,8 @@ public class ViewProductDimController extends JInvFXBrowserController
     {
         toolBar.setStandartActions (ActionFactory.ActionTypeEnum.CREATE, 
                                     ActionFactory.ActionTypeEnum.UPDATE,
-                                    ActionFactory.ActionTypeEnum.DELETE);
+                                    ActionFactory.ActionTypeEnum.DELETE,
+                                    ActionFactory.ActionTypeEnum.FILTER);
     }
 //
 // setPrintParam
@@ -171,6 +182,99 @@ public class ViewProductDimController extends JInvFXBrowserController
         return result.isPresent() && result.get() == okButton;
     }
     
+    private void categoryComboBox(){
+        if (filterForCategoryBox != null) filterForCategoryBox.getItems().clear();
+        Set<String> unigTetles = new LinkedHashSet<>();
+        for (PCategoryDim item : dsPCategorySet.getRows()){
+            unigTetles.add(item.getCATEGORY_NAME());
+        }
+        filterForCategoryBox.getItems().addAll("Все продукты");
+        filterForCategoryBox.getItems().addAll(unigTetles);
+        if (!filterForCategoryBox.getItems().isEmpty())
+            filterForCategoryBox.getSelectionModel().selectFirst();
+    }
+    
+    private void CategoryBooksComboBox() {
+        Set<String> uniqueSuppliers = new LinkedHashSet<>();
+        List<PCategoryDim> findOfUsers = new ArrayList<>();// LinkedHashSet сохраняет порядок
+        for (PCategoryDim category : dsPCategorySet.getRows()) 
+            findOfUsers.add(category);
+        filterForCategoryBox.setEditable(true);
+        filterForCategoryBox.getEditor().textProperty().addListener((obs, oldVal, newVal) -> {
+            if (!filterForCategoryBox.getItems().contains(newVal)) {
+                if (!uniqueSuppliers.isEmpty())
+                    uniqueSuppliers.clear();
+                int count = 0;
+                for (PCategoryDim category : dsPCategorySet.getRows()) {
+                    for (char item : newVal.toCharArray()) {
+                        if (Character.toLowerCase(item) == Character.toLowerCase((category.getCATEGORY_NAME().charAt(count)))) {
+                            if (count < newVal.length()) {
+                                count++;
+                                if (count == (newVal.length())) {
+                                    uniqueSuppliers.add(category.getCATEGORY_NAME());
+                                    count = 0;
+                                }
+                            }
+                        }
+                        else {
+                            count = 0;
+                            break;
+                        }
+                    }
+                }       
+                filterForCategoryBox.getItems().clear();
+                filterForCategoryBox.getItems().setAll(uniqueSuppliers);
+                filterForCategoryBox.show();
+                filterForCategoryBox.getItems().addAll("Все продукты");
+
+                // Показываем выпадающий список при вводе
+                if (newVal.isEmpty()) {
+                    filterForCategoryBox.getItems().clear();
+                    uniqueSuppliers.clear();
+                    for (PCategoryDim category : findOfUsers){
+                        uniqueSuppliers.add(category.getCATEGORY_NAME());
+                    }
+                    filterForCategoryBox.getItems().addAll(uniqueSuppliers);                                
+                    filterForCategoryBox.show();
+                }
+            }
+        });
+
+        // Устанавливаем первое значение по умолчанию, если список не пуст
+        if (!filterForCategoryBox.getItems().isEmpty()) {
+            filterForCategoryBox.getSelectionModel().selectFirst();
+        }
+    } 
+    
+    private boolean showFilterAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        if (filterForCategoryBox == null) {
+            filterForCategoryBox = new ComboBox<>();
+        }
+        
+        categoryComboBox();
+        CategoryBooksComboBox();
+        
+        VBox content = new VBox();
+        content.getChildren().addAll(new Label(message), filterForCategoryBox);
+        content.setSpacing(10);
+
+        alert.getDialogPane().setContent(content);
+        
+        // Добавляем кастомные кнопки
+        ButtonType okButton = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
+        ButtonType cancelButton = new ButtonType("Отмена", ButtonBar.ButtonData.CANCEL_CLOSE);
+        alert.getButtonTypes().setAll(okButton, cancelButton);
+
+        // Ждём нажатия кнопки и возвращаем результат
+        Optional<ButtonType> result = alert.showAndWait();
+        return result.isPresent() && result.get() == okButton;
+    }
+    
+    
     private void doOperation ( JInvFXFormController.FormModeEnum mode ) 
     {
         PProductDim p = null;
@@ -193,7 +297,9 @@ public class ViewProductDimController extends JInvFXBrowserController
                 break;
             case VM_DEL:
                 PProductDim selectProduct = PRODUCT_DIM.getSelectionModel().getSelectedItem();
-                boolean temp = showErrorAlert("Удалить", "Вы точно хотите удалить " + selectProduct.getPRODUCT_NAME());     
+                //boolean temp = showErrorAlert("Удалить", "Вы точно хотите удалить " + selectProduct.getPRODUCT_NAME()); 
+                boolean temp = Alerts.yesNo(PRODUCT_DIM.getSelectionModel().getSelectedItem(), "Удаление", "Удалить колонку " 
+                        + PRODUCT_DIM.getSelectionModel().getSelectedItem().getPRODUCT_NAME() + "?");
                 if (temp) {
                     try {
                         new ParamMap()
@@ -205,6 +311,22 @@ public class ViewProductDimController extends JInvFXBrowserController
                     doRefresh();
                 }
                 break;
+            case VM_SHOW:
+                boolean tempFilter = showFilterAlert("Фильтрация", "Фильтрация по категории");
+                if (tempFilter) {
+                   PRODUCT_DIM.getItems().clear();
+                   List<PProductDim> tempList = products.stream()
+                           .filter(prod -> filterForCategoryBox.getSelectionModel().getSelectedItem() != null && 
+                                   prod.getCATEGORY_NAME().equals(filterForCategoryBox.getSelectionModel().getSelectedItem()))
+                           .collect(Collectors.toList());
+                   if (tempList != null) 
+                       PRODUCT_DIM.getItems().addAll(tempList);   
+                   else PRODUCT_DIM.getItems().addAll(products);
+                }
+                
+                
+                
+                
         }
         if (p != null) 
             new FXFormLauncher<> (this, EditProductDimController.class)

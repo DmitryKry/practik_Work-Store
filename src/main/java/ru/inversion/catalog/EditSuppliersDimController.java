@@ -15,6 +15,7 @@ import ru.inversion.db.expr.SQLExpressionException;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 import java.math.*;
+import ru.inversion.fx.form.valid.Validator;
 
 /**
  * @author  admin
@@ -39,6 +40,7 @@ public class EditSuppliersDimController extends JInvFXFormController <PSuppliers
     private static final String PHONE_REGEX = 
             "^(\\+7|8)[-\\s]?\\(?[0-9]{3}\\)?[-\\s]?[0-9]{3}[-\\s]?[0-9]{2}[-\\s]?[0-9]{2}$";;
     private static final Pattern pattern_PHONE = Pattern.compile(PHONE_REGEX);
+    String phoneNumber = "";
             
 //
 // Initializes the controller class.
@@ -48,16 +50,40 @@ public class EditSuppliersDimController extends JInvFXFormController <PSuppliers
     {
         evereField = new JInvTextField[]{FIRST_NAME, LAST_NAME, PATRONYMIC, MAIL, PHONE};
         nameFields = new String[]{"FIRST_NAME", "LAST_NAME", "PATRONYMIC", "MAIL", "PHONE"};
+        getValidMan().bindValidators2Control(FIRST_NAME,(value)-> {
+            if (value==null)
+                return new Validator.Result(value,String.format(bundle.getString("VALIDATOR.ERROR"), value));
+            return null;
+        });
+        getValidMan().bindValidators2Control(LAST_NAME,(value)-> {
+            if (value==null)
+                return new Validator.Result(value,String.format(bundle.getString("VALIDATOR.ERROR"), value));
+            return null;
+        });
+        
+        getValidMan().bindValidators2Control(PATRONYMIC,(value)-> {
+            if (value==null)
+                return new Validator.Result(value,String.format(bundle.getString("VALIDATOR.ERROR"), value));
+            return null;
+        });
+        getValidMan().bindValidators2Control(PHONE,(value)-> {
+            if (value==null)
+                return new Validator.Result(value,String.format(bundle.getString("VALIDATOR.ERROR"), value));  
+            if (!isValidEmail((String) value, pattern_PHONE)){
+                return new Validator.Result(value,String.format(bundle.getString("VALIDATOR.PHONE"), value));  
+                }
+            return null;
+        });
+        getValidMan().bindValidators2Control(MAIL,(value)-> {
+            if (value==null)
+                return new Validator.Result(value,String.format(bundle.getString("VALIDATOR.ERROR"), value));
+            if (!isValidEmail((String) value, pattern_EMAIL)){
+                return new Validator.Result(value,String.format(bundle.getString("VALIDATOR.EMAIL"), value));
+            }
+            return null;
+        });
         super.init (); 
     }    
-
-    private static void showErrorAlert(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
     
     private static boolean isValidEmail(String element, Pattern anotherPattern) {
         if (element == null) {
@@ -69,38 +95,19 @@ public class EditSuppliersDimController extends JInvFXFormController <PSuppliers
     
     @Override
     public boolean onOK() {
-        String phoneNumber = "";
         char[] arrayNumber = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
-        for (int i = 0; i < 5; i++){
-            String tempEveryField = evereField[i].getText();
-            if (tempEveryField == null){
-                showErrorAlert("Ошибка", "Поле " + nameFields[i] + " обязательно для заполнения!");
-                return false;
-            }
-            else if (nameFields[i].equals("MAIL")){
-                if (!isValidEmail(tempEveryField, pattern_EMAIL)){
-                    showErrorAlert("Ошибка", "Неверно введённый емаил!");
-                    return false;
+        String tempPhone = PHONE.getText();
+        for (int j = 0; j < tempPhone.length(); j++) {
+            if (j == 0){
+                if (tempPhone.charAt(j) == '+'){
+                    phoneNumber += '8';
+                    j++;
+                    continue;
                 }
             }
-            else if (nameFields[i].equals("PHONE")){
-                if (!isValidEmail(tempEveryField, pattern_PHONE)){
-                    showErrorAlert("Ошибка", "Неверно введённый номер телефона!");
-                    return false;
-                }
-                for (int j = 0; j < tempEveryField.length(); j++) {
-                    if (j == 0){
-                        if (tempEveryField.charAt(j) == '+'){
-                            phoneNumber += '8';
-                            j++;
-                            continue;
-                        }
-                    }
-                    for (char item : arrayNumber){
-                        if (item == tempEveryField.charAt(j)){
-                            phoneNumber += tempEveryField.charAt(j);
-                        }
-                    }
+            for (char item : arrayNumber){
+                if (item == tempPhone.charAt(j)){
+                    phoneNumber += tempPhone.charAt(j);
                 }
             }
         }

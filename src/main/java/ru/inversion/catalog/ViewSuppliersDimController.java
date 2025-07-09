@@ -194,8 +194,8 @@ public class ViewSuppliersDimController extends JInvFXBrowserController
             case VM_SHOW:
             case VM_DEL:
                 PSuppliersDim selectProduct = SUPPLIERS_DIM.getSelectionModel().getSelectedItem();
-                boolean temp = showErrorAlert("Удалить", "Вы точно хотите удалить " 
-                        + selectProduct.getFIRST_NAME() + " " + selectProduct.getLAST_NAME() + " " + selectProduct.getPATRONYMIC());
+                boolean temp = Alerts.yesNo(SUPPLIERS_DIM.getSelectionModel().getSelectedItem(), "Удаление", "Удалить колонку " 
+                        + selectProduct.getFIRST_NAME() + " " + selectProduct.getLAST_NAME() + " " + selectProduct.getPATRONYMIC() + "?");
                 if (temp){
                     try {
                         new ParamMap()
