@@ -20,18 +20,6 @@
     <top>
         <VBox spacing="5" style="-fx-padding: 5;">
             <!-- Панель кнопок -->
-            <HBox style="-fx-padding: 5;">
-                <children>
-                    <Button mnemonicParsing="false" onAction="#load_store" text="Магазины" 
-                            prefWidth="100"/>
-                    <Button mnemonicParsing="false" onAction="#load_suppliers" text="Поставщики" 
-                            prefWidth="100"/>
-                    <Button mnemonicParsing="false" onAction="#load_product" text="Товары" 
-                            prefWidth="100"/>
-                    <Button mnemonicParsing="false" onAction="#load_category" 
-                            text="Категории" prefWidth="120"/>
-                </children>
-            </HBox>
             
             <!-- Фиксированный тулбар -->
             <JInvToolBar fx:id="toolBar"/>

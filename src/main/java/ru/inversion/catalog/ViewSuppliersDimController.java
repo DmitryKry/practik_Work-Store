@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
@@ -36,6 +37,7 @@ import ru.inversion.db.expr.SQLExpressionException;
  * @author  admin
  * @since   Tue Jun 17 10:20:04 MSK 2025
  */
+
 public class ViewSuppliersDimController extends JInvFXBrowserController 
 {
     @FXML private JInvTable<PSuppliersDim> SUPPLIERS_DIM;   
@@ -43,6 +45,7 @@ public class ViewSuppliersDimController extends JInvFXBrowserController
     @FXML private TextField EMAILField;
     @FXML private TextField PhoneField;
     @FXML private BorderPane rootPane;
+    private boolean exitInMenu;
     private static List<PSuppliersDim> supplersList;
  
     public List<PSuppliersDim> getSupllers(){
@@ -62,35 +65,14 @@ public class ViewSuppliersDimController extends JInvFXBrowserController
         dsSUPPLIERS_DIM.setTaskContext (getTaskContext ());
         dsSUPPLIERS_DIM.setRowClass (PSuppliersDim.class);
     }
-    
-    private void centerStage(Stage stage) {
-        // Получаем размеры экрана
-        double screenWidth = Screen.getPrimary().getVisualBounds().getWidth();
-        double screenHeight = Screen.getPrimary().getVisualBounds().getHeight();
-        
-        // Вычисляем координаты для центрирования
-        double x = (screenWidth - stage.getWidth()) / 2;
-        double y = (screenHeight - stage.getHeight()) / 2;
-        
-        // Устанавливаем позицию
-        stage.setX(x);
-        stage.setY(y);
-    }
 //
 // Initializes the controller class.
 //
     @Override
     protected void init() throws Exception
     {
-        Stage stage = (Stage) rootPane.getScene().getWindow();
-        
-        // Устанавливаем начальный размер окна
-        stage.setWidth(800);  // Ширина
-        stage.setHeight(400); // Высота
-        
-        // Центрируем окно на экране
-        centerStage(stage);
         setTitle (getBundleString ("VIEW.TITLE"));
+        exitInMenu = false;
         
         initDataSet ();
         DSFXAdapter<PSuppliersDim> dsfx = DSFXAdapter.bind (dsSUPPLIERS_DIM, SUPPLIERS_DIM, null, false); 
@@ -138,10 +120,19 @@ public class ViewSuppliersDimController extends JInvFXBrowserController
 //    
     private void initToolBar () 
     {
+        Button customButton = new Button("В меню");
+        customButton.setOnAction(e -> {
+            new FXFormLauncher<>(this, ViewStoreController.class)
+                .initProperties(getInitProperties())
+                .doModal();
+            getViewContext().getStage().close();
+        });
         toolBar.setStandartActions (ActionFactory.ActionTypeEnum.CREATE, 
                                     ActionFactory.ActionTypeEnum.UPDATE,
                                     ActionFactory.ActionTypeEnum.CHOOSE_DIRECTORY,
+                                    ActionFactory.ActionTypeEnum.VIEW,
                                     ActionFactory.ActionTypeEnum.DELETE);
+        toolBar.getItems().add(customButton);
     }
 //
 // setPrintParam
@@ -154,22 +145,6 @@ public class ViewSuppliersDimController extends JInvFXBrowserController
 //
 // doOperation
 //    
-    
-    static private boolean showErrorAlert(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-
-        // Добавляем кастомные кнопки
-        ButtonType okButton = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
-        ButtonType cancelButton = new ButtonType("Отмена", ButtonBar.ButtonData.CANCEL_CLOSE);
-        alert.getButtonTypes().setAll(okButton, cancelButton);
-
-        // Ждём нажатия кнопки и возвращаем результат
-        Optional<ButtonType> result = alert.showAndWait();
-        return result.isPresent() && result.get() == okButton;
-    }
     
     private void doOperation ( JInvFXFormController.FormModeEnum mode ) 
     {
@@ -259,37 +234,6 @@ public class ViewSuppliersDimController extends JInvFXBrowserController
         SUPPLIERS_DIM.requestFocus ();
     }        
     
-    @FXML
-    private void load_suppliers(ActionEvent event){
-        new FXFormLauncher<>(this, ViewSuppliersDimController.class)
-                .initProperties(getInitProperties())
-                .doModal();
-        getViewContext().getStage().close();
-    }
-    
-    @FXML
-    private void load_product(ActionEvent event){
-        new FXFormLauncher<>(this, ViewProductDimController.class)
-                .initProperties(getInitProperties())
-                .doModal();
-        getViewContext().getStage().close();
-    }
-    
-    @FXML
-    private void load_category(ActionEvent event){
-        new FXFormLauncher<>(this, ViewCategoryDimController.class)
-                .initProperties(getInitProperties())
-                .doModal();
-        getViewContext().getStage().close();
-    }
-    
-    @FXML
-    private void load_store(ActionEvent event){
-        new FXFormLauncher<>(this, ViewStoreController.class)
-                .initProperties(getInitProperties())
-                .doModal();
-        getViewContext().getStage().close();
-    }   
 //
 //
 //    
