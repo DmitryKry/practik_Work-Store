@@ -27,6 +27,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
@@ -79,14 +80,6 @@ public class ViewProductDimController extends JInvFXBrowserController
     @Override
     protected void init() throws Exception
     {
-        Stage stage = (Stage) rootPane.getScene().getWindow();
-        
-        // Устанавливаем начальный размер окна
-        //stage.setWidth(800);  // Ширина
-        //stage.setHeight(400); // Высота
-        
-        // Центрируем окно на экране
-        //centerStage(stage);
         setTitle (getBundleString ("VIEW.TITLE"));
         initDataSet ();
         dsSupplierSet.executeQuery();
@@ -149,10 +142,18 @@ public class ViewProductDimController extends JInvFXBrowserController
 //    
     private void initToolBar () 
     {
+        Button customButton = new Button("В меню");
+        customButton.setOnAction(e -> {
+            new FXFormLauncher<>(this, ViewStoreController.class)
+                .initProperties(getInitProperties())
+                .doModal();
+            getViewContext().getStage().close();
+        });
         toolBar.setStandartActions (ActionFactory.ActionTypeEnum.CREATE, 
                                     ActionFactory.ActionTypeEnum.UPDATE,
                                     ActionFactory.ActionTypeEnum.DELETE,
                                     ActionFactory.ActionTypeEnum.FILTER);
+        toolBar.getItems().add(customButton);
     }
 //
 // setPrintParam
@@ -364,38 +365,6 @@ public class ViewProductDimController extends JInvFXBrowserController
         PRODUCT_DIM.getSelectionModel().clearSelection();
         PRODUCT_DIM.requestFocus ();
     }        
-    
-    @FXML
-    private void load_suppliers(ActionEvent event){
-        new FXFormLauncher<>(this, ViewSuppliersDimController.class)
-                .initProperties(getInitProperties())
-                .doModal();
-        getViewContext().getStage().close();
-    }
-    
-    @FXML
-    private void load_product(ActionEvent event){
-        new FXFormLauncher<>(this, ViewProductDimController.class)
-                .initProperties(getInitProperties())
-                .doModal();
-        getViewContext().getStage().close();
-    }
-    
-    @FXML
-    private void load_category(ActionEvent event){
-        new FXFormLauncher<>(this, ViewCategoryDimController.class)
-                .initProperties(getInitProperties())
-                .doModal();
-        getViewContext().getStage().close();
-    }
-       
-    @FXML
-    private void load_store(ActionEvent event){
-        new FXFormLauncher<>(this, ViewStoreController.class)
-                .initProperties(getInitProperties())
-                .doModal();
-        getViewContext().getStage().close();
-    }   
 
 //
 //

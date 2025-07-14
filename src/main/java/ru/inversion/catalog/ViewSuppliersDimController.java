@@ -45,6 +45,7 @@ public class ViewSuppliersDimController extends JInvFXBrowserController
     @FXML private TextField EMAILField;
     @FXML private TextField PhoneField;
     @FXML private BorderPane rootPane;
+    private JInvButton customButton;
     private boolean exitInMenu;
     private static List<PSuppliersDim> supplersList;
  
@@ -87,26 +88,10 @@ public class ViewSuppliersDimController extends JInvFXBrowserController
         SUPPLIERS_DIM.setAction (ActionFactory.ActionTypeEnum.DELETE, (a) -> doOperation (FormModeEnum.VM_DEL));
         SUPPLIERS_DIM.setAction (ActionFactory.ActionTypeEnum.CHOOSE_DIRECTORY, (a) -> doOperation (FormModeEnum.VM_CHOICE));
         SUPPLIERS_DIM.setAction (ActionFactory.ActionTypeEnum.REFRESH, (a) -> doRefresh ());
-        SUPPLIERS_DIM.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-            if (newSelection != null) {
-                updateTextFields(newSelection);
-            }
-        });
         doRefresh();
         
     }
     
-    private void updateTextFields(PSuppliersDim selectSuppliers){
-        if (selectSuppliers != null){
-            EMAILField.setText(String.valueOf(selectSuppliers.getMAIL()));
-            PhoneField.setText(String.valueOf(selectSuppliers.getPHONE()));
-            EMAILField.setEditable(false);
-            PhoneField.setEditable(false);            
-        } else {
-            EMAILField.clear();
-            PhoneField.clear();
-        }
-    }
     
 //
 // doRefresh
@@ -120,7 +105,7 @@ public class ViewSuppliersDimController extends JInvFXBrowserController
 //    
     private void initToolBar () 
     {
-        Button customButton = new Button("В меню");
+        customButton = new JInvButton("В меню");
         customButton.setOnAction(e -> {
             new FXFormLauncher<>(this, ViewStoreController.class)
                 .initProperties(getInitProperties())
