@@ -52,7 +52,7 @@ public class EditSuppliersDimController extends JInvFXFormController <PSuppliers
         nameFields = new String[]{"FIRST_NAME", "LAST_NAME", "PATRONYMIC", "MAIL", "PHONE"};
         getValidMan().bindValidators2Control(FIRST_NAME,(value)-> {
             if (value==null)
-                return new Validator.Result(value,String.format(bundle.getString("VALIDATOR.ERROR"), value));
+                return new Validator.Result(value, bundle.getString("VALIDATOR.ERROR"));
             return null;
         });
         getValidMan().bindValidators2Control(LAST_NAME,(value)-> {

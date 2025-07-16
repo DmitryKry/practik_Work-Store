@@ -1,5 +1,7 @@
 package ru.inversion.catalog;
 
+import java.util.ArrayList;
+import java.util.List;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -21,6 +23,9 @@ import ru.inversion.fx.form.controls.*;
 import ru.inversion.bicomp.action.JInvButtonPrint;
 import ru.inversion.bicomp.action.StopExecuteActionBiCompException;
 import ru.inversion.bicomp.fxreport.ApReport;
+import javafx.scene.control.Label;
+import ru.inversion.fx.form.*;
+import ru.inversion.fx.form.controls.*;
 
 /**
  *
@@ -30,7 +35,8 @@ import ru.inversion.bicomp.fxreport.ApReport;
 public class ViewStoreController extends JInvFXBrowserController 
 { 
     @FXML private JInvToolBar toolBar;
- 
+    @FXML private JInvLabel adressInvLabel;
+    private PStore infoStore;
    
     private final XXIDataSet<PStore> dsPstore_table = new XXIDataSet<> ();    
 //
@@ -48,8 +54,9 @@ public class ViewStoreController extends JInvFXBrowserController
     protected void init() throws Exception
     {
         setTitle (getBundleString ("VIEW.TITLE"));
-        
         initDataSet ();
+        infoStore = dsPstore_table.getRows().get(0);
+        infoStore.get
  
     } 
 //
@@ -93,15 +100,7 @@ public class ViewStoreController extends JInvFXBrowserController
                 .initProperties(getInitProperties())
                 .doModal();
         getViewContext().getStage().close();
-    }
-    
-    @FXML
-    private void load_store(ActionEvent event){
-        new FXFormLauncher<>(this, ViewStoreController.class)
-                .initProperties(getInitProperties())
-                .doModal();
-        getViewContext().getStage().close();
-    }    
+    }   
 //
 //
 //    

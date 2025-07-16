@@ -11,35 +11,30 @@
 <?import ru.inversion.fx.form.controls.JInvLabel?>
 <?import ru.inversion.fx.form.controls.JInvTextField?>
 <?import ru.inversion.fx.form.controls.*?>
-<VBox alignment="TOP_CENTER" prefHeight="265.0" prefWidth="698.0" spacing="5.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.inversion.catalog.EditProductDimController">
+
+<VBox alignment="TOP_CENTER" prefHeight="265.0" prefWidth="698.0" spacing="5.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1"
+fx:controller="ru.inversion.catalog.EditProductDimFilterController">
 <children>
-<GridPane hgap="5.0" prefHeight="101.0" prefWidth="688.0" vgap="5.0" VBox.vgrow="ALWAYS">
+<GridPane hgap="5.0" vgap="5.0" VBox.vgrow="ALWAYS">
 <children>
-<JInvLabel fx:id="lblPRODUCT_NAME" text="%PRODUCT_NAME" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-<JInvTextField fx:id="PRODUCT_NAME" fieldName="PRODUCT_NAME" prefColumnCount="50" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 <JInvLabel fx:id="lblCATEGORY" text="%CATEGORY" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-<JInvLabel fx:id="lblPRICE" text="%PRICE" GridPane.columnIndex="0" GridPane.rowIndex="3" />
-<JInvTextField fx:id="PRICE" fieldName="PRICE" prefColumnCount="10" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-<JInvLabel fx:id="lblSTOCK_QUANTITY" text="%STOCK_QUANTITY" GridPane.columnIndex="0" GridPane.rowIndex="4" />
-<JInvLabel text="%SUPPLIER" GridPane.rowIndex="5" />
+<JInvLabel text="%SUPPLIER" GridPane.rowIndex="4" />
 <JInvComboBox fx:id="productCategoryComboBox" editable="true" GridPane.columnIndex="1" GridPane.rowIndex="2" required="true" />
-            <JInvComboBox fx:id="productSuppliersComboBox" editable="true" GridPane.columnIndex="1" GridPane.rowIndex="5" required="true" />
-<JInvTextField fx:id="STOCK_QUANTITY" prefColumnCount="10" required="true" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <JInvComboBox fx:id="productSuppliersComboBox" editable="true" GridPane.columnIndex="1" GridPane.rowIndex="4" required="true" />
             
 </children>
 <columnConstraints>
-<ColumnConstraints halignment="RIGHT" />
-<ColumnConstraints hgrow="ALWAYS" />
+<ColumnConstraints halignment="RIGHT" maxWidth="345.0" minWidth="75.0" prefWidth="289.0" />
+<ColumnConstraints hgrow="ALWAYS" maxWidth="608.0" minWidth="338.0" prefWidth="394.0" />
 </columnConstraints>
 <VBox.margin>
 <Insets />
 </VBox.margin>
 <rowConstraints>
+<RowConstraints maxHeight="0.0" minHeight="0.0" prefHeight="0.0" />
+<RowConstraints maxHeight="0.0" minHeight="0.0" prefHeight="0.0" />
 <RowConstraints />
 <RowConstraints />
-<RowConstraints />
-<RowConstraints />
-<RowConstraints maxHeight="26.0" minHeight="19.0" prefHeight="26.0" />
 <RowConstraints maxHeight="26.0" minHeight="19.0" prefHeight="26.0" />
             <RowConstraints maxHeight="7.0" minHeight="0.0" prefHeight="0.0" />
             <RowConstraints maxHeight="7.0" minHeight="0.0" prefHeight="0.0" />

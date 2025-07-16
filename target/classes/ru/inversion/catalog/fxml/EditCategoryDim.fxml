@@ -18,8 +18,8 @@
 <JInvTextField fx:id="CATEGORY_NAME" fieldName="CATEGORY_NAME" prefColumnCount="50" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 </children>
 <columnConstraints>
-<ColumnConstraints halignment="RIGHT" />
-<ColumnConstraints hgrow="ALWAYS" />
+<ColumnConstraints halignment="RIGHT" maxWidth="167.0" minWidth="38.0" prefWidth="82.0" />
+<ColumnConstraints hgrow="ALWAYS" maxWidth="644.0" minWidth="515.0" prefWidth="600.0" />
 </columnConstraints>
 <VBox.margin>
 <Insets />

@@ -165,121 +165,12 @@ public class ViewProductDimController extends JInvFXBrowserController
     }
 //
 // doOperation
-//    
-    
-    private boolean showErrorAlert(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-
-        // Добавляем кастомные кнопки
-        ButtonType okButton = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
-        ButtonType cancelButton = new ButtonType("Отмена", ButtonBar.ButtonData.CANCEL_CLOSE);
-        alert.getButtonTypes().setAll(okButton, cancelButton);
-
-        // Ждём нажатия кнопки и возвращаем результат
-        Optional<ButtonType> result = alert.showAndWait();
-        return result.isPresent() && result.get() == okButton;
-    }
-    
-    private void categoryComboBox(){
-        if (filterForCategoryBox != null) filterForCategoryBox.getItems().clear();
-        Set<String> unigTetles = new LinkedHashSet<>();
-        for (PCategoryDim item : dsPCategorySet.getRows()){
-            unigTetles.add(item.getCATEGORY_NAME());
-        }
-        filterForCategoryBox.getItems().addAll("Все продукты");
-        filterForCategoryBox.getItems().addAll(unigTetles);
-        if (!filterForCategoryBox.getItems().isEmpty())
-            filterForCategoryBox.getSelectionModel().selectFirst();
-    }
-    
-    private void CategoryBooksComboBox() {
-        Set<String> uniqueSuppliers = new LinkedHashSet<>();
-        List<PCategoryDim> findOfUsers = new ArrayList<>();// LinkedHashSet сохраняет порядок
-        for (PCategoryDim category : dsPCategorySet.getRows()) 
-            findOfUsers.add(category);
-        filterForCategoryBox.setEditable(true);
-        filterForCategoryBox.getEditor().textProperty().addListener((obs, oldVal, newVal) -> {
-            if (!filterForCategoryBox.getItems().contains(newVal)) {
-                if (!uniqueSuppliers.isEmpty())
-                    uniqueSuppliers.clear();
-                int count = 0;
-                for (PCategoryDim category : dsPCategorySet.getRows()) {
-                    for (char item : newVal.toCharArray()) {
-                        if (Character.toLowerCase(item) == Character.toLowerCase((category.getCATEGORY_NAME().charAt(count)))) {
-                            if (count < newVal.length()) {
-                                count++;
-                                if (count == (newVal.length())) {
-                                    uniqueSuppliers.add(category.getCATEGORY_NAME());
-                                    count = 0;
-                                }
-                            }
-                        }
-                        else {
-                            count = 0;
-                            break;
-                        }
-                    }
-                }       
-                filterForCategoryBox.getItems().clear();
-                filterForCategoryBox.getItems().setAll(uniqueSuppliers);
-                filterForCategoryBox.show();
-                filterForCategoryBox.getItems().addAll("Все продукты");
-
-                // Показываем выпадающий список при вводе
-                if (newVal.isEmpty()) {
-                    filterForCategoryBox.getItems().clear();
-                    uniqueSuppliers.clear();
-                    for (PCategoryDim category : findOfUsers){
-                        uniqueSuppliers.add(category.getCATEGORY_NAME());
-                    }
-                    filterForCategoryBox.getItems().addAll(uniqueSuppliers);                                
-                    filterForCategoryBox.show();
-                }
-            }
-        });
-
-        // Устанавливаем первое значение по умолчанию, если список не пуст
-        if (!filterForCategoryBox.getItems().isEmpty()) {
-            filterForCategoryBox.getSelectionModel().selectFirst();
-        }
-    } 
-    
-    private boolean showFilterAlert(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        if (filterForCategoryBox == null) {
-            filterForCategoryBox = new ComboBox<>();
-        }
-        
-        categoryComboBox();
-        CategoryBooksComboBox();
-        
-        VBox content = new VBox();
-        content.getChildren().addAll(new Label(message), filterForCategoryBox);
-        content.setSpacing(10);
-
-        alert.getDialogPane().setContent(content);
-        
-        // Добавляем кастомные кнопки
-        ButtonType okButton = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
-        ButtonType cancelButton = new ButtonType("Отмена", ButtonBar.ButtonData.CANCEL_CLOSE);
-        alert.getButtonTypes().setAll(okButton, cancelButton);
-
-        // Ждём нажатия кнопки и возвращаем результат
-        Optional<ButtonType> result = alert.showAndWait();
-        return result.isPresent() && result.get() == okButton;
-    }
-    
+//        
     
     private void doOperation ( JInvFXFormController.FormModeEnum mode ) 
     {
         PProductDim p = null;
-
+        boolean cheakFilter = false;
         switch (mode) {
             case VM_INS:
                 p = new PProductDim ();
@@ -313,23 +204,13 @@ public class ViewProductDimController extends JInvFXBrowserController
                 }
                 break;
             case VM_SHOW:
-                boolean tempFilter = showFilterAlert("Фильтрация", "Фильтрация по категории");
-                if (tempFilter) {
-                   PRODUCT_DIM.getItems().clear();
-                   List<PProductDim> tempList = products.stream()
-                           .filter(prod -> filterForCategoryBox.getSelectionModel().getSelectedItem() != null && 
-                                   prod.getCATEGORY_NAME().equals(filterForCategoryBox.getSelectionModel().getSelectedItem()))
-                           .collect(Collectors.toList());
-                   if (tempList != null) 
-                       PRODUCT_DIM.getItems().addAll(tempList);   
-                   else PRODUCT_DIM.getItems().addAll(products);
-                }
-                
-                
-                
-                
+                cheakFilter = true;
+                new FXFormLauncher<>(this, EditProductDimFilterController.class)
+                        .dataObject (p)
+                        .initProperties(getInitProperties())
+                        .doModal();
         }
-        if (p != null) 
+        if (p != null && !cheakFilter) 
             new FXFormLauncher<> (this, EditProductDimController.class)
                 .dataObject (p)
                 .dialogMode (mode)
@@ -358,6 +239,15 @@ public class ViewProductDimController extends JInvFXBrowserController
                     dsPRODUCT_DIM.removeCurrentRow ();      
                     doRefresh ();
                     break;
+                case VM_SHOW:
+                    PRODUCT_DIM.getItems().clear();
+                    List<PProductDim> tempList = products.stream()
+                            .filter(prod -> filterForCategoryBox.getSelectionModel().getSelectedItem() != null && 
+                                    prod.getCATEGORY_NAME().equals(dctl.getDataObject().getCATEGORY_NAME()))
+                            .collect(Collectors.toList());
+                    if (tempList != null) 
+                        PRODUCT_DIM.getItems().addAll(tempList);   
+                    else PRODUCT_DIM.getItems().addAll(products);
                 default:
                     break;
             }               

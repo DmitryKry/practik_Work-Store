@@ -15,7 +15,7 @@
 <GridPane hgap="5.0" vgap="5.0" VBox.vgrow="ALWAYS">
 <children>
 <JInvLabel fx:id="lblFIRST_NAME" text="%FIRST_NAME" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-<JInvTextField fx:id="FIRST_NAME" fieldName="FIRST_NAME" maxWidth="-Infinity" prefColumnCount="25" required="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+<JInvTextField fx:id="FIRST_NAME" fieldName="FIRST_NAME" maxWidth="-Infinity" pickOnBounds="false" prefColumnCount="25" required="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 <JInvLabel fx:id="lblLAST_NAME" text="%LAST_NAME" GridPane.columnIndex="0" GridPane.rowIndex="2" />
 <JInvTextField fx:id="LAST_NAME" fieldName="LAST_NAME" maxWidth="-Infinity" prefColumnCount="25" required="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 <JInvLabel fx:id="lblPATRONYMIC" text="%PATRONYMIC" GridPane.columnIndex="0" GridPane.rowIndex="3" />
@@ -26,8 +26,8 @@
 <JInvTextField fx:id="PHONE" required="true" GridPane.columnIndex="1" GridPane.rowIndex="5" />
 </children>
 <columnConstraints>
-<ColumnConstraints halignment="RIGHT" />
-<ColumnConstraints hgrow="ALWAYS" />
+<ColumnConstraints halignment="RIGHT" maxWidth="110.0" minWidth="62.0" prefWidth="62.0" />
+<ColumnConstraints hgrow="ALWAYS" maxWidth="317.0" minWidth="269.0" prefWidth="317.0" />
 </columnConstraints>
 <VBox.margin>
 <Insets />

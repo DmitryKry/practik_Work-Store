@@ -1,40 +1,31 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package ru.inversion.catalog;
 
-import javafx.event.ActionEvent;
-import ru.inversion.fx.form.JInvFXFormController;
-import ru.inversion.fx.form.controls.*;
-import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
-import ru.inversion.bicomp.util.ParamMap;
-import ru.inversion.db.expr.SQLExpressionException;
-import java.util.List;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
-import javafx.scene.Node;
+import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
-import javafx.scene.layout.GridPane;
+import javafx.scene.control.ComboBox;
+import ru.inversion.bicomp.util.ParamMap;
 import ru.inversion.dataset.XXIDataSet;
-import javafx.stage.Stage;
-import ru.inversion.fx.form.valid.Validator;
-/**
- * @author  admin
- * @since   Mon Jun 16 14:39:40 MSK 2025
- */
-public class EditProductDimController extends JInvFXFormController <PProductDim> 
-{  
-//
-//
-//
-//    @FXML JInvLongField PRODUCT_ID;
-    @FXML private JInvTextField PRODUCT_NAME;
-//    @FXML JInvLongField CATEGORY;
-    @FXML private JInvTextField PRICE;
-    @FXML private JInvTextField STOCK_QUANTITY;
+import ru.inversion.db.expr.SQLExpressionException;
+import ru.inversion.fx.form.JInvFXFormController;
+import ru.inversion.fx.form.controls.JInvComboBox;
+import ru.inversion.fx.form.controls.JInvTextField;
 
+/**
+ *
+ * @author admin
+ */
+public class EditProductDimFilterController extends JInvFXFormController <PProductDim>{
     @FXML private JInvComboBox productCategoryComboBox;
     @FXML private JInvComboBox productSuppliersComboBox;
     private boolean cheakBox;
@@ -56,7 +47,6 @@ public class EditProductDimController extends JInvFXFormController <PProductDim>
         dsPCategorySet.setTaskContext (getTaskContext ());
         dsPCategorySet.setRowClass (PCategoryDim.class);
     }
-
     
     @Override
     public boolean onOK() {
@@ -69,38 +59,10 @@ public class EditProductDimController extends JInvFXFormController <PProductDim>
         PCategoryDim categoryOnly = categores.stream()
                         .filter(c -> (c.getCATEGORY_NAME())
                                 .equals(productCategoryComboBox.getSelectionModel().getSelectedItem()))
-                        .findFirst().orElse(null);                 
-        if (dataObject.getPRODUCT_NAME() == null){
-            try {
-                new ParamMap()
-                        .add("p_name", PRODUCT_NAME.getText())
-                        .add("p_category", categoryOnly.getCATEGORY_DIM_ID())
-                        .add("p_price", PRICE.getText())
-                        .add("p_stock_quantity", STOCK_QUANTITY.getText())
-                        .add("p_supplier", SupplersOnly.getID())
-                        .exec(this, "addNewProduct");
-            } catch (SQLExpressionException ex) {
-                Logger.getLogger(EditProductDimController.class.getName()).log(Level.SEVERE, null, ex);
-                System.out.println(ex.getMessage());
-                return false;
-            }
-        }
-        else{
-            try {
-                new ParamMap()
-                        .add("p_id", dataObject.getPRODUCT_ID())
-                        .add("p_name", PRODUCT_NAME.getText())
-                        .add("p_category", categoryOnly.getCATEGORY_DIM_ID())
-                        .add("p_price", PRICE.getText())
-                        .add("p_stock_quantity", STOCK_QUANTITY.getText())
-                        .add("p_supplier", SupplersOnly.getID())
-                        .exec(this, "updateProductsNew");
-            } catch (SQLExpressionException ex) {
-                Logger.getLogger(EditProductDimController.class.getName()).log(Level.SEVERE, null, ex);
-                System.out.println(ex.getMessage());
-                return false;
-            }
-        }
+                        .findFirst().orElse(null);   
+        dataObject.setCATEGORY_NAME(categoryOnly.getCATEGORY_NAME());
+        dataObject.setFIRST_NAME(SupplersOnly.getFIRST_NAME());
+        dataObject.setLAST_NAME(SupplersOnly.getLAST_NAME());
         this.getFXEntity().commit();
         return true;
     }
@@ -211,23 +173,9 @@ public class EditProductDimController extends JInvFXFormController <PProductDim>
     protected void init () throws Exception 
     {
         initDataSet();
-        getValidMan().bindValidators2Control(STOCK_QUANTITY,(value)-> {
-            if (value==null)
-                return new Validator.Result(value,String.format(bundle.getString("VALIDATOR.ERROR"), value));
-            return null;
-        });
         dsSupplierSet.executeQuery();
         dsPCategorySet.executeQuery();
-        if (dataObject.getFIRST_NAME() != null){
-            productSuppliersComboBox.getItems().clear();
-            supplierses = new ArrayList<>();
-            for (PSuppliersDim item : dsSupplierSet.getRows()){
-                supplierses.add(item);
-            }
-            productSuppliersComboBox.getItems().addAll(dataObject.getFIRST_NAME() + " " + dataObject.getLAST_NAME());
-            productSuppliersComboBox.getSelectionModel().selectFirst();
-        }
-        else productComboBox();
+        productComboBox();
         categoryComboBox();
         SupplersBooksComboBox();
         CategoryBooksComboBox();
@@ -260,4 +208,3 @@ public class EditProductDimController extends JInvFXFormController <PProductDim>
             productCategoryComboBox.getSelectionModel().selectFirst();
     }
 }
-
