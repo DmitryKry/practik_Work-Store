@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
@@ -179,8 +180,13 @@ public class EditProductDimFilterController extends JInvFXFormController <PProdu
         categoryComboBox();
         SupplersBooksComboBox();
         CategoryBooksComboBox();
+        productCategoryComboBox.setDisable(false);
+        productSuppliersComboBox.setDisable(false);
+        Platform.runLater(() -> {
+            productCategoryComboBox.requestFocus();
+        });
         super.init (); 
-    }       
+    }
     
     private void productComboBox(){
         productSuppliersComboBox.getItems().clear();

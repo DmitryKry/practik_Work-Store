@@ -83,7 +83,7 @@ public class ViewStoreController extends JInvFXBrowserController
         maiLabel.setText(properties.getProperty("MAIL") + ": " + infoStore.getMAIL().toString());
         nameStoreLabel.setText(properties.getProperty("NAME_STORE") + ": " + infoStore.getNAME_STORE().toString());
         phoneInvLabel.setText(properties.getProperty("PHONE") + ": " + infoStore.getPHONE().toString());
-        timeOpenInvLabel.setText(properties.getProperty("TIME_OF_WORK") + ": " + String.valueOf(infoStore.getTIME_OPEN_STORE().toLocalTime()) + " до "
+        timeOpenInvLabel.setText(properties.getProperty("TIME_OF_WORK") + ": c " + String.valueOf(infoStore.getTIME_OPEN_STORE().toLocalTime()) + " до "
         + String.valueOf(infoStore.getTIME_CLOSE_STORE().toLocalTime()));
         
     } 

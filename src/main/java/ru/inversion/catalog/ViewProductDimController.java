@@ -55,6 +55,7 @@ public class ViewProductDimController extends JInvFXBrowserController
     @FXML private BorderPane rootPane;
     private ComboBox<String> filterForCategoryBox;
     private List<PProductDim> products;
+    private JInvFXFormController.FormModeEnum mainModeEnum;
  
    
     private final XXIDataSet<PProductDim> dsPRODUCT_DIM = new XXIDataSet<> ();    
@@ -88,11 +89,6 @@ public class ViewProductDimController extends JInvFXBrowserController
         DSFXAdapter<PProductDim> dsfx = DSFXAdapter.bind (dsPRODUCT_DIM, PRODUCT_DIM, null, false); 
         
         dsfx.setEnableFilter (true);
-        products = new ArrayList<>();
-        for (PProductDim item : dsPRODUCT_DIM.getRows())
-            products.add(item);
- 
-                
         initToolBar ();
 
         PRODUCT_DIM.setToolBar (toolBar);       
@@ -171,6 +167,7 @@ public class ViewProductDimController extends JInvFXBrowserController
     {
         PProductDim p = null;
         boolean cheakFilter = false;
+        mainModeEnum = mode;
         switch (mode) {
             case VM_INS:
                 p = new PProductDim ();
@@ -204,10 +201,12 @@ public class ViewProductDimController extends JInvFXBrowserController
                 }
                 break;
             case VM_SHOW:
+                p = new PProductDim ();
                 cheakFilter = true;
                 new FXFormLauncher<>(this, EditProductDimFilterController.class)
                         .dataObject (p)
                         .initProperties(getInitProperties())
+                        .callback (this::doFormResult)   
                         .doModal();
         }
         if (p != null && !cheakFilter) 
@@ -225,7 +224,7 @@ public class ViewProductDimController extends JInvFXBrowserController
     {
         if (JInvFXFormController.FormReturnEnum.RET_OK == ok)
         {
-            switch (dctl.getFormMode ()) 
+            switch (mainModeEnum) 
             {
                 case VM_INS:
                     dsPRODUCT_DIM.insertRow (dctl.getDataObject (), IDataSet.InsertRowModeEnum.AFTER_CURRENT, true);
@@ -240,11 +239,14 @@ public class ViewProductDimController extends JInvFXBrowserController
                     doRefresh ();
                     break;
                 case VM_SHOW:
-                    PRODUCT_DIM.getItems().clear();
+                    
+                    products = new ArrayList<>();
+                    for (PProductDim item : dsPRODUCT_DIM.getRows())
+                        products.add(item);
                     List<PProductDim> tempList = products.stream()
-                            .filter(prod -> filterForCategoryBox.getSelectionModel().getSelectedItem() != null && 
-                                    prod.getCATEGORY_NAME().equals(dctl.getDataObject().getCATEGORY_NAME()))
+                            .filter(prod -> prod.getCATEGORY_NAME().equals(dctl.getDataObject().getCATEGORY_NAME()))
                             .collect(Collectors.toList());
+                    PRODUCT_DIM.getItems().clear();
                     if (tempList != null) 
                         PRODUCT_DIM.getItems().addAll(tempList);   
                     else PRODUCT_DIM.getItems().addAll(products);
