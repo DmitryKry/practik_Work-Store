@@ -1,7 +1,10 @@
 package ru.inversion.catalog;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -34,8 +37,13 @@ import ru.inversion.fx.form.controls.*;
  */
 public class ViewStoreController extends JInvFXBrowserController 
 { 
-    @FXML private JInvToolBar toolBar;
     @FXML private JInvLabel adressInvLabel;
+    @FXML private JInvLabel dateOpenStoreInvLabel;
+    @FXML private JInvLabel firstNameOwnerInvLabel;
+    @FXML private JInvLabel maiLabel;
+    @FXML private JInvLabel nameStoreLabel;
+    @FXML private JInvLabel phoneInvLabel;
+    @FXML private JInvLabel timeOpenInvLabel;
     private PStore infoStore;
    
     private final XXIDataSet<PStore> dsPstore_table = new XXIDataSet<> ();    
@@ -46,18 +54,38 @@ public class ViewStoreController extends JInvFXBrowserController
     {
         dsPstore_table.setTaskContext (getTaskContext ());
         dsPstore_table.setRowClass (PStore.class);
+        dsPstore_table.executeQuery();
     }
     
 // Initializes the controller class.
-//
+//    
     @Override
     protected void init() throws Exception
     {
         setTitle (getBundleString ("VIEW.TITLE"));
         initDataSet ();
         infoStore = dsPstore_table.getRows().get(0);
-        infoStore.get
- 
+        Properties properties = new Properties();
+        // Вариант 1 (лучший):
+        try (InputStream input = getClass().getResourceAsStream("/ru/inversion/catalog/res/ViewStore.properties")) {
+            if (input == null) {
+                throw new RuntimeException("Файл не найден! Проверьте путь: /ru/inversion/catalog/res/ViewStore.properties");
+            }
+            properties.load(input);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        adressInvLabel.setText(properties.getProperty("ADDRESS") + ": " + infoStore.getADDRESS().toString());
+        dateOpenStoreInvLabel.setText(properties.getProperty("DATE_OPEN_STORE") + ": " + infoStore.getDATE_OPEN_STORE().toString());
+        firstNameOwnerInvLabel.setText(properties.getProperty("FULL_NAME") + ": " + infoStore.getSECOND_NAME_OWNER().toString() + " "
+                + infoStore.getFIRST_NAME_OWNER().toString() + " "
+                + infoStore.getLAST_NAME_OWNER().toString());
+        maiLabel.setText(properties.getProperty("MAIL") + ": " + infoStore.getMAIL().toString());
+        nameStoreLabel.setText(properties.getProperty("NAME_STORE") + ": " + infoStore.getNAME_STORE().toString());
+        phoneInvLabel.setText(properties.getProperty("PHONE") + ": " + infoStore.getPHONE().toString());
+        timeOpenInvLabel.setText(properties.getProperty("TIME_OF_WORK") + ": " + String.valueOf(infoStore.getTIME_OPEN_STORE().toLocalTime()) + " до "
+        + String.valueOf(infoStore.getTIME_CLOSE_STORE().toLocalTime()));
+        
     } 
 //
 // doRefresh

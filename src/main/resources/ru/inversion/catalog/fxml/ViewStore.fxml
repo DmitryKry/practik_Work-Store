@@ -14,7 +14,13 @@
                <items>
                   <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                      <children>
-                        <JInvLabel />
+                        <JInvLabel fx:id="adressInvLabel" />
+                        <JInvLabel fx:id="dateOpenStoreInvLabel" />
+                        <JInvLabel fx:id="firstNameOwnerInvLabel" />
+                        <JInvLabel fx:id="maiLabel" />
+                        <JInvLabel fx:id="nameStoreLabel" />
+                        <JInvLabel fx:id="phoneInvLabel" />
+                        <JInvLabel fx:id="timeOpenInvLabel" />
                      </children></VBox>
                   <VBox alignment="CENTER" spacing="0">
                      <children>
