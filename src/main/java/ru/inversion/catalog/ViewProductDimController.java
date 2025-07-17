@@ -1,4 +1,6 @@
 package ru.inversion.catalog;
+import java.io.IOException;
+import java.io.InputStream;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import ru.inversion.dataset.IDataSet;
@@ -22,6 +24,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashSet;
 
 import java.util.Optional;
+import java.util.Properties;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -53,6 +56,7 @@ public class ViewProductDimController extends JInvFXBrowserController
     @FXML private TextField phoneField;
     @FXML private TextField emailField;
     @FXML private BorderPane rootPane;
+    private Properties properties;
     private ComboBox<String> filterForCategoryBox;
     private List<PProductDim> products;
     private JInvFXFormController.FormModeEnum mainModeEnum;
@@ -90,6 +94,17 @@ public class ViewProductDimController extends JInvFXBrowserController
         
         dsfx.setEnableFilter (true);
         initToolBar ();
+        
+        properties = new Properties();
+        // Вариант 1 (лучший):
+        try (InputStream input = getClass().getResourceAsStream("/ru/inversion/catalog/res/ViewProductDim.properties")) {
+            if (input == null) {
+                throw new RuntimeException("Файл не найден! Проверьте путь: /ru/inversion/catalog/res/ViewProductDim.properties");
+            }
+            properties.load(input);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         PRODUCT_DIM.setToolBar (toolBar);       
         PRODUCT_DIM.setAction (ActionFactory.ActionTypeEnum.CREATE, (a) -> doOperation (FormModeEnum.VM_INS));
@@ -268,6 +283,11 @@ public class ViewProductDimController extends JInvFXBrowserController
                     else if (!tempListSuppliers.isEmpty() && tempListCategory.isEmpty()) {
                         for (PProductDim item : tempListSuppliers)
                             tempList.add(item);
+                    }
+                    if ((dctl.getDataObject().getCATEGORY_NAME() != null && tempListCategory.isEmpty()) || 
+                            (dctl.getDataObject().getFIRST_NAME() != null && tempListSuppliers.isEmpty())){ 
+                        Alerts.info(PRODUCT_DIM, properties.getProperty("ERROR"), properties.getProperty("INFO.FILTER"));
+                        tempList.clear();
                     }
                     PRODUCT_DIM.getItems().clear();
                     if (!tempList.isEmpty())
