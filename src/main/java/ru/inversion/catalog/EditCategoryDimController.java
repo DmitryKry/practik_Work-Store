@@ -1,8 +1,10 @@
 package ru.inversion.catalog;
 
+import java.util.prefs.Preferences;
 import ru.inversion.fx.form.JInvFXFormController;
 import ru.inversion.fx.form.controls.*;
 import javafx.fxml.FXML;
+import javafx.stage.Stage;
 
 /**
  * @author  admin
@@ -24,6 +26,5 @@ public class EditCategoryDimController extends JInvFXFormController <PCategoryDi
     {
         super.init (); 
     }    
-
 }
 

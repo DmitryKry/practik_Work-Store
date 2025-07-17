@@ -226,6 +226,7 @@ public class EditProductDimController extends JInvFXFormController <PProductDim>
             }
             productSuppliersComboBox.getItems().addAll(dataObject.getFIRST_NAME() + " " + dataObject.getLAST_NAME());
             productSuppliersComboBox.getSelectionModel().selectFirst();
+            productSuppliersComboBox.setDisable(true);
         }
         else productComboBox();
         categoryComboBox();

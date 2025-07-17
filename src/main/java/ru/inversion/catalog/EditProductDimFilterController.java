@@ -195,6 +195,7 @@ public class EditProductDimFilterController extends JInvFXFormController <PProdu
     }
     
     private void productComboBox(){
+        setTitle(getBundleString("EDIT.TITLE"));
         productSuppliersComboBox.getItems().clear();
         Set<String> unigTetles = new LinkedHashSet<>();
         supplierses = new ArrayList<>();
