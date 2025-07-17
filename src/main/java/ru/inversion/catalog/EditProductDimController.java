@@ -13,6 +13,8 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
@@ -41,6 +43,8 @@ public class EditProductDimController extends JInvFXFormController <PProductDim>
     private List<PSuppliersDim> supplierses;
     private List<PCategoryDim> categores;
 //
+    static private String reg_Price = "^\\d+(\\.\\d{2})?$";
+    private static final Pattern pattern_Price = Pattern.compile(reg_Price);
 // Initializes the controller class.
 //
      private final XXIDataSet<PSuppliersDim> dsSupplierSet = new XXIDataSet<> ();    
@@ -57,6 +61,13 @@ public class EditProductDimController extends JInvFXFormController <PProductDim>
         dsPCategorySet.setRowClass (PCategoryDim.class);
     }
 
+    private static boolean isValidPrice(String element, Pattern anotherPattern) {
+        if (element == null) {
+            return false;
+        }
+        Matcher matcher = anotherPattern.matcher(element);
+        return matcher.matches();
+    }
     
     @Override
     public boolean onOK() {
@@ -211,11 +222,6 @@ public class EditProductDimController extends JInvFXFormController <PProductDim>
     protected void init () throws Exception 
     {
         initDataSet();
-        getValidMan().bindValidators2Control(STOCK_QUANTITY,(value)-> {
-            if (value==null)
-                return new Validator.Result(value,String.format(bundle.getString("VALIDATOR.ERROR"), value));
-            return null;
-        });
         dsSupplierSet.executeQuery();
         dsPCategorySet.executeQuery();
         if (dataObject.getFIRST_NAME() != null){
@@ -232,6 +238,27 @@ public class EditProductDimController extends JInvFXFormController <PProductDim>
         categoryComboBox();
         SupplersBooksComboBox();
         CategoryBooksComboBox();
+        
+        getValidMan().bindValidators2Control(PRODUCT_NAME,(value)-> {
+            if (value==null)
+                return new Validator.Result(value, bundle.getString("VALIDATOR.ERROR"));
+            return null;
+        });
+        
+        getValidMan().bindValidators2Control(PRICE,(value)-> {
+            if (value==null)
+                return new Validator.Result(value, bundle.getString("VALIDATOR.ERROR"));
+            if (!isValidPrice((String) value, pattern_Price)){
+                return new Validator.Result(value,String.format(bundle.getString("VALIDATOR.PRICE"), value));
+            }
+            return null;
+        });
+        
+        getValidMan().bindValidators2Control(STOCK_QUANTITY,(value)-> {
+            if (value==null)
+                return new Validator.Result(value, bundle.getString("VALIDATOR.ERROR"));
+            return null;
+        });
         super.init (); 
     }       
     
