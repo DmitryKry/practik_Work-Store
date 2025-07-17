@@ -52,18 +52,24 @@ public class EditProductDimFilterController extends JInvFXFormController <PProdu
     @Override
     public boolean onOK() {
         cheakBox = true;
-        PSuppliersDim SupplersOnly = supplierses.stream()
-                        .filter(s -> (s.getFIRST_NAME() + " " + s.getLAST_NAME())
-                                .equals(productSuppliersComboBox.getSelectionModel().getSelectedItem()))
-                        .findFirst().orElse(null);
-
-        PCategoryDim categoryOnly = categores.stream()
-                        .filter(c -> (c.getCATEGORY_NAME())
-                                .equals(productCategoryComboBox.getSelectionModel().getSelectedItem()))
-                        .findFirst().orElse(null);   
-        dataObject.setCATEGORY_NAME(categoryOnly.getCATEGORY_NAME());
-        dataObject.setFIRST_NAME(SupplersOnly.getFIRST_NAME());
-        dataObject.setLAST_NAME(SupplersOnly.getLAST_NAME());
+        if (!productSuppliersComboBox.getSelectionModel().getSelectedItem().equals("Ничего"))
+        {
+            PSuppliersDim SupplersOnly = supplierses.stream()
+                            .filter(s -> (s.getFIRST_NAME() + " " + s.getLAST_NAME())
+                                    .equals(productSuppliersComboBox.getSelectionModel().getSelectedItem()))
+                            .findFirst().orElse(null);
+            dataObject.setFIRST_NAME(SupplersOnly.getFIRST_NAME());
+            dataObject.setLAST_NAME(SupplersOnly.getLAST_NAME());
+            
+        }
+        if (!productCategoryComboBox.getSelectionModel().getSelectedItem().equals("Ничего"))
+        {
+            PCategoryDim categoryOnly = categores.stream()
+                            .filter(c -> (c.getCATEGORY_NAME())
+                                    .equals(productCategoryComboBox.getSelectionModel().getSelectedItem()))
+                            .findFirst().orElse(null);   
+            dataObject.setCATEGORY_NAME(categoryOnly.getCATEGORY_NAME());
+        }
         this.getFXEntity().commit();
         return true;
     }
@@ -196,6 +202,7 @@ public class EditProductDimFilterController extends JInvFXFormController <PProdu
             unigTetles.add(item.getFIRST_NAME() + " " + item.getLAST_NAME());
             supplierses.add(item);
         }
+        productSuppliersComboBox.getItems().add("Ничего");
         productSuppliersComboBox.getItems().addAll(unigTetles);
         if (!productSuppliersComboBox.getItems().isEmpty())
             productSuppliersComboBox.getSelectionModel().selectFirst();
@@ -209,6 +216,7 @@ public class EditProductDimFilterController extends JInvFXFormController <PProdu
             unigTetles.add(item.getCATEGORY_NAME());
             categores.add(item);
         }
+        productCategoryComboBox.getItems().add("Ничего");
         productCategoryComboBox.getItems().addAll(unigTetles);
         if (!productCategoryComboBox.getItems().isEmpty())
             productCategoryComboBox.getSelectionModel().selectFirst();

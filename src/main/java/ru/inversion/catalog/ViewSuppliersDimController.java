@@ -115,7 +115,6 @@ public class ViewSuppliersDimController extends JInvFXBrowserController
         toolBar.setStandartActions (ActionFactory.ActionTypeEnum.CREATE, 
                                     ActionFactory.ActionTypeEnum.UPDATE,
                                     ActionFactory.ActionTypeEnum.CHOOSE_DIRECTORY,
-                                    ActionFactory.ActionTypeEnum.VIEW,
                                     ActionFactory.ActionTypeEnum.DELETE);
         toolBar.getItems().add(customButton);
     }

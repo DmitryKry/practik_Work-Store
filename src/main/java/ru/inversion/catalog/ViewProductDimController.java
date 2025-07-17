@@ -220,7 +220,7 @@ public class ViewProductDimController extends JInvFXBrowserController
 //
 // doFormResult 
 //
-    private void doFormResult ( JInvFXFormController.FormReturnEnum ok, JInvFXFormController<PProductDim> dctl )    
+    private void doFormResult ( JInvFXFormController.FormReturnEnum ok, JInvFXFormController<PProductDim> dctl )
     {
         if (JInvFXFormController.FormReturnEnum.RET_OK == ok)
         {
@@ -239,17 +239,40 @@ public class ViewProductDimController extends JInvFXBrowserController
                     doRefresh ();
                     break;
                 case VM_SHOW:
-                    
+                    List<PProductDim> tempList = new ArrayList<>();
+                    List<PProductDim> tempListCategory = new ArrayList<>();
                     products = new ArrayList<>();
                     for (PProductDim item : dsPRODUCT_DIM.getRows())
                         products.add(item);
-                    List<PProductDim> tempList = products.stream()
+                    tempListCategory = products.stream()
                             .filter(prod -> prod.getCATEGORY_NAME().equals(dctl.getDataObject().getCATEGORY_NAME()))
                             .collect(Collectors.toList());
+                    
+                    List<PProductDim> tempListSuppliers = products.stream()
+                            .filter(prod -> 
+                                prod.getFIRST_NAME().equals(dctl.getDataObject().getFIRST_NAME()) && 
+                                prod.getLAST_NAME().equals(dctl.getDataObject().getLAST_NAME())
+                            )
+                            .collect(Collectors.toList());
+                    if (!tempListSuppliers.isEmpty() && !tempListCategory.isEmpty()){
+                        tempList = tempListCategory.stream()
+                                .filter(categories -> tempListSuppliers.stream()
+                                    .anyMatch(suppliers -> categories.getFIRST_NAME().equals(suppliers.getFIRST_NAME()) && 
+                                            categories.getLAST_NAME().equals(suppliers.getLAST_NAME())))
+                                .collect(Collectors.toList());
+                    }
+                    else if (tempListSuppliers.isEmpty() && !tempListCategory.isEmpty()) {
+                        for (PProductDim item : tempListCategory)
+                            tempList.add(item);
+                    }
+                    else if (!tempListSuppliers.isEmpty() && tempListCategory.isEmpty()) {
+                        for (PProductDim item : tempListSuppliers)
+                            tempList.add(item);
+                    }
                     PRODUCT_DIM.getItems().clear();
-                    if (tempList != null) 
-                        PRODUCT_DIM.getItems().addAll(tempList);   
-                    else PRODUCT_DIM.getItems().addAll(products);
+                    if (!tempList.isEmpty())
+                        PRODUCT_DIM.getItems().addAll(tempList); 
+                    else doRefresh(); 
                 default:
                     break;
             }               
