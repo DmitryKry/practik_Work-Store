@@ -128,7 +128,7 @@ public class ViewSuppliersDimController extends JInvFXBrowserController
                 .toolTipText(getBundleString("INFO.BUTTON_PRODUCT"))          
                 .setKeyCombination(new KeyCodeCombination(KeyCode.F9))
                 .icon(
-                    new IconDescriptorBuilder().iconId(IonIcon.ion_android_add).build())
+                    new IconDescriptorBuilder().iconId(IonIcon.ion_document).build())
                 .build()
         );
         toolBar.setStandartActions (ActionFactory.ActionTypeEnum.CREATE, 
