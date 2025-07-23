@@ -36,8 +36,7 @@
                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                    </columnResizePolicy>
                </JInvTable>
-            <GridPane alignment="CENTER" hgap="10" prefHeight="336.0" 
-                        style="-fx-padding: 0 0 0 0;" vgap="10">
+            <GridPane alignment="CENTER" hgap="10" prefHeight="336.0" style="-fx-padding: 0 0 0 0;" vgap="10">
                   <columnConstraints>
                       <ColumnConstraints halignment="RIGHT" hgrow="NEVER" minWidth="80.0" prefWidth="80.0" />
                       <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" minWidth="120.0" />
@@ -50,21 +49,28 @@
                   </rowConstraints>
                   <children>
                       <Label text="Категория:" GridPane.halignment="RIGHT" />
-                      <TextField fx:id="categoryField" GridPane.columnIndex="1" GridPane.halignment="LEFT" 
-                                 GridPane.hgrow="ALWAYS" maxWidth="Infinity">
-                      </TextField>
+                      <TextField fx:id="categoryField" maxWidth="Infinity" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS">
+                     <GridPane.margin>
+                        <Insets right="5.0" />
+                     </GridPane.margin></TextField>
 
                       <Label text="Поставщик:" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
-                      <TextField fx:id="firstNameField" GridPane.columnIndex="1" GridPane.halignment="LEFT" 
-                                 GridPane.rowIndex="1" GridPane.hgrow="ALWAYS" maxWidth="Infinity" />
+                      <TextField fx:id="firstNameField" maxWidth="Infinity" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1">
+                     <GridPane.margin>
+                        <Insets right="5.0" />
+                     </GridPane.margin></TextField>
 
                       <Label text="EMAIL:" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
-                      <TextField fx:id="emailField" GridPane.columnIndex="1" GridPane.halignment="LEFT" 
-                                 GridPane.rowIndex="2" GridPane.hgrow="ALWAYS" maxWidth="Infinity" />
+                      <TextField fx:id="emailField" maxWidth="Infinity" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2">
+                     <GridPane.margin>
+                        <Insets right="5.0" />
+                     </GridPane.margin></TextField>
 
                       <Label text="Телефон:" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
-                      <TextField fx:id="phoneField" GridPane.columnIndex="1" GridPane.halignment="LEFT" 
-                                 GridPane.rowIndex="3" GridPane.hgrow="ALWAYS" maxWidth="Infinity" />
+                      <TextField fx:id="phoneField" maxWidth="Infinity" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3">
+                     <GridPane.margin>
+                        <Insets right="5.0" />
+                     </GridPane.margin></TextField>
                   </children>
             </GridPane>
          </items>

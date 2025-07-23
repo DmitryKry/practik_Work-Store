@@ -29,8 +29,8 @@
                     <JInvTableColumn fx:id="FIRST_NAME" fieldName="FIRST_NAME" prefWidth="150" text="%FIRST_NAME" />
                     <JInvTableColumn fx:id="LAST_NAME" fieldName="LAST_NAME" prefWidth="150" text="%LAST_NAME" />
                     <JInvTableColumn fx:id="PATRONYMIC" fieldName="PATRONYMIC" prefWidth="150" text="%PATRONYMIC" />
-               <JInvTableColumn fx:id="MAIL" editable="false" prefWidth="75.0" text="%MAIL" transientColumn="false" />
-               <JInvTableColumn fx:id="PHONE" editable="false" prefWidth="75.0" text="%PHONE" transientColumn="false" />
+                    <JInvTableColumn fx:id="MAIL" editable="false" prefWidth="75.0" text="%MAIL" transientColumn="false" />
+                    <JInvTableColumn fx:id="PHONE" editable="false" prefWidth="75.0" text="%PHONE" transientColumn="false" />
                 </columns>
                 <columnResizePolicy>
                     <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

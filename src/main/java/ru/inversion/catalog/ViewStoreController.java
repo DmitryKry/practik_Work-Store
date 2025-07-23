@@ -65,25 +65,15 @@ public class ViewStoreController extends JInvFXBrowserController
         setTitle (getBundleString ("VIEW.TITLE"));
         initDataSet ();
         infoStore = dsPstore_table.getRows().get(0);
-        Properties properties = new Properties();
-        // Вариант 1 (лучший):
-        try (InputStream input = getClass().getResourceAsStream("/ru/inversion/catalog/res/ViewStore.properties")) {
-            if (input == null) {
-                throw new RuntimeException("Файл не найден! Проверьте путь: /ru/inversion/catalog/res/ViewStore.properties");
-            }
-            properties.load(input);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        adressInvLabel.setText(properties.getProperty("ADDRESS") + ": " + infoStore.getADDRESS().toString());
-        dateOpenStoreInvLabel.setText(properties.getProperty("DATE_OPEN_STORE") + ": " + infoStore.getDATE_OPEN_STORE().toString());
-        firstNameOwnerInvLabel.setText(properties.getProperty("FULL_NAME") + ": " + infoStore.getSECOND_NAME_OWNER().toString() + " "
+        adressInvLabel.setText(getBundleString("ADDRESS") + ": " + infoStore.getADDRESS().toString());
+        dateOpenStoreInvLabel.setText(getBundleString("DATE_OPEN_STORE") + ": " + infoStore.getDATE_OPEN_STORE().toString());
+        firstNameOwnerInvLabel.setText(getBundleString("FULL_NAME") + ": " + infoStore.getSECOND_NAME_OWNER().toString() + " "
                 + infoStore.getFIRST_NAME_OWNER().toString() + " "
                 + infoStore.getLAST_NAME_OWNER().toString());
-        maiLabel.setText(properties.getProperty("MAIL") + ": " + infoStore.getMAIL().toString());
-        nameStoreLabel.setText(properties.getProperty("NAME_STORE") + ": " + infoStore.getNAME_STORE().toString());
-        phoneInvLabel.setText(properties.getProperty("PHONE") + ": " + infoStore.getPHONE().toString());
-        timeOpenInvLabel.setText(properties.getProperty("TIME_OF_WORK") + ": c " + String.valueOf(infoStore.getTIME_OPEN_STORE().toLocalTime()) + " до "
+        maiLabel.setText(getBundleString("MAIL") + ": " + infoStore.getMAIL().toString());
+        nameStoreLabel.setText(getBundleString("NAME_STORE") + ": " + infoStore.getNAME_STORE().toString());
+        phoneInvLabel.setText(getBundleString("PHONE") + ": " + infoStore.getPHONE().toString());
+        timeOpenInvLabel.setText(getBundleString("TIME_OF_WORK") + ": c " + String.valueOf(infoStore.getTIME_OPEN_STORE().toLocalTime()) + " до "
         + String.valueOf(infoStore.getTIME_CLOSE_STORE().toLocalTime()));
         
     } 

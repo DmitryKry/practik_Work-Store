@@ -43,8 +43,10 @@ public class EditProductDimController extends JInvFXFormController <PProductDim>
     private List<PSuppliersDim> supplierses;
     private List<PCategoryDim> categores;
 //
-    static private String reg_Price = "^\\d+(\\.\\d{2})?$";
+    static private String reg_Price = "^\\d+(\\,\\d{2})?$";
+    static private String reg_Count = "[0-9]+";
     private static final Pattern pattern_Price = Pattern.compile(reg_Price);
+    private static final Pattern pattern_Count = Pattern.compile(reg_Count);
 // Initializes the controller class.
 //
      private final XXIDataSet<PSuppliersDim> dsSupplierSet = new XXIDataSet<> ();    
@@ -61,7 +63,7 @@ public class EditProductDimController extends JInvFXFormController <PProductDim>
         dsPCategorySet.setRowClass (PCategoryDim.class);
     }
 
-    private static boolean isValidPrice(String element, Pattern anotherPattern) {
+    private static boolean isValidPATTERN(String element, Pattern anotherPattern) {
         if (element == null) {
             return false;
         }
@@ -248,7 +250,7 @@ public class EditProductDimController extends JInvFXFormController <PProductDim>
         getValidMan().bindValidators2Control(PRICE,(value)-> {
             if (value==null)
                 return new Validator.Result(value, bundle.getString("VALIDATOR.ERROR"));
-            if (!isValidPrice((String) value, pattern_Price)){
+            if (!isValidPATTERN((String) value, pattern_Price)){
                 return new Validator.Result(value,String.format(bundle.getString("VALIDATOR.PRICE"), value));
             }
             return null;
@@ -257,6 +259,9 @@ public class EditProductDimController extends JInvFXFormController <PProductDim>
         getValidMan().bindValidators2Control(STOCK_QUANTITY,(value)-> {
             if (value==null)
                 return new Validator.Result(value, bundle.getString("VALIDATOR.ERROR"));
+            if (!isValidPATTERN((String) value, pattern_Count)){
+                return new Validator.Result(value,String.format(bundle.getString("VALIDATOR.COUNT"), value));
+            }
             return null;
         });
         super.init (); 

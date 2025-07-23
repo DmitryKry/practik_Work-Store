@@ -153,7 +153,7 @@ public class ViewProductDimController extends JInvFXBrowserController
 //    
     private void initToolBar () 
     {
-        Button customButton = new Button("В меню");
+        Button customButton = new Button(getBundleString("MAIN"));
         customButton.setOnAction(e -> {
             new FXFormLauncher<>(this, ViewStoreController.class)
                 .initProperties(getInitProperties())
