@@ -1,5 +1,6 @@
 package ru.inversion.catalog;
 
+import java.math.BigDecimal;
 import javafx.event.ActionEvent;
 import ru.inversion.fx.form.JInvFXFormController;
 import ru.inversion.fx.form.controls.*;
@@ -43,7 +44,7 @@ public class EditProductDimController extends JInvFXFormController <PProductDim>
     private List<PSuppliersDim> supplierses;
     private List<PCategoryDim> categores;
 //
-    static private String reg_Price = "^\\d+(\\,\\d{2})?$";
+    static private String reg_Price = "^\\d+(\\.\\d{2})?$";
     static private String reg_Count = "[0-9]+";
     private static final Pattern pattern_Price = Pattern.compile(reg_Price);
     private static final Pattern pattern_Count = Pattern.compile(reg_Count);
@@ -71,6 +72,8 @@ public class EditProductDimController extends JInvFXFormController <PProductDim>
         return matcher.matches();
     }
     
+    
+    
     @Override
     public boolean onOK() {
         cheakBox = true;
@@ -82,13 +85,14 @@ public class EditProductDimController extends JInvFXFormController <PProductDim>
         PCategoryDim categoryOnly = categores.stream()
                         .filter(c -> (c.getCATEGORY_NAME())
                                 .equals(productCategoryComboBox.getSelectionModel().getSelectedItem()))
-                        .findFirst().orElse(null);                 
+                        .findFirst().orElse(null);            
+        BigDecimal decimalTemp = new BigDecimal(PRICE.getText());
         if (dataObject.getPRODUCT_NAME() == null){
             try {
                 new ParamMap()
                         .add("p_name", PRODUCT_NAME.getText())
                         .add("p_category", categoryOnly.getCATEGORY_DIM_ID())
-                        .add("p_price", PRICE.getText())
+                        .add("p_price", decimalTemp)
                         .add("p_stock_quantity", STOCK_QUANTITY.getText())
                         .add("p_supplier", SupplersOnly.getID())
                         .exec(this, "addNewProduct");
@@ -104,7 +108,7 @@ public class EditProductDimController extends JInvFXFormController <PProductDim>
                         .add("p_id", dataObject.getPRODUCT_ID())
                         .add("p_name", PRODUCT_NAME.getText())
                         .add("p_category", categoryOnly.getCATEGORY_DIM_ID())
-                        .add("p_price", PRICE.getText())
+                        .add("p_price", decimalTemp)
                         .add("p_stock_quantity", STOCK_QUANTITY.getText())
                         .add("p_supplier", SupplersOnly.getID())
                         .exec(this, "updateProductsNew");
@@ -235,6 +239,7 @@ public class EditProductDimController extends JInvFXFormController <PProductDim>
             productSuppliersComboBox.getItems().addAll(dataObject.getFIRST_NAME() + " " + dataObject.getLAST_NAME());
             productSuppliersComboBox.getSelectionModel().selectFirst();
             productSuppliersComboBox.setDisable(true);
+            STOCK_QUANTITY.setText(dataObject.getSTOCK_QUANTITY().toString());
         }
         else productComboBox();
         categoryComboBox();

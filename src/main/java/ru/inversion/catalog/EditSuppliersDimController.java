@@ -50,6 +50,8 @@ public class EditSuppliersDimController extends JInvFXFormController <PSuppliers
     {
         evereField = new JInvTextField[]{FIRST_NAME, LAST_NAME, PATRONYMIC, MAIL, PHONE};
         nameFields = new String[]{"FIRST_NAME", "LAST_NAME", "PATRONYMIC", "MAIL", "PHONE"};
+        if (dataObject.getFIRST_NAME() != null)
+            PHONE.setText(dataObject.getPHONE().toString());
         getValidMan().bindValidators2Control(FIRST_NAME,(value)-> {
             if (value==null)
                 return new Validator.Result(value, bundle.getString("VALIDATOR.ERROR"));
