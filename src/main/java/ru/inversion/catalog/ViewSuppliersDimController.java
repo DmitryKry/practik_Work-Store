@@ -11,6 +11,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -31,6 +33,9 @@ import ru.inversion.bicomp.action.StopExecuteActionBiCompException;
 import ru.inversion.bicomp.fxreport.ApReport;
 import ru.inversion.bicomp.util.ParamMap;
 import ru.inversion.db.expr.SQLExpressionException;
+import ru.inversion.fx.form.action.ActionBuilder;
+import ru.inversion.icons.IconDescriptorBuilder;
+import ru.inversion.icons.enums.IonIcon;
 
 /**
  *
@@ -48,6 +53,7 @@ public class ViewSuppliersDimController extends JInvFXBrowserController
     private JInvButton customButton;
     private boolean exitInMenu;
     private static List<PSuppliersDim> supplersList;
+    private Button createProductButton;
  
     public List<PSuppliersDim> getSupllers(){
         for(PSuppliersDim item : SUPPLIERS_DIM.getItems()){
@@ -86,7 +92,7 @@ public class ViewSuppliersDimController extends JInvFXBrowserController
         SUPPLIERS_DIM.setAction (ActionFactory.ActionTypeEnum.CREATE, (a) -> doOperation (FormModeEnum.VM_INS));
         SUPPLIERS_DIM.setAction (ActionFactory.ActionTypeEnum.UPDATE, (a) -> doOperation (FormModeEnum.VM_EDIT));
         SUPPLIERS_DIM.setAction (ActionFactory.ActionTypeEnum.DELETE, (a) -> doOperation (FormModeEnum.VM_DEL));
-        SUPPLIERS_DIM.setAction (ActionFactory.ActionTypeEnum.CHOOSE_DIRECTORY, (a) -> doOperation (FormModeEnum.VM_CHOICE));
+        //SUPPLIERS_DIM.setAction (ActionFactory.ActionTypeEnum.CHOOSE_DIRECTORY, (a) -> doOperation (FormModeEnum.VM_CHOICE));
         SUPPLIERS_DIM.setAction (ActionFactory.ActionTypeEnum.REFRESH, (a) -> doRefresh ());
         doRefresh();
         
@@ -105,18 +111,44 @@ public class ViewSuppliersDimController extends JInvFXBrowserController
 //    
     private void initToolBar () 
     {
-        customButton = new JInvButton(getBundleString("MAIN"));
-        customButton.setOnAction(e -> {
-            new FXFormLauncher<>(this, ViewStoreController.class)
+        Button customButton = new Button(getBundleString("MAIN"));
+        customButton = (Button) ActionFactory.createButton(
+                new ActionBuilder()
+                .handler(this::openMenu)
+                .title(getBundleString("MAIN"))
+                .toolTipText(getBundleString("INFO.BUTTON_MENU"))
+                .setKeyCombination(new KeyCodeCombination(KeyCode.F1))
+                .build()
+        );
+        
+        createProductButton = (Button) ActionFactory.createButton(
+                new ActionBuilder()
+                .handler(this::openCreateProduct)
+                .title(getBundleString("MAIN"))
+                .toolTipText(getBundleString("INFO.BUTTON_PRODUCT"))          
+                .setKeyCombination(new KeyCodeCombination(KeyCode.F9))
+                .icon(
+                    new IconDescriptorBuilder().iconId(IonIcon.ion_android_add).build())
+                .build()
+        );
+        toolBar.setStandartActions (ActionFactory.ActionTypeEnum.CREATE, 
+                                    ActionFactory.ActionTypeEnum.UPDATE,
+                                    ActionFactory.ActionTypeEnum.DELETE);
+        toolBar.getItems().add(createProductButton);
+        toolBar.getItems().add(customButton);
+    }
+   
+    @FXML
+    private void openCreateProduct(ActionEvent event){
+        doOperation (FormModeEnum.VM_CHOICE);
+    }
+    
+    @FXML
+    private void openMenu(ActionEvent event){
+        new FXFormLauncher<>(this, ViewStoreController.class)
                 .initProperties(getInitProperties())
                 .doModal();
             getViewContext().getStage().close();
-        });
-        toolBar.setStandartActions (ActionFactory.ActionTypeEnum.CREATE, 
-                                    ActionFactory.ActionTypeEnum.UPDATE,
-                                    ActionFactory.ActionTypeEnum.CHOOSE_DIRECTORY,
-                                    ActionFactory.ActionTypeEnum.DELETE);
-        toolBar.getItems().add(customButton);
     }
 //
 // setPrintParam
@@ -133,6 +165,7 @@ public class ViewSuppliersDimController extends JInvFXBrowserController
     private void doOperation ( JInvFXFormController.FormModeEnum mode ) 
     {
         PSuppliersDim p = null;
+        boolean cheakProduct = false;
         PProductDim prod = null;
         switch (mode) {
             case VM_INS:
@@ -172,7 +205,7 @@ public class ViewSuppliersDimController extends JInvFXBrowserController
                 prod = new PProductDim();
                 prod.setFIRST_NAME(p.getFIRST_NAME());
                 prod.setLAST_NAME(p.getLAST_NAME());
-                p = null;
+                cheakProduct = true;
                 new FXFormLauncher<> (this, EditProductDimController.class)
                 .dataObject (prod)
                 .dialogMode (mode)
@@ -180,7 +213,7 @@ public class ViewSuppliersDimController extends JInvFXBrowserController
                 .doModal ();
                 break;
         }
-        if (p != null) 
+        if (p != null && !cheakProduct) 
             new FXFormLauncher<> (this, EditSuppliersDimController.class)
                 .dataObject (p)
                 .dialogMode (mode)

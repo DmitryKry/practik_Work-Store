@@ -35,6 +35,8 @@ import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
 import ru.inversion.bicomp.util.ParamMap;
 import ru.inversion.db.expr.SQLExpressionException;
 import javafx.scene.layout.BorderPane;
@@ -42,6 +44,10 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.Screen;
 import ru.inversion.dataset.DataSetException;
+import ru.inversion.fx.form.action.ActionBuilder;
+import ru.inversion.icons.IconDescriptor;
+import ru.inversion.icons.IconDescriptorBuilder;
+import ru.inversion.icons.enums.IonIcon;
 /**
  *
  * @author  admin
@@ -60,6 +66,7 @@ public class ViewProductDimController extends JInvFXBrowserController
     private ComboBox<String> filterForCategoryBox;
     private List<PProductDim> products;
     private JInvFXFormController.FormModeEnum mainModeEnum;
+    private Button filterButton;
  
    
     private final XXIDataSet<PProductDim> dsPRODUCT_DIM = new XXIDataSet<> ();    
@@ -110,7 +117,7 @@ public class ViewProductDimController extends JInvFXBrowserController
         PRODUCT_DIM.setAction (ActionFactory.ActionTypeEnum.CREATE, (a) -> doOperation (FormModeEnum.VM_INS));
         PRODUCT_DIM.setAction (ActionFactory.ActionTypeEnum.UPDATE, (a) -> doOperation (FormModeEnum.VM_EDIT));
         PRODUCT_DIM.setAction (ActionFactory.ActionTypeEnum.DELETE, (a) -> doOperation (FormModeEnum.VM_DEL));
-        PRODUCT_DIM.setAction (ActionFactory.ActionTypeEnum.FILTER, (a) -> doOperation (FormModeEnum.VM_SHOW));
+        //PRODUCT_DIM.setAction (ActionFactory.ActionTypeEnum.FILTER, (a) -> doOperation (FormModeEnum.VM_SHOW));
         PRODUCT_DIM.setAction (ActionFactory.ActionTypeEnum.REFRESH, (a) -> doRefresh ());
         PRODUCT_DIM.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
@@ -154,18 +161,43 @@ public class ViewProductDimController extends JInvFXBrowserController
     private void initToolBar () 
     {
         Button customButton = new Button(getBundleString("MAIN"));
-        customButton.setOnAction(e -> {
-            new FXFormLauncher<>(this, ViewStoreController.class)
+        customButton = (Button) ActionFactory.createButton(
+                new ActionBuilder()
+                .handler(this::openMenu)
+                .title(getBundleString("MAIN"))
+                .toolTipText(getBundleString("INFO.BUTTON_MENU"))        
+                .setKeyCombination(new KeyCodeCombination(KeyCode.F1))
+                .build()
+        );
+        filterButton = (Button) ActionFactory.createButton(
+                new ActionBuilder()
+                .handler(this::openEditFileter)
+                .toolTipText(getBundleString("INFO.BUTTON_FILTER"))          
+                .setKeyCombination(new KeyCodeCombination(KeyCode.F9))
+                .icon(
+                    new IconDescriptorBuilder().iconId(IonIcon.ion_filing).build())
+                .build()
+        );
+        toolBar.setStandartActions (ActionFactory.ActionTypeEnum.CREATE, 
+                                    ActionFactory.ActionTypeEnum.UPDATE,
+                                    ActionFactory.ActionTypeEnum.DELETE);
+        toolBar.getItems().add(filterButton);
+        toolBar.getItems().add(customButton);
+    }
+    
+    @FXML
+    private void openEditFileter(ActionEvent event){
+        doOperation (FormModeEnum.VM_SHOW);
+    }
+    
+    @FXML
+    private void openMenu(ActionEvent event){
+        new FXFormLauncher<>(this, ViewStoreController.class)
                 .initProperties(getInitProperties())
                 .doModal();
             getViewContext().getStage().close();
-        });
-        toolBar.setStandartActions (ActionFactory.ActionTypeEnum.CREATE, 
-                                    ActionFactory.ActionTypeEnum.UPDATE,
-                                    ActionFactory.ActionTypeEnum.DELETE,
-                                    ActionFactory.ActionTypeEnum.FILTER);
-        toolBar.getItems().add(customButton);
     }
+
 //
 // setPrintParam
 //

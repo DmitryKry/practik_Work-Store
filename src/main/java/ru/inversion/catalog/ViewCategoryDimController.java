@@ -3,6 +3,8 @@ package ru.inversion.catalog;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -21,6 +23,7 @@ import ru.inversion.fx.form.controls.*;
 import ru.inversion.bicomp.action.JInvButtonPrint;
 import ru.inversion.bicomp.action.StopExecuteActionBiCompException;
 import ru.inversion.bicomp.fxreport.ApReport;
+import ru.inversion.fx.form.action.ActionBuilder;
 
 /**
  *
@@ -82,16 +85,26 @@ public class ViewCategoryDimController extends JInvFXBrowserController
     private void initToolBar () 
     {
         Button customButton = new Button(getBundleString("MAIN"));
-        customButton.setOnAction(e -> {
-            new FXFormLauncher<>(this, ViewStoreController.class)
-                .initProperties(getInitProperties())
-                .doModal();
-            getViewContext().getStage().close();
-        });
+        customButton = (Button) ActionFactory.createButton(
+                new ActionBuilder()
+                .handler(this::openMenu)
+                .title(getBundleString("MAIN"))
+                .toolTipText(getBundleString("INFO.BUTTON_MENU"))
+                .setKeyCombination(new KeyCodeCombination(KeyCode.F1))
+                .build()
+        );
         toolBar.setStandartActions (ActionFactory.ActionTypeEnum.CREATE, 
                                     ActionFactory.ActionTypeEnum.UPDATE,
                                     ActionFactory.ActionTypeEnum.DELETE);
         toolBar.getItems().add(customButton);
+    }
+    
+    @FXML
+    private void openMenu(ActionEvent event){
+        new FXFormLauncher<>(this, ViewStoreController.class)
+                .initProperties(getInitProperties())
+                .doModal();
+            getViewContext().getStage().close();
     }
 //
 // setPrintParam
